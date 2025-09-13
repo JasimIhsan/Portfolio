@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Download, MapPin, Calendar, Coffee } from "lucide-react";
-import profile from "../../assets/profile.png"
+import profile from "../../assets/White Shirt.jpg"
 
 interface AboutProps {
 	isDark: boolean;
@@ -71,6 +71,7 @@ export default function About({ isDark }: AboutProps) {
 							<motion.button
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
+								onClick={() => window.open("https://drive.google.com/file/d/1LNhiZxZLAQ-yoT6F0MZAruxRrztJDLUt/view?usp=sharing", "_blank")}
 								className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${isDark ? "bg-blue-600 hover:bg-blue-500 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"}`}>
 								<Download size={18} />
 								Download Resume

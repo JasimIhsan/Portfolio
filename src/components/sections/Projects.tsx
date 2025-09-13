@@ -16,9 +16,9 @@ const projects = [
 		description: "A platform for booking mentorship sessions with features like chat, video calls, payments, wallet, and admin panel.",
 		image: mentorshub,
 		tech: ["React.js", "TypeScript", "Node.js", "Socket.io", "MongoDB", "Tailwind CSS"],
-		github: "#",
-		liveDemo: false,
-		live: "#",
+		github: "https://github.com/JasimIhsan/MentorsHub",
+		liveDemo: true,
+		live: "https://mentors-hub-in.vercel.app",
 	},
 	{
 		title: "Byteverse E-Commerce Platform",
@@ -140,7 +140,7 @@ export default function Projects({ isDark }: ProjectsProps) {
 											className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 ${isDark ? "bg-blue-600 hover:bg-blue-500 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
 											aria-label={`View ${project.title} live demo`}>
 											<ExternalLink size={16} />
-											Live Demo
+											Visit Site
 										</motion.a>
 									)}
 								</div>
