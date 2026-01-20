@@ -12,7 +12,7 @@ interface ProjectsProps {
    isDark: boolean;
 }
 
-const projects = [
+export const projects = [
    {
       title: "Onboard Careers",
       description: "Onboard Careers is a dedicated recruitment portal designed to connect aspiring professionals with premier opportunities in the maritime and cruise industries. We bridge the gap between talent and the open ocean, specializing in sourcing skilled candidates for hospitality, technical, and deck roles aboard international vessels.",
