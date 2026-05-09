@@ -5,19 +5,35 @@ import ScrollReveal from "../animations/ScrollReveal";
 export const experiences = [
    {
       id: 1,
-      role: "Mobile App Developer",
-      company: "Freelance / Independent",
-      duration: "2023 - Present",
-      description: "Designing and developing cross-platform mobile applications using Flutter and Dart. Implementing complex state management, integrating RESTful APIs, and building seamless user interfaces for iOS and Android.",
-      skills: ["Flutter", "Dart", "Firebase", "REST APIs", "Provider/Riverpod"],
+      role: "Founding Engineer",
+      company: "Ciltriq Technologies",
+      duration: "2025 - Present",
+      description: "Leading the development of scalable web and mobile applications using the MERN stack and Flutter. Building production-ready systems with clean architecture, API integrations, authentication flows, real-time features, and performance-focused user experiences across Android, iOS, and web platforms.",
+      skills: ["React", "Next.js", "Node.js", "Express.js", "MongoDB", "PostgreSQL", "Flutter", "Dart", "Firebase", "REST APIs", "Docker", "TypeScript"],
    },
    {
       id: 2,
+      role: "Technical Mentor",
+      company: "ExpertX Coding Academy",
+      duration: "2025 - 2026",
+      description: "Mentoring aspiring developers in MERN stack and Flutter development through live coding sessions, project-based learning, debugging practices, and real-world application architecture. Helping students build industry-level projects and improve problem-solving skills.",
+      skills: ["MERN Stack", "Flutter", "JavaScript", "TypeScript", "React", "Node.js", "MongoDB", "Firebase", "Git", "System Design"],
+   },
+   {
+      id: 3,
+      role: "Founding Engineer",
+      company: "Onboard",
+      duration: "2025 - Present",
+      description: "Developing modern digital products with a strong focus on scalable backend systems, intuitive frontend experiences, and cross-platform mobile applications. Collaborating on product architecture, API development, authentication systems, and deployment workflows.",
+      skills: ["React", "Next.js", "Node.js", "Express.js", "PostgreSQL", "Flutter", "Docker", "Redis", "AWS", "TypeScript"],
+   },
+   {
+      id: 4,
       role: "Full Stack Developer",
       company: "Freelance",
       duration: "July 2024 - Present",
-      description: "Developing and maintaining full-stack web applications for various clients. Focusing on scalable architectures, responsive user interfaces, and robust backend systems using modern web technologies.",
-      skills: ["React", "Next.js", "TypeScript", "Node.js", "MongoDB", "PostgreSQL", "Tailwind CSS"],
+      description: "Building custom web and mobile applications for clients using the MERN stack and Flutter. Delivering responsive frontends, scalable backend APIs, authentication systems, admin dashboards, payment integrations, and optimized mobile experiences for startups and businesses.",
+      skills: ["React", "Next.js", "Node.js", "Express.js", "MongoDB", "PostgreSQL", "Flutter", "Dart", "Tailwind CSS", "Firebase", "Docker", "REST APIs"],
    },
 ];
 
@@ -40,7 +56,7 @@ export default function Experience() {
 
                         <div className="clay-card p-6 md:p-8 rounded-[2rem] transition-all duration-300 relative overflow-hidden group-hover:-translate-y-1">
                            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/2"></div>
-                           
+
                            <div className="flex flex-col md:flex-row md:items-start justify-between mb-6 gap-4 relative z-10">
                               <div>
                                  <h3 className="text-2xl font-bold text-white mb-2">{exp.role}</h3>

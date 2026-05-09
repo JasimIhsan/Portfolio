@@ -4,12 +4,22 @@ import { useEffect, useState } from "react";
 import brewcode from "../../assets/projects/brewcode.png";
 import byteverse from "../../assets/projects/byteverse.png";
 import forge from "../../assets/projects/forge.onboard.png";
+import lifePartnerAgain from "../../assets/projects/lifepartneragain.png";
 import mentorshub from "../../assets/projects/mentorshub.png";
 import onboard from "../../assets/projects/onboard.png";
 import usermanagement from "../../assets/projects/user_management.jpg";
 import ScrollReveal from "../animations/ScrollReveal";
 
 export const projects = [
+   {
+      title: "Life Partner Again",
+      description: "A matrimony platform designed specifically for middle-aged women seeking a second chance at companionship. Built to provide a safe, respectful, and trust-driven environment — focusing on meaningful connections, verified profiles, and a supportive experience tailored for a new phase of life.",
+      image: lifePartnerAgain,
+      tech: ["Flutter"],
+      // github: "https://github.com/JasimIhsan/Smart_Canteen",
+      liveDemo: false,
+      live: "#",
+   },
    {
       title: "Onboard Careers",
       description: "Onboard Careers is a dedicated recruitment portal designed to connect aspiring professionals with premier opportunities in the maritime and cruise industries. We bridge the gap between talent and the open ocean, specializing in sourcing skilled candidates for hospitality, technical, and deck roles aboard international vessels.",
@@ -103,42 +113,46 @@ export default function Projects() {
                <p className="text-lg text-slate-400 font-light max-w-2xl mx-auto">A curated selection of my recent work showcasing modern development, premium design, and scalable architecture.</p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <div className="flex flex-col gap-16">
                {projects.map((project, index) => {
-                  // Determine grid column span
-                  const isFeatured = index === 0 || index === 4;
-                  const colSpan = isFeatured ? "md:col-span-8" : "md:col-span-4";
-                  
+                  const isEven = index % 2 === 0;
+
                   return (
-                     <ScrollReveal key={project.title} delay={index * 0.1} className={colSpan}>
-                        <div className="clay-card h-full group flex flex-col overflow-hidden">
-                           <div className="relative overflow-hidden h-64 md:h-80 w-full shrink-0">
+                     <ScrollReveal key={project.title} delay={index * 0.1}>
+                        <div className="clay-card group flex flex-col lg:flex-row overflow-hidden relative rounded-[2.5rem]">
+                           {/* Image Container */}
+                           <div className={`relative overflow-hidden w-full lg:w-1/2 shrink-0 h-64 md:h-96 lg:h-auto ${!isEven ? "lg:order-2" : ""}`}>
                               <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer" loading="lazy" onClick={() => openModal(project.image)} />
-                              <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c10] via-transparent to-transparent opacity-80 pointer-events-none" />
-                              <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                                 <h3 className="text-2xl font-bold text-white drop-shadow-lg">{project.title}</h3>
-                                 <div className="flex gap-3">
-                                    <motion.a href={project.github} whileHover={{ scale: 1.1, y: -2 }} target="_blank" whileTap={{ scale: 0.9 }} className="clay-btn p-3 text-slate-200 hover:text-white" aria-label={`View ${project.title} on GitHub`}>
-                                       <Github size={18} />
-                                    </motion.a>
-                                    {project.liveDemo && (
-                                       <motion.a href={project.live} whileHover={{ scale: 1.1, y: -2 }} whileTap={{ scale: 0.9 }} target="_blank" className="clay-btn bg-cyan-600/50 p-3 text-cyan-50 hover:text-white" aria-label={`View ${project.title} live demo`}>
-                                          <ExternalLink size={18} />
-                                       </motion.a>
-                                    )}
-                                 </div>
-                              </div>
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c10]/90 via-[#0b0c10]/20 to-transparent pointer-events-none lg:opacity-0 transition-opacity duration-300" />
                            </div>
 
-                           <div className="p-8 flex-grow flex flex-col justify-between relative z-10">
-                              <p className="mb-8 line-clamp-3 text-slate-300 font-light leading-relaxed">{project.description}</p>
+                           {/* Content Container */}
+                           <div className={`p-8 md:p-12 flex-grow flex flex-col justify-center relative z-10 lg:w-1/2 ${!isEven ? "lg:order-1" : ""}`}>
+                              <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 drop-shadow-md">{project.title}</h3>
+                              
+                              <p className="mb-8 text-slate-300 font-light leading-relaxed text-lg">{project.description}</p>
 
-                              <div className="flex flex-wrap gap-3">
+                              <div className="flex flex-wrap gap-3 mb-10">
                                  {project.tech.map((tech) => (
-                                    <span key={tech} className="clay-pill px-4 py-1.5 text-xs font-medium text-cyan-100/90 tracking-wide">
+                                    <span key={tech} className="clay-pill px-5 py-2 text-sm font-medium text-cyan-100/90 tracking-wide shadow-sm">
                                        {tech}
                                     </span>
                                  ))}
+                              </div>
+
+                              <div className="flex flex-wrap gap-4 mt-auto">
+                                 {project.github && (
+                                    <motion.a href={project.github} whileHover={{ scale: 1.05, y: -2 }} target="_blank" whileTap={{ scale: 0.95 }} className="clay-btn flex items-center gap-2 px-6 py-3 text-slate-200 hover:text-white" aria-label={`View ${project.title} on GitHub`}>
+                                       <Github size={20} />
+                                       <span className="font-medium tracking-wide">Source Code</span>
+                                    </motion.a>
+                                 )}
+                                 {project.liveDemo && (
+                                    <motion.a href={project.live} whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} target="_blank" className="clay-btn bg-cyan-600/20 border-cyan-500/30 flex items-center gap-2 px-6 py-3 text-cyan-50 hover:text-white" aria-label={`View ${project.title} live demo`}>
+                                       <ExternalLink size={20} />
+                                       <span className="font-medium tracking-wide">Live Demo</span>
+                                    </motion.a>
+                                 )}
                               </div>
                            </div>
                         </div>
@@ -151,22 +165,8 @@ export default function Projects() {
          {/* Enhanced Modal */}
          <AnimatePresence>
             {isModalOpen && selectedImage && (
-               <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="fixed inset-0 bg-[#0d0f14]/90 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-                  onClick={closeModal}
-               >
-                  <motion.div
-                     initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                     animate={{ scale: 1, opacity: 1, y: 0 }}
-                     exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                     transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                     className="clay-card relative max-w-6xl w-full mx-auto p-2"
-                     onClick={(e) => e.stopPropagation()}
-                  >
+               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="fixed inset-0 bg-[#0d0f14]/90 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={closeModal}>
+                  <motion.div initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }} transition={{ type: "spring", damping: 25, stiffness: 300 }} className="clay-card relative max-w-6xl w-full mx-auto p-2" onClick={(e) => e.stopPropagation()}>
                      <img src={selectedImage} alt="Enlarged project" className="w-full h-auto max-h-[85vh] object-contain rounded-[1.5rem]" />
                      <button className="clay-btn absolute -top-4 -right-4 text-white p-3 shadow-xl" onClick={closeModal} aria-label="Close modal">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
