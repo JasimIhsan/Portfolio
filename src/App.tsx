@@ -5,7 +5,6 @@ function App() {
    return (
       <>
          <Analytics />
-
          <Portfolio />
       </>
    );
