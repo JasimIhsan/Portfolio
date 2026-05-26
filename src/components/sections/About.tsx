@@ -55,21 +55,15 @@ export default function About() {
                         <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                         <div className="space-y-6 relative z-10 text-slate-300 font-light leading-relaxed">
                            <p className="text-lg">
-                              I'm a passionate full-stack and mobile developer with over a year of experience creating digital solutions that make a difference. My journey began with a curiosity about how things work on the web and mobile platforms, and it has evolved into a deep love for crafting cross-platform experiences that users genuinely enjoy.
+                              I'm a passionate full-stack and mobile developer with over a year of experience creating digital solutions that make a difference. My journey began with a curiosity about how things work on the web and mobile platforms, and it has evolved into a deep love for crafting cross-platform experiences that users genuinely
+                              enjoy.
                            </p>
 
-                           <p className="text-lg">
-                              When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee while sketching out ideas for my next project. I believe in the power of clean code, thoughtful design, and continuous learning.
-                           </p>
+                           <p className="text-lg">When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee while sketching out ideas for my next project. I believe in the power of clean code, thoughtful design, and continuous learning.</p>
 
                            <p className="text-lg pb-4">I'm always excited to take on new challenges and collaborate with teams that share my passion for creating exceptional digital experiences.</p>
 
-                           <motion.button
-                              whileHover={{ scale: 1.02, y: -2 }}
-                              whileTap={{ scale: 0.98 }}
-                              onClick={() => window.open("https://drive.google.com/file/d/1LNhiZxZLAQ-yoT6F0MZAruxRrztJDLUt/view?usp=sharing", "_blank")}
-                              className="clay-btn inline-flex items-center gap-3 px-8 py-4 text-white font-medium tracking-wide group"
-                           >
+                           <motion.button whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} onClick={() => window.open("https://drive.google.com/file/d/1G6Ylakk0SxJHrs6rfh6K4Blsx19aRueD/view?usp=drive_link", "_blank")} className="clay-btn inline-flex items-center gap-3 px-8 py-4 text-white font-medium tracking-wide group">
                               <Download size={20} className="group-hover:-translate-y-1 transition-transform" />
                               Download Resume
                            </motion.button>
