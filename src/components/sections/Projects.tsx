@@ -54,7 +54,7 @@ export const projects = [
       tech: ["React", "TypeScript"],
       github: "https://github.com/JasimIhsan/Brew-Code-JS-Compiler",
       liveDemo: true,
-      live: "https://brewcode.vercel.app",
+      live: "https://brewcode.jasimihsan.in",
    },
    {
       title: "Byteverse E-Commerce Platform",
@@ -129,7 +129,7 @@ export default function Projects() {
                            {/* Content Container */}
                            <div className={`p-8 md:p-12 flex-grow flex flex-col justify-center relative z-10 lg:w-1/2 ${!isEven ? "lg:order-1" : ""}`}>
                               <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 drop-shadow-md">{project.title}</h3>
-                              
+
                               <p className="mb-8 text-slate-300 font-light leading-relaxed text-lg">{project.description}</p>
 
                               <div className="flex flex-wrap gap-3 mb-10">
