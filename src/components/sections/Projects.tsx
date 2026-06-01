@@ -39,6 +39,15 @@ export const projects = [
       live: "https://forge.onboardcareers.in",
    },
    {
+      title: "BrewCode JS Compiler",
+      description: "A web application that compiles JavaScript code into a visual representation",
+      image: brewcode,
+      tech: ["Next.js", "TypeScript", "Docker", "BullMQ", "Redis", "Queue Management"],
+      github: "https://github.com/JasimIhsan/Brew-Code-JS-Compiler",
+      liveDemo: true,
+      live: "https://brewcode.jasimihsan.in",
+   },
+   {
       title: "MentorsHub",
       description: "A platform for booking mentorship sessions with features like chat, video calls, payments, wallet, and admin panel.",
       image: mentorshub,
@@ -47,15 +56,7 @@ export const projects = [
       liveDemo: true,
       live: "https://mentors-hub-in.vercel.app",
    },
-   {
-      title: "Brew Code JS Compiler",
-      description: "A web application that compiles JavaScript code into a visual representation",
-      image: brewcode,
-      tech: ["React", "TypeScript"],
-      github: "https://github.com/JasimIhsan/Brew-Code-JS-Compiler",
-      liveDemo: true,
-      live: "https://brewcode.jasimihsan.in",
-   },
+
    {
       title: "Byteverse E-Commerce Platform",
       description: "A full-stack e-commerce solution with Ejs, Node.js, and RazorPay integration.",
