@@ -10,6 +10,7 @@ import Projects from "../components/sections/Projects";
 import Skills from "../components/sections/Skills";
 import FloatingElements from "../components/ui/floating-elements";
 import Navigation from "../components/ui/navigation";
+import SEO from "../components/SEO";
 import { useLenis } from "../hooks/useLenis";
 
 export default function Portfolio() {
@@ -67,6 +68,7 @@ export default function Portfolio() {
 
    return (
       <div className="min-h-screen text-white max-w-full overflow-x-hidden box-border bg-transparent">
+         <SEO />
          <FloatingElements />
 
          {/* Theme Toggle */}

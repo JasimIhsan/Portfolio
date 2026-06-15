@@ -56,7 +56,6 @@ export const projects = [
       liveDemo: true,
       live: "https://mentors-hub-in.vercel.app",
    },
-
    {
       title: "Byteverse E-Commerce Platform",
       description: "A full-stack e-commerce solution with Ejs, Node.js, and RazorPay integration.",
