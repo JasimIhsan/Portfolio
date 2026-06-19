@@ -64,18 +64,18 @@ export default function Contact() {
          <ScrollReveal>
             <div className="max-w-6xl mx-auto">
                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="mb-20 text-center">
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white drop-shadow-md">Let's Work Together</h2>
-                  <p className="text-lg text-slate-400 font-light max-w-2xl mx-auto">Have a project in mind? I'd love to hear about it.</p>
+                  <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-[#08142C]">Let's Work Together</h2>
+                  <p className="text-lg text-[#64748B] font-normal max-w-2xl mx-auto">Have a project in mind? I'd love to hear about it.</p>
                </motion.div>
 
                <div className="grid lg:grid-cols-12 gap-12">
                   {/* Contact info */}
                   <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="lg:col-span-5">
-                     <div className="clay-card p-8 md:p-10 rounded-[2.5rem] space-y-12 h-full relative overflow-hidden">
-                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[60px] translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                        
+                     <div className="clay-card p-8 md:p-10 rounded-[2.5rem] space-y-12 h-full relative overflow-hidden bg-white">
+                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-[60px] translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
                         <div className="relative z-10">
-                           <h3 className="text-2xl font-bold mb-8 text-white">Get in Touch</h3>
+                           <h3 className="text-2xl font-bold mb-8 text-[#08142C]">Get in Touch</h3>
                            <div className="space-y-6">
                               {[
                                  { icon: Mail, label: "Email", value: "jasimihsan1234@gmail.com", href: "mailto:jasimihsan1234@gmail.com" },
@@ -90,14 +90,14 @@ export default function Contact() {
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     viewport={{ once: true }}
                                     whileHover={{ x: 5 }}
-                                    className="flex items-center gap-5 p-4 rounded-2xl transition-all duration-300 hover:bg-white/5 group"
+                                    className="flex items-center gap-5 p-4 rounded-2xl transition-all duration-300 hover:bg-[#F8FAFC] group border border-transparent hover:border-[#E5E7EB]"
                                  >
-                                    <div className="clay-pill p-3 text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all">
+                                    <div className="clay-pill bg-white p-3 text-[#2563EB] group-hover:scale-110 transition-all border border-[#E5E7EB] shadow-sm">
                                        <contact.icon size={20} />
                                     </div>
                                     <div>
-                                       <div className="text-sm font-medium text-slate-400 mb-1">{contact.label}</div>
-                                       <div className="text-white font-medium">{contact.value}</div>
+                                       <div className="text-sm font-medium text-[#64748B] mb-1">{contact.label}</div>
+                                       <div className="text-[#08142C] font-semibold">{contact.value}</div>
                                     </div>
                                  </motion.a>
                               ))}
@@ -105,7 +105,7 @@ export default function Contact() {
                         </div>
 
                         <div className="relative z-10">
-                           <h3 className="text-xl font-bold mb-6 text-white">Follow Me</h3>
+                           <h3 className="text-xl font-bold mb-6 text-[#08142C]">Follow Me</h3>
                            <div className="flex gap-4">
                               {[
                                  { icon: Github, href: "http://github.com/JasimIhsan", label: "GitHub" },
@@ -121,7 +121,7 @@ export default function Contact() {
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
                                     viewport={{ once: true }}
                                     whileHover={{ scale: 1.1, y: -2 }}
-                                    className="clay-btn p-4 text-slate-300 hover:text-white"
+                                    className="clay-pill p-4 text-[#64748B] hover:text-[#2563EB] bg-white border border-[#E5E7EB] shadow-sm hover:border-[#2563EB]/30 transition-all"
                                     aria-label={social.label}
                                  >
                                     <social.icon size={22} />
@@ -134,12 +134,12 @@ export default function Contact() {
 
                   {/* Contact form */}
                   <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} viewport={{ once: true }} className="lg:col-span-7">
-                     <div className="clay-card p-8 md:p-10 rounded-[2.5rem]">
+                     <div className="clay-card p-8 md:p-10 rounded-[2.5rem] bg-white">
                         <form onSubmit={handleSubmit} className="space-y-6">
-                           {submitStatus && <div className={`p-4 rounded-xl font-medium ${submitStatus.success ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>{submitStatus.message}</div>}
+                           {submitStatus && <div className={`p-4 rounded-xl font-medium ${submitStatus.success ? "bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/20" : "bg-red-50 text-red-600 border border-red-200"}`}>{submitStatus.message}</div>}
                            <div className="grid md:grid-cols-2 gap-6">
                               <div>
-                                 <label htmlFor="name" className="block text-sm font-medium mb-2 text-slate-300 ml-2">
+                                 <label htmlFor="name" className="block text-sm font-semibold mb-2 text-[#08142C] ml-2">
                                     Name
                                  </label>
                                  <input
@@ -149,12 +149,12 @@ export default function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none bg-[#11131a] border border-white/5 text-white focus:border-cyan-500/50 focus:bg-[#151821] shadow-inner placeholder-slate-500"
+                                    className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none bg-[#F8FAFC] border border-[#E5E7EB] text-[#08142C] focus:border-[#2563EB]/50 focus:bg-white shadow-sm placeholder-slate-400"
                                     placeholder="Your name"
                                  />
                               </div>
                               <div>
-                                 <label htmlFor="email" className="block text-sm font-medium mb-2 text-slate-300 ml-2">
+                                 <label htmlFor="email" className="block text-sm font-semibold mb-2 text-[#08142C] ml-2">
                                     Email
                                  </label>
                                  <input
@@ -164,14 +164,14 @@ export default function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none bg-[#11131a] border border-white/5 text-white focus:border-cyan-500/50 focus:bg-[#151821] shadow-inner placeholder-slate-500"
+                                    className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none bg-[#F8FAFC] border border-[#E5E7EB] text-[#08142C] focus:border-[#2563EB]/50 focus:bg-white shadow-sm placeholder-slate-400"
                                     placeholder="your@email.com"
                                  />
                               </div>
                            </div>
 
                            <div>
-                              <label htmlFor="message" className="block text-sm font-medium mb-2 text-slate-300 ml-2">
+                              <label htmlFor="message" className="block text-sm font-semibold mb-2 text-[#08142C] ml-2">
                                  Message
                               </label>
                               <textarea
@@ -181,7 +181,7 @@ export default function Contact() {
                                  onChange={handleChange}
                                  required
                                  rows={6}
-                                 className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none resize-none bg-[#11131a] border border-white/5 text-white focus:border-cyan-500/50 focus:bg-[#151821] shadow-inner placeholder-slate-500"
+                                 className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none resize-none bg-[#F8FAFC] border border-[#E5E7EB] text-[#08142C] focus:border-[#2563EB]/50 focus:bg-white shadow-sm placeholder-slate-400"
                                  placeholder="Tell me about your project..."
                               />
                            </div>
@@ -203,18 +203,8 @@ export default function Contact() {
                                  `}
                            />
 
-                           <motion.button
-                              type="submit"
-                              disabled={isSubmitting}
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              className="clay-btn w-full flex items-center justify-center gap-3 px-6 py-4 text-white font-medium tracking-wide disabled:opacity-50 disabled:cursor-not-allowed group"
-                           >
-                              {isSubmitting ? (
-                                 <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }} className="w-5 h-5 border-2 border-white border-t-transparent rounded-full" />
-                              ) : (
-                                 <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                              )}
+                           <motion.button type="submit" disabled={isSubmitting} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="clay-btn w-full flex items-center justify-center gap-3 px-6 py-4 text-white font-medium tracking-wide disabled:opacity-50 disabled:cursor-not-allowed group shadow-md mt-4">
+                              {isSubmitting ? <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }} className="w-5 h-5 border-2 border-white border-t-transparent rounded-full" /> : <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
                               {isSubmitting ? "Sending..." : "Send Message"}
                            </motion.button>
                         </form>

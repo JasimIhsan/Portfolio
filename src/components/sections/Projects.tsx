@@ -16,7 +16,6 @@ export const projects = [
       description: "A matrimony platform designed specifically for middle-aged women seeking a second chance at companionship. Built to provide a safe, respectful, and trust-driven environment — focusing on meaningful connections, verified profiles, and a supportive experience tailored for a new phase of life.",
       image: lifePartnerAgain,
       tech: ["Flutter"],
-      // github: "https://github.com/JasimIhsan/Smart_Canteen",
       liveDemo: false,
       live: "#",
    },
@@ -65,7 +64,6 @@ export const projects = [
       liveDemo: false,
       live: "#",
    },
-
    {
       title: "User Management System",
       description: "A user management system built with React, TypeScript, and MongoDB",
@@ -78,23 +76,19 @@ export const projects = [
 ];
 
 export default function Projects() {
-   // State for modal visibility and selected image
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedImage, setSelectedImage] = useState<any>(null);
 
-   // Open modal with selected image
    const openModal = (image: any) => {
       setSelectedImage(image);
       setIsModalOpen(true);
    };
 
-   // Close modal
    const closeModal = () => {
       setIsModalOpen(false);
       setSelectedImage(null);
    };
 
-   // Add ESC key listener
    useEffect(() => {
       const handleEsc = (event: KeyboardEvent) => {
          if (event.key === "Escape" && isModalOpen) {
@@ -109,8 +103,8 @@ export default function Projects() {
       <section id="projects" className="py-24 px-6 relative z-10">
          <div className="max-w-6xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="mb-20 text-center">
-               <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white drop-shadow-md">Featured Projects</h2>
-               <p className="text-lg text-slate-400 font-light max-w-2xl mx-auto">A curated selection of my recent work showcasing modern development, premium design, and scalable architecture.</p>
+               <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-[#08142C]">Featured Projects</h2>
+               <p className="text-lg text-[#64748B] font-normal max-w-2xl mx-auto">A curated selection of my recent work showcasing modern development, premium design, and scalable architecture.</p>
             </motion.div>
 
             <div className="flex flex-col gap-16">
@@ -123,18 +117,18 @@ export default function Projects() {
                            {/* Image Container */}
                            <div className={`relative overflow-hidden w-full lg:w-1/2 shrink-0 h-64 md:h-96 lg:h-auto ${!isEven ? "lg:order-2" : ""}`}>
                               <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer" loading="lazy" onClick={() => openModal(project.image)} />
-                              <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c10]/90 via-[#0b0c10]/20 to-transparent pointer-events-none lg:opacity-0 transition-opacity duration-300" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#08142C]/20 via-transparent to-transparent pointer-events-none lg:opacity-0 transition-opacity duration-300" />
                            </div>
 
                            {/* Content Container */}
-                           <div className={`p-8 md:p-12 flex-grow flex flex-col justify-center relative z-10 lg:w-1/2 ${!isEven ? "lg:order-1" : ""}`}>
-                              <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 drop-shadow-md">{project.title}</h3>
+                           <div className={`p-8 md:p-12 flex-grow flex flex-col justify-center relative z-10 lg:w-1/2 bg-white ${!isEven ? "lg:order-1" : ""}`}>
+                              <h3 className="text-3xl md:text-4xl font-bold text-[#08142C] mb-6">{project.title}</h3>
 
-                              <p className="mb-8 text-slate-300 font-light leading-relaxed text-lg">{project.description}</p>
+                              <p className="mb-8 text-[#64748B] font-normal leading-relaxed text-lg">{project.description}</p>
 
                               <div className="flex flex-wrap gap-3 mb-10">
                                  {project.tech.map((tech) => (
-                                    <span key={tech} className="clay-pill px-5 py-2 text-sm font-medium text-cyan-100/90 tracking-wide shadow-sm">
+                                    <span key={tech} className="clay-pill px-5 py-2 text-sm font-medium text-[#64748B] tracking-wide shadow-sm">
                                        {tech}
                                     </span>
                                  ))}
@@ -142,13 +136,13 @@ export default function Projects() {
 
                               <div className="flex flex-wrap gap-4 mt-auto">
                                  {project.github && (
-                                    <motion.a href={project.github} whileHover={{ scale: 1.05, y: -2 }} target="_blank" whileTap={{ scale: 0.95 }} className="clay-btn flex items-center gap-2 px-6 py-3 text-slate-200 hover:text-white" aria-label={`View ${project.title} on GitHub`}>
+                                    <motion.a href={project.github} whileHover={{ scale: 1.05, y: -2 }} target="_blank" whileTap={{ scale: 0.95 }} className="clay-pill bg-white flex items-center gap-2 px-6 py-3 text-[#08142C] hover:bg-[#F8FAFC]" aria-label={`View ${project.title} on GitHub`}>
                                        <Github size={20} />
                                        <span className="font-medium tracking-wide">Source Code</span>
                                     </motion.a>
                                  )}
                                  {project.liveDemo && (
-                                    <motion.a href={project.live} whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} target="_blank" className="clay-btn bg-cyan-600/20 border-cyan-500/30 flex items-center gap-2 px-6 py-3 text-cyan-50 hover:text-white" aria-label={`View ${project.title} live demo`}>
+                                    <motion.a href={project.live} whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} target="_blank" className="clay-btn flex items-center gap-2 px-6 py-3" aria-label={`View ${project.title} live demo`}>
                                        <ExternalLink size={20} />
                                        <span className="font-medium tracking-wide">Live Demo</span>
                                     </motion.a>
@@ -165,10 +159,10 @@ export default function Projects() {
          {/* Enhanced Modal */}
          <AnimatePresence>
             {isModalOpen && selectedImage && (
-               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="fixed inset-0 bg-[#0d0f14]/90 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={closeModal}>
-                  <motion.div initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }} transition={{ type: "spring", damping: 25, stiffness: 300 }} className="clay-card relative max-w-6xl w-full mx-auto p-2" onClick={(e) => e.stopPropagation()}>
+               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="fixed inset-0 bg-[#08142C]/80 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={closeModal}>
+                  <motion.div initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }} transition={{ type: "spring", damping: 25, stiffness: 300 }} className="clay-card relative max-w-6xl w-full mx-auto p-2 bg-white" onClick={(e) => e.stopPropagation()}>
                      <img src={selectedImage} alt="Enlarged project" className="w-full h-auto max-h-[85vh] object-contain rounded-[1.5rem]" />
-                     <button className="clay-btn absolute -top-4 -right-4 text-white p-3 shadow-xl" onClick={closeModal} aria-label="Close modal">
+                     <button className="clay-btn absolute -top-4 -right-4 text-white p-3 shadow-xl border-2 border-white" onClick={closeModal} aria-label="Close modal">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                         </svg>

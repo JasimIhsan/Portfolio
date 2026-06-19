@@ -39,9 +39,9 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
                <ul className="flex space-x-10 items-center">
                   {navItems.map((item, index) => (
                      <motion.li key={item.id} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + index * 0.1 }}>
-                        <button onClick={() => scrollToSection(item.id)} className={`relative group text-sm font-medium transition-colors duration-300 ${activeSection === item.id ? "text-cyan-400" : "text-slate-300 hover:text-white"}`} aria-label={`Navigate to ${item.label}`}>
+                        <button onClick={() => scrollToSection(item.id)} className={`relative group text-sm font-medium transition-colors duration-300 ${activeSection === item.id ? "text-[#2563EB]" : "text-[#64748B] hover:text-[#08142C]"}`} aria-label={`Navigate to ${item.label}`}>
                            <span className="relative z-10">{item.label}</span>
-                           {activeSection === item.id && <motion.div layoutId="activeIndicator" className="absolute -left-4 -right-4 -top-2 -bottom-2 rounded-full bg-cyan-400/10 shadow-[inset_0_0_8px_rgba(34,211,238,0.2)]" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />}
+                           {activeSection === item.id && <motion.div layoutId="activeIndicator" className="absolute -left-4 -right-4 -top-2 -bottom-2 rounded-full bg-[#2563EB]/10 shadow-[inset_0_0_8px_rgba(37,99,235,0.2)]" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />}
                         </button>
                      </motion.li>
                   ))}
@@ -53,13 +53,13 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
          <AnimatePresence>
             {isMobileMenuOpen && (
                <motion.nav initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.2 }} className="fixed inset-0 z-30 md:hidden">
-                  <div className="absolute inset-0 bg-[#0b0c10]/95 backdrop-blur-md" />
+                  <div className="absolute inset-0 bg-[#FFFFFF]/95 backdrop-blur-md" />
                   <div className="relative flex items-center justify-center h-full">
-                     <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+                     <div className="absolute top-0 right-0 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-[80px] pointer-events-none"></div>
                      <ul className="space-y-8 text-center relative z-10">
                         {navItems.map((item, index) => (
                            <motion.li key={item.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
-                              <button onClick={() => scrollToSection(item.id)} className={`text-2xl font-bold transition-all duration-300 ${activeSection === item.id ? "text-cyan-400 scale-110" : "text-slate-400 hover:text-white"}`}>
+                              <button onClick={() => scrollToSection(item.id)} className={`text-2xl font-bold transition-all duration-300 ${activeSection === item.id ? "text-[#2563EB] scale-110" : "text-[#64748B] hover:text-[#08142C]"}`}>
                                  {item.label}
                               </button>
                            </motion.li>
