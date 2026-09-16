@@ -19,29 +19,29 @@
        Bronze Accent:       #8A5A2B / #8C6339
    */
 
-   --bg-page: #F7F5F0;
-   --bg-card: #FFFFFF;
-   --bg-subtle: #EFECE4;
-   --border-color: #E2DDD2;
+   --bg-page: #f7f5f0;
+   --bg-card: #ffffff;
+   --bg-subtle: #efece4;
+   --border-color: #e2ddd2;
    --text-main: #181513;
-   --text-muted: #6E655C;
-   --text-accent: #8A5A2B;
-   --pill-bg: #EFECE4;
+   --text-muted: #6e655c;
+   --text-accent: #8a5a2b;
+   --pill-bg: #efece4;
    --primary-btn: #181513;
-   --primary-btn-text: #F7F5F0;
+   --primary-btn-text: #f7f5f0;
 }
 
 html.dark {
-   --bg-page: #0B0A09;
+   --bg-page: #0b0a09;
    --bg-card: #181513;
-   --bg-subtle: #231E1A;
+   --bg-subtle: #231e1a;
    --border-color: rgba(229, 223, 211, 0.1);
-   --text-main: #E5DFD3;
-   --text-muted: #A89F91;
-   --text-accent: #D4A373;
-   --pill-bg: #231E1A;
-   --primary-btn: #E5DFD3;
-   --primary-btn-text: #0B0A09;
+   --text-main: #e5dfd3;
+   --text-muted: #a89f91;
+   --text-accent: #d4a373;
+   --pill-bg: #231e1a;
+   --primary-btn: #e5dfd3;
+   --primary-btn-text: #0b0a09;
 }
 
 html:not(.dark) {
@@ -50,10 +50,6 @@ html:not(.dark) {
 
 html.dark {
    color-scheme: dark;
-}
-
-html {
-   overflow-x: clip;
 }
 
 /* Prevent any media from causing horizontal overflow */
@@ -69,7 +65,9 @@ body {
    font-family: var(--font-sans);
    background-color: var(--bg-page);
    color: var(--text-main);
-   transition: background-color 0.3s ease, color 0.3s ease;
+   transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
    overflow-x: hidden;
 }
 
@@ -79,37 +77,84 @@ body::before {
    position: fixed;
    inset: 0;
    pointer-events: none;
-   background-image: 
-      radial-gradient(circle at 15% 15%, rgba(140, 99, 57, 0.04) 0%, transparent 40%),
-      radial-gradient(circle at 85% 85%, rgba(61, 45, 32, 0.04) 0%, transparent 40%);
+   background-image: radial-gradient(circle at 15% 15%, rgba(140, 99, 57, 0.04) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(61, 45, 32, 0.04) 0%, transparent 40%);
    z-index: 0;
 }
 
 html.dark body::before {
-   background-image: 
-      radial-gradient(circle at 20% 20%, rgba(212, 163, 115, 0.06) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(61, 45, 32, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(30, 26, 23, 0.2) 0%, transparent 60%);
+   background-image: radial-gradient(circle at 20% 20%, rgba(212, 163, 115, 0.06) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(61, 45, 32, 0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(30, 26, 23, 0.2) 0%, transparent 60%);
+}
+
+/* Theme-synced Global Web Scrollbar */
+html {
+   overflow-x: clip;
+   scrollbar-width: thin;
+   scrollbar-color: rgba(138, 90, 43, 0.3) transparent;
+}
+
+html.dark {
+   scrollbar-color: rgba(212, 163, 115, 0.3) transparent;
+}
+
+/* Chrome, Edge, Safari WebKit Scrollbar */
+::-webkit-scrollbar {
+   width: 8px;
+   height: 8px;
+}
+
+::-webkit-scrollbar-track {
+   background: var(--bg-page);
+}
+
+::-webkit-scrollbar-thumb {
+   background: rgba(138, 90, 43, 0.28);
+   border-radius: 9999px;
+   border: 2px solid var(--bg-page);
+}
+
+::-webkit-scrollbar-thumb:hover {
+   background: rgba(138, 90, 43, 0.55);
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+   background: rgba(212, 163, 115, 0.25);
+   border: 2px solid var(--bg-page);
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+   background: rgba(212, 163, 115, 0.5);
+}
+
+.custom-scrollbar {
+   scrollbar-width: thin;
+   scrollbar-color: rgba(138, 90, 43, 0.3) transparent;
+}
+
+html.dark .custom-scrollbar {
+   scrollbar-color: rgba(212, 163, 115, 0.3) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
    width: 5px;
+   height: 5px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
    background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-   background: rgba(138, 90, 43, 0.2);
+   background: rgba(138, 90, 43, 0.25);
    border-radius: 9999px;
+   border: none;
 }
 html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
-   background: rgba(212, 163, 115, 0.2);
+   background: rgba(212, 163, 115, 0.25);
+   border: none;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-   background: rgba(138, 90, 43, 0.4);
+   background: rgba(138, 90, 43, 0.5);
 }
 html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-   background: rgba(212, 163, 115, 0.4);
+   background: rgba(212, 163, 115, 0.5);
 }
 
 .no-scrollbar::-webkit-scrollbar {

@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import brewcode from "../../assets/projects/brewcode_mock.png";
 import byteverse from "../../assets/projects/byteverse_mock.png";
+import forge from "../../assets/projects/forge_mock.png";
 import lifePartnerAgain from "../../assets/projects/lifepartneragain_mock.png";
 import mentorshub from "../../assets/projects/mentorshub_mock.png";
 import onboard from "../../assets/projects/onboard_mock.png";
@@ -137,6 +138,26 @@ export const projects: ProjectItem[] = [
       ],
    },
    {
+      id: "forge-nearhirable",
+      title: "NearHirable Engine (Forge)",
+      subtitle: "Candidate Assessment & Code Readiness Platform",
+      category: "Systems & Cloud",
+      description: "An automated diagnostic assessment engine that analyzes developer fundamentals and pinpoints exactly whether a candidate is near-hirable or job-ready, generating customized improvement roadmaps.",
+      image: forge,
+      tech: ["Next.js", "MongoDB", "Tailwind CSS", "TypeScript", "Node.js"],
+      github: "https://github.com/muhammedsirajudeen/near-hireable-platform-engine",
+      liveDemo: true,
+      live: "https://forge.onboardcareers.in",
+      highlights: ["Automated scoring heuristics for developer core competencies", "Actionable candidate feedback reports with diagnostic metrics", "Seamless integration with recruiting assessment portals"],
+      featured: true,
+      architectureFlow: [
+         { label: "Assessment Frontend", sublabel: "Diagnostic Test Engine", tech: "Next.js" },
+         { label: "Scoring & Rubric Worker", sublabel: "Competency Analysis Heuristics", tech: "TypeScript" },
+         { label: "Feedback Generator", sublabel: "Dynamic Roadmap Aggregator", tech: "Node.js" },
+         { label: "Candidate Analytics DB", sublabel: "Historical Progress Tracking", tech: "MongoDB" },
+      ],
+   },
+   {
       id: "byteverse",
       title: "Byteverse E-Commerce",
       subtitle: "Full-Stack Commerce & Payments",
@@ -147,11 +168,7 @@ export const projects: ProjectItem[] = [
       github: "https://github.com/JasimIhsan/Byteverse-E-commerse-website",
       liveDemo: false,
       live: "#",
-      highlights: [
-         "Multi-step checkout flow with RazorPay payment gateway integration and signature verification",
-         "Product catalog with dynamic filtering, pagination, and inventory stock tracking",
-         "Session-based cart state and secure authentication management",
-      ],
+      highlights: ["Multi-step checkout flow with RazorPay payment gateway integration and signature verification", "Product catalog with dynamic filtering, pagination, and inventory stock tracking", "Session-based cart state and secure authentication management"],
       architectureFlow: [
          { label: "E-Commerce UI", sublabel: "Server-rendered Catalog & Dynamic Filters", tech: "EJS / JS" },
          { label: "Order & Cart Logic", sublabel: "Stock Verification & Session Management", tech: "Express.js" },
@@ -352,43 +369,39 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                <AnimatePresence>
                   {selectedProject && (
                      <motion.div
+                        data-lenis-prevent="true"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
                         className="fixed inset-0 bg-black/80 dark:bg-black/92 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-hidden"
                         onClick={() => setSelectedProject(null)}
-                        onWheel={(e) => e.stopPropagation()}
-                        onTouchMove={(e) => e.stopPropagation()}
                      >
                         <motion.div
+                           data-lenis-prevent="true"
                            initial={{ scale: 0.95, opacity: 0, y: 15 }}
                            animate={{ scale: 1, opacity: 1, y: 0 }}
                            exit={{ scale: 0.95, opacity: 0, y: 15 }}
                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                           className="bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 rounded-3xl md:rounded-[2rem] max-w-5xl w-full max-h-[92vh] md:max-h-[85vh] overflow-hidden shadow-2xl relative flex flex-col md:grid md:grid-cols-12"
+                           className="bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 rounded-3xl md:rounded-[2rem] max-w-5xl w-full h-[90vh] sm:h-[86vh] md:h-[82vh] max-h-[90vh] sm:max-h-[86vh] md:max-h-[82vh] overflow-hidden shadow-2xl relative flex flex-col md:grid md:grid-cols-12"
                            onClick={(e) => e.stopPropagation()}
                         >
-                           {/* Mobile & Desktop floating close button */}
-                           <button
-                              onClick={() => setSelectedProject(null)}
-                              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 dark:bg-[#231E1A]/90 backdrop-blur-md border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#6E655C] dark:text-[#E5DFD3] hover:text-[#181513] dark:hover:text-white shadow-md hover:scale-105 transition-all cursor-pointer"
-                              aria-label="Close modal"
-                           >
-                              <span className="text-sm font-bold">✕</span>
-                           </button>
-
                            {/* Left Column: MacBook Device Showcase */}
-                           <div className="md:col-span-6 lg:col-span-7 bg-[#ECE8DF]/60 dark:bg-[#12100E] border-b md:border-b-0 md:border-r border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-col justify-between p-4 sm:p-7 relative overflow-hidden shrink-0">
+                           <div className="md:col-span-6 lg:col-span-7 bg-[#ECE8DF]/60 dark:bg-[#12100E] border-b md:border-b-0 md:border-r border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-col justify-between p-4 sm:p-7 relative overflow-hidden shrink-0 h-auto md:h-full min-h-0">
                               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/10 dark:to-black/35 pointer-events-none" />
 
                               {/* Category & Status badges */}
-                              <div className="flex items-center justify-between z-10 mb-2 sm:mb-4 pr-10 sm:pr-0">
+                              <div className="flex items-center justify-between z-10 mb-2 sm:mb-4">
                                  <span className="px-3 py-1 rounded-full bg-white/95 dark:bg-[#231E1A]/95 backdrop-blur-md border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-[11px] sm:text-xs font-semibold uppercase tracking-wider shadow-2xs">{selectedProject.category}</span>
-                                 {selectedProject.liveDemo && (
+                                 {selectedProject.liveDemo && selectedProject.live && selectedProject.live !== "#" ? (
                                     <span className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] sm:text-xs font-medium rounded-full bg-emerald-600 text-white shadow-xs">
                                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                        Live Platform
+                                    </span>
+                                 ) : (
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] sm:text-xs font-medium rounded-full bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">
+                                       <span className="w-1.5 h-1.5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373]" />
+                                       Production Architecture
                                     </span>
                                  )}
                               </div>
@@ -406,10 +419,10 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                            </div>
 
                            {/* Right Column: Project Dossier & Scrollable Content */}
-                           <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between overflow-hidden bg-white dark:bg-[#181513] flex-1 min-h-0">
-                              {/* Modal Tab Switcher */}
-                              <div className="px-3 sm:px-5 pt-3.5 sm:pt-5 pb-2 border-b border-[#EFECE4] dark:border-[#E5DFD3]/10 flex items-center justify-between gap-2 shrink-0 flex-wrap">
-                                 <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">
+                           <div className="md:col-span-6 lg:col-span-5 flex flex-col h-full max-h-full overflow-hidden bg-white dark:bg-[#181513] min-h-0">
+                              {/* Modal Header Bar with Tab Switcher, Category & Close Button */}
+                              <div className="px-4 sm:px-5 py-3 sm:py-3.5 border-b border-[#EFECE4] dark:border-[#E5DFD3]/10 flex items-center justify-between gap-3 shrink-0 bg-white/50 dark:bg-[#181513]/50 backdrop-blur-sm z-10">
+                                 <div className="flex items-center gap-1 p-1 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">
                                     <button
                                        onClick={() => setModalTab("overview")}
                                        className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${modalTab === "overview" ? "bg-white dark:bg-[#181513] text-[#8A5A2B] dark:text-[#D4A373] shadow-xs" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}
@@ -424,11 +437,21 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                                        Architecture
                                     </button>
                                  </div>
-                                 <span className="text-[10px] sm:text-[11px] font-mono text-[#A89F91] dark:text-[#6E655C] uppercase">{selectedProject.category}</span>
+
+                                 <div className="flex items-center gap-2">
+                                    <span className="hidden sm:inline-block px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-mono text-[#8A5A2B] dark:text-[#D4A373] bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 uppercase font-semibold truncate max-w-[120px]">{selectedProject.category}</span>
+                                    <button
+                                       onClick={() => setSelectedProject(null)}
+                                       className="w-8 h-8 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-white hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all cursor-pointer shadow-2xs group shrink-0"
+                                       aria-label="Close modal"
+                                    >
+                                       <span className="text-xs font-bold group-hover:scale-110 transition-transform">✕</span>
+                                    </button>
+                                 </div>
                               </div>
 
                               {/* Scrollable details */}
-                              <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 overflow-y-auto flex-1 custom-scrollbar min-h-0">
+                              <div data-lenis-prevent="true" className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto overscroll-contain flex-1 custom-scrollbar min-h-0 touch-pan-y">
                                  {modalTab === "overview" ? (
                                     <>
                                        <div>
@@ -469,7 +492,7 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                                        </div>
                                     </>
                                  ) : (
-                                    /* System Architecture Blueprint Flow */
+                                    /* System Architecture Blueprint Flow with Perfect Node & Line Alignment */
                                     <div className="space-y-4 sm:space-y-5">
                                        <div>
                                           <div className="text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373] uppercase tracking-wider mb-1">System Architecture Blueprint</div>
@@ -477,49 +500,73 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                                           <p className="text-xs text-[#6E655C] dark:text-[#A89F91] leading-relaxed">Visual breakdown of how requests, state transitions, security layers, and data flows operate in production.</p>
                                        </div>
 
-                                       {/* Interactive Pipeline Diagram */}
-                                       <div className="relative pl-5 sm:pl-6 space-y-3 sm:space-y-4 before:absolute before:left-2 sm:before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-[#8A5A2B] before:via-[#D4A373] before:to-[#8A5A2B]/20">
-                                          {(selectedProject.architectureFlow || []).map((step, idx) => (
-                                             <div key={idx} className="relative group">
-                                                <div className="absolute -left-5 sm:-left-6 top-3 w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-white dark:bg-[#181513] border-2 border-[#8A5A2B] dark:border-[#D4A373] group-hover:scale-125 transition-transform" />
-                                                <div className="p-3 sm:p-3.5 rounded-2xl bg-[#EFECE4]/80 dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-all">
-                                                   <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
-                                                      <span className="text-xs font-bold text-[#181513] dark:text-[#E5DFD3]">{step.label}</span>
-                                                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white dark:bg-[#181513] text-[#8A5A2B] dark:text-[#D4A373] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">{step.tech}</span>
+                                       {/* Interactive Pipeline Diagram: Flex Spine for 100% Center Alignment */}
+                                       <div className="space-y-2.5 sm:space-y-3 pt-1">
+                                          {(selectedProject.architectureFlow || []).map((step, idx) => {
+                                             const isLast = idx === (selectedProject.architectureFlow?.length || 0) - 1;
+                                             return (
+                                                <div key={idx} className="flex items-stretch gap-3 sm:gap-3.5 group">
+                                                   {/* Timeline Spine Column */}
+                                                   <div className="flex flex-col items-center shrink-0 w-3.5 pt-3">
+                                                      <div className="w-3 h-3 rounded-full bg-white dark:bg-[#181513] border-2 border-[#8A5A2B] dark:border-[#D4A373] shadow-xs group-hover:scale-125 transition-transform shrink-0 z-10" />
+                                                      {!isLast && <div className="w-[2px] flex-1 bg-gradient-to-b from-[#8A5A2B] via-[#D4A373] to-[#8A5A2B]/20 my-1 group-hover:from-[#8A5A2B] group-hover:to-[#D4A373] transition-colors" />}
                                                    </div>
-                                                   <p className="text-xs text-[#6E655C] dark:text-[#A89F91]">{step.sublabel}</p>
+
+                                                   {/* Step Card */}
+                                                   <div className="flex-1 p-3 sm:p-3.5 rounded-2xl bg-[#EFECE4]/80 dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-all shadow-2xs">
+                                                      <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
+                                                         <span className="text-xs font-bold text-[#181513] dark:text-[#E5DFD3]">{step.label}</span>
+                                                         <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white dark:bg-[#181513] text-[#8A5A2B] dark:text-[#D4A373] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 font-semibold">{step.tech}</span>
+                                                      </div>
+                                                      <p className="text-xs text-[#6E655C] dark:text-[#A89F91] leading-relaxed font-normal">{step.sublabel}</p>
+                                                   </div>
                                                 </div>
-                                             </div>
-                                          ))}
+                                             );
+                                          })}
                                        </div>
                                     </div>
                                  )}
                               </div>
 
                               {/* Pinned Action Footer */}
-                              <div className="p-3.5 sm:p-5 bg-[#EFECE4] dark:bg-[#110E0C] border-t border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-wrap gap-2 items-center justify-between shrink-0">
-                                 <div className="flex flex-wrap gap-2">
+                              <div className="p-3.5 sm:p-4 md:p-5 bg-[#EFECE4] dark:bg-[#110E0C] border-t border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-wrap gap-2.5 items-center justify-between shrink-0">
+                                 <div className="flex flex-wrap items-center gap-2">
                                     {selectedProject.github && (
                                        <a
                                           href={selectedProject.github}
                                           target="_blank"
                                           rel="noreferrer"
-                                          className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-white dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all shadow-2xs"
+                                          className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-white dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all shadow-2xs hover:scale-[1.02]"
                                        >
                                           <Github size={14} />
                                           <span>GitHub</span>
                                        </a>
                                     )}
-                                    {selectedProject.liveDemo && (
-                                       <a href={selectedProject.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] text-[#F7F5F0] dark:text-[#0B0A09] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-xs font-semibold transition-all shadow-sm">
+                                    {selectedProject.liveDemo && selectedProject.live && selectedProject.live !== "#" && (
+                                       <a
+                                          href={selectedProject.live}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] text-[#F7F5F0] dark:text-[#0B0A09] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-xs font-semibold transition-all shadow-sm hover:scale-[1.02]"
+                                       >
                                           <ExternalLink size={14} />
                                           <span>Live Platform</span>
                                        </a>
                                     )}
+                                    {/* Informative client/enterprise badge when no public repo/live links exist */}
+                                    {!selectedProject.github && (!selectedProject.liveDemo || !selectedProject.live || selectedProject.live === "#") && (
+                                       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/80 dark:bg-[#181513]/80 border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-xs text-[#6E655C] dark:text-[#A89F91]">
+                                          <span className="w-2 h-2 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373]" />
+                                          <span className="font-medium text-[11px] sm:text-xs">Enterprise Protected Architecture</span>
+                                       </div>
+                                    )}
                                  </div>
 
-                                 <button onClick={() => setSelectedProject(null)} className="text-xs font-semibold text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-white transition-colors cursor-pointer px-2 py-1">
-                                    Close
+                                 <button
+                                    onClick={() => setSelectedProject(null)}
+                                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-xs font-semibold text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all cursor-pointer shadow-2xs hover:scale-[1.02]"
+                                 >
+                                    <span>Close Window</span>
                                  </button>
                               </div>
                            </div>

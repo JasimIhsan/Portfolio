@@ -2,7 +2,8 @@
 
 import { Cpu, Download, MapPin, Sparkles, Terminal, UserCheck, Zap } from "lucide-react";
 import Image from "next/image";
-import profile from "../../assets/White Shirt.jpg";
+import profileLight from "../../assets/profile-light.jpg";
+import profileDark from "../../assets/profile-dark.jpg";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
 
@@ -37,7 +38,24 @@ export default function About() {
                         <div className="flex flex-col items-center w-full">
                            <div className="relative mb-5 sm:mb-6">
                               <div className="w-44 h-44 sm:w-56 sm:h-56 md:w-60 md:h-60 rounded-full overflow-hidden border-4 border-white dark:border-[#231E1A] shadow-xl shadow-black/10 relative">
-                                 <Image src={profile} alt="Jasim Ihsan" priority fill sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 240px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                                 {/* Light mode portrait */}
+                                 <Image
+                                    src={profileLight}
+                                    alt="Jasim Ihsan"
+                                    priority
+                                    fill
+                                    sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 240px"
+                                    className="object-cover group-hover:scale-105 transition-all duration-500 opacity-100 dark:opacity-0"
+                                 />
+                                 {/* Dark mode portrait */}
+                                 <Image
+                                    src={profileDark}
+                                    alt="Jasim Ihsan"
+                                    priority
+                                    fill
+                                    sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 240px"
+                                    className="object-cover group-hover:scale-105 transition-all duration-500 opacity-0 dark:opacity-100"
+                                 />
                               </div>
                            </div>
 
