@@ -1,10 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Code2, Cpu, Database, Server, Smartphone, Sparkles, Workflow, Zap } from "lucide-react";
+import { CheckCircle2, Cloud, Code2, Cpu, Database, Server, Smartphone, Sparkles, Workflow, Zap } from "lucide-react";
 import { useRef, useState } from "react";
 import { FaAws } from "react-icons/fa6";
-import { SiDocker, SiGit, SiMongodb, SiPostgresql, SiPostman, SiPrisma, SiRedis } from "react-icons/si";
+import { SiDocker, SiGit, SiMongodb, SiNginx, SiPostgresql, SiPostman, SiPrisma, SiRedis } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
@@ -113,18 +113,49 @@ const skillCategories: SkillCategory[] = [
             capabilities: ["In-Memory Caching", "Token Blacklisting", "Session Store", "Key-Value Design"],
          },
          {
-            name: "AWS S3",
+            name: "AWS S3 & Cloud Storage",
             badge: "Cloud Storage",
             capabilities: ["Secure Media Storage", "File Upload Pipelines", "Optimized Workflows", "Presigned URLs"],
          },
       ],
    },
    {
-      id: "mobile-devops",
-      title: "Mobile & DevOps",
-      subtitle: "Cross-Platform Apps & CI/CD",
+      id: "cloud-devops",
+      title: "Cloud & DevOps",
+      subtitle: "AWS Infrastructure & CI/CD",
+      icon: Cloud,
+      description: "Deploying and orchestrating resilient cloud infrastructure on AWS with automated CI/CD, Nginx reverse proxy, and containerization.",
+      skills: [
+         {
+            name: "AWS Cloud Infrastructure",
+            badge: "Cloud & Compute",
+            capabilities: ["EC2 Instances", "Route 53 DNS", "Secrets Manager", "AWS S3 Storage"],
+            highlight: true,
+         },
+         {
+            name: "Traffic & Load Balancing",
+            badge: "High Availability",
+            capabilities: ["Application Load Balancer (ALB)", "Target Groups", "Nginx Load Balancing", "SSL / TLS"],
+            highlight: true,
+         },
+         {
+            name: "Cloud Security & Networking",
+            badge: "Infrastructure Security",
+            capabilities: ["Security Groups", "VPC & Subnets", "Secrets Management", "IAM Policies"],
+         },
+         {
+            name: "Docker & CI/CD Pipelines",
+            badge: "DevOps & Automation",
+            capabilities: ["Docker Sandboxing", "Multi-Stage Builds", "GitHub Actions", "Automated Deployments"],
+         },
+      ],
+   },
+   {
+      id: "mobile",
+      title: "Mobile Engineering",
+      subtitle: "Cross-Platform Apps & Integrations",
       icon: Smartphone,
-      description: "Developing cross-platform mobile apps with Flutter and deploying systems with Docker, GitHub Actions, and CI/CD pipelines.",
+      description: "Developing cross-platform mobile apps with Flutter and integrating real-time audio/video, subscriptions, and native device services.",
       skills: [
          {
             name: "Flutter & Dart",
@@ -139,14 +170,14 @@ const skillCategories: SkillCategory[] = [
             highlight: true,
          },
          {
-            name: "Docker & Containerization",
-            badge: "DevOps",
-            capabilities: ["Container Sandboxing", "Multi-Stage Builds", "Docker Compose", "Environment Isolation"],
+            name: "Architecture & State",
+            badge: "Architecture",
+            capabilities: ["Bloc / Cubit", "Riverpod", "Clean Architecture", "Offline Caching"],
          },
          {
-            name: "CI/CD & Workflows",
-            badge: "Automation",
-            capabilities: ["GitHub Actions", "CI/CD Pipelines", "Agile Development", "Code Reviews"],
+            name: "Platform Channels & UI",
+            badge: "Native / UX",
+            capabilities: ["Custom Animations", "Responsive Mobile Layouts", "Camera & Media", "Push Notifications"],
          },
       ],
    },
@@ -178,7 +209,8 @@ const tools = [
    { name: "Prisma ORM", icon: SiPrisma, category: "Data Layer" },
    { name: "Redis", icon: SiRedis, category: "Caching Layer" },
    { name: "MongoDB", icon: SiMongodb, category: "Document DB" },
-   { name: "AWS S3", icon: FaAws, category: "Cloud Storage" },
+   { name: "AWS Cloud", icon: FaAws, category: "Cloud Platform" },
+   { name: "Nginx", icon: SiNginx, category: "Load Balancer & Proxy" },
    { name: "Docker", icon: SiDocker, category: "Containerization" },
    { name: "Git & GitHub", icon: SiGit, category: "Version Control" },
    { name: "Postman", icon: SiPostman, category: "API Testing" },
@@ -336,7 +368,7 @@ export default function Skills() {
             <ScrollReveal>
                <div className="p-5 sm:p-8 rounded-[1.75rem] sm:rounded-[2rem] bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs text-center">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] text-[10px] sm:text-[11px] font-bold uppercase tracking-widest mb-5 sm:mb-6">Integrated Platforms & Developer Tooling</div>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl mx-auto">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-4 max-w-5xl mx-auto">
                      {tools.map((tool) => (
                         <div key={tool.name} className="flex flex-col items-center justify-center p-3.5 sm:p-4 rounded-2xl bg-[#EFECE4]/70 dark:bg-[#231E1A]/80 border border-[#E2DDD2] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all hover:scale-[1.03] group cursor-default">
                            <div className="w-9 sm:w-10 h-9 sm:h-10 rounded-xl bg-white dark:bg-[#181513] flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] mb-2 shadow-2xs group-hover:scale-110 transition-transform">
