@@ -106,10 +106,10 @@ export default function Home() {
          />
 
          {/* Unified Navigation (Desktop floating pill & Mobile smart auto-hiding bar) */}
-         <Navigation activeSection={activeSection} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
+         <Navigation activeSection={activeSection} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} isLoading={isLoading} />
 
-         <motion.main initial={isLoading ? { opacity: 0.8, scale: 0.98 } : false} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} className="relative w-full">
-            <Hero />
+         <motion.main initial={{ opacity: 0 }} animate={{ opacity: isLoading ? 0 : 1 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} className="relative w-full">
+            <Hero isReady={!isLoading} />
             <About />
             <Experience />
             <Projects selectedProjectId={selectedProjectId} onClearSelectedProject={() => setSelectedProjectId(null)} />

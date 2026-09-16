@@ -4,9 +4,10 @@ interface TextRevealProps {
   text: string;
   delay?: number;
   className?: string;
+  isReady?: boolean;
 }
 
-export default function TextReveal({ text, delay = 0, className = "" }: TextRevealProps) {
+export default function TextReveal({ text, delay = 0, className = "", isReady = true }: TextRevealProps) {
   // Split words for staggered animation
   const words = text.split(" ");
 
@@ -38,7 +39,7 @@ export default function TextReveal({ text, delay = 0, className = "" }: TextReve
     <motion.div
       variants={container}
       initial="hidden"
-      animate="visible"
+      animate={isReady ? "visible" : "hidden"}
       className={`overflow-hidden flex flex-wrap ${className}`}
     >
       {words.map((word, index) => (

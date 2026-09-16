@@ -1,8 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Box, CheckCircle2, Cloud, Code2, Cpu, Database, GitBranch, Globe, Layers, Palette, Server, Smartphone, Sparkles, Terminal, Workflow, Zap } from "lucide-react";
+import { CheckCircle2, Code2, Cpu, Database, Server, Smartphone, Sparkles, Workflow, Zap } from "lucide-react";
 import { useRef, useState } from "react";
+import { FaAws } from "react-icons/fa6";
+import { SiDocker, SiGit, SiMongodb, SiPostgresql, SiPostman, SiPrisma, SiRedis } from "react-icons/si";
+import { VscVscode } from "react-icons/vsc";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
 
@@ -26,124 +29,124 @@ const skillCategories: SkillCategory[] = [
    {
       id: "frontend",
       title: "Frontend Engineering",
-      subtitle: "Component Architecture & Fluid Motion",
+      subtitle: "Component Architecture & Responsive UI",
       icon: Code2,
-      description: "Crafting reactive, high-performance web applications with modern component frameworks and design systems.",
+      description: "Crafting scalable, high-performance web applications with React, Next.js App Router, and modern design systems.",
       skills: [
          {
-            name: "React & Next.js",
+            name: "React.js & Next.js",
             badge: "Production Core",
-            capabilities: ["App Router", "SSR / ISR", "Server Actions", "Next.js 15"],
+            capabilities: ["App Router", "SSR / SSG", "Server Actions", "Component Reusability"],
             highlight: true,
          },
          {
-            name: "TypeScript",
+            name: "TypeScript & JavaScript",
             badge: "Daily Driver",
-            capabilities: ["Strict Mode", "Generics", "Type Inference", "Zod Validation"],
+            capabilities: ["TypeScript Strict Mode", "Generics", "Type Inference", "Modern ES6+"],
             highlight: true,
          },
          {
-            name: "Tailwind CSS & Motion",
-            badge: "Design Systems",
-            capabilities: ["Framer Motion", "Custom Design Tokens", "Micro-Interactions", "Responsive Design"],
+            name: "Tailwind CSS & Styling",
+            badge: "UI / UX",
+            capabilities: ["Responsive UI Design", "CSS3 / HTML5", "Design Systems", "Framer Motion"],
          },
          {
             name: "State Management",
             badge: "State Architecture",
-            capabilities: ["Redux Toolkit", "Zustand", "Context API", "Optimistic UI Updates"],
+            capabilities: ["Redux Toolkit", "Zustand", "Context API", "Optimistic Updates"],
          },
       ],
    },
    {
       id: "backend",
       title: "Backend & Systems",
-      subtitle: "Scalable APIs & Data Pipelines",
+      subtitle: "Scalable REST APIs & Architecture",
       icon: Server,
-      description: "Architecting resilient server-side services, relational/NoSQL schemas, and event-driven backends.",
+      description: "Designing modular RESTful APIs, authentication workflows, RBAC systems, and real-time communication services.",
       skills: [
          {
-            name: "Node.js & Express",
+            name: "Node.js & Express.js",
             badge: "Production Core",
-            capabilities: ["Event Loop Tuning", "RESTful Architecture", "Custom Middleware", "Streams"],
+            capabilities: ["REST APIs", "Express.js", "NestJS", "API Development"],
             highlight: true,
          },
          {
-            name: "PostgreSQL & Prisma",
-            badge: "Relational Data",
-            capabilities: ["Relational Modeling", "Migrations", "Indexing", "ACID Transactions"],
+            name: "Auth & Security",
+            badge: "Access Control",
+            capabilities: ["JWT Authentication", "RBAC", "Google OAuth", "Token Blacklisting"],
             highlight: true,
          },
          {
-            name: "MongoDB & Mongoose",
-            badge: "Document Store",
-            capabilities: ["Aggregation Pipelines", "Schema Design", "Indexing", "Replica Sets"],
-         },
-         {
-            name: "Real-Time & WebSockets",
+            name: "Real-Time & Communications",
             badge: "Bidirectional",
-            capabilities: ["Socket.io", "Event Emitters", "Room Broadcasting", "State Sync"],
+            capabilities: ["Socket.io", "WebRTC", "ZegoCloud Audio/Video", "Live Updates"],
+         },
+         {
+            name: "Architecture & Design",
+            badge: "Best Practices",
+            capabilities: ["Clean Architecture", "Design Patterns", "System Design", "Modular Backend"],
          },
       ],
    },
    {
-      id: "mobile",
-      title: "Cross-Platform Mobile",
-      subtitle: "Native-Quality iOS & Android Apps",
+      id: "database",
+      title: "Databases & Storage",
+      subtitle: "Relational, Document & In-Memory Stores",
+      icon: Database,
+      description: "Architecting structured database schemas, optimized queries, ACID transactions, and high-performance caching layers.",
+      skills: [
+         {
+            name: "PostgreSQL & Prisma ORM",
+            badge: "Relational DB",
+            capabilities: ["Prisma ORM", "Database Design", "Query Optimization", "Relational Schemas"],
+            highlight: true,
+         },
+         {
+            name: "MongoDB",
+            badge: "Document DB",
+            capabilities: ["Document Modeling", "Aggregation Pipelines", "Indexing", "Mongoose"],
+            highlight: true,
+         },
+         {
+            name: "Redis",
+            badge: "Caching Layer",
+            capabilities: ["In-Memory Caching", "Token Blacklisting", "Session Store", "Key-Value Design"],
+         },
+         {
+            name: "AWS S3",
+            badge: "Cloud Storage",
+            capabilities: ["Secure Media Storage", "File Upload Pipelines", "Optimized Workflows", "Presigned URLs"],
+         },
+      ],
+   },
+   {
+      id: "mobile-devops",
+      title: "Mobile & DevOps",
+      subtitle: "Cross-Platform Apps & CI/CD",
       icon: Smartphone,
-      description: "Developing cross-platform mobile experiences with smooth 60fps animations and robust offline caching.",
+      description: "Developing cross-platform mobile apps with Flutter and deploying systems with Docker, GitHub Actions, and CI/CD pipelines.",
       skills: [
          {
             name: "Flutter & Dart",
-            badge: "Cross-Platform",
-            capabilities: ["BLoC Pattern", "Custom Canvas & Motion", "Native Bridge Interop", "Clean Architecture"],
+            badge: "Mobile Core",
+            capabilities: ["Flutter", "Dart", "Dio HTTP Client", "State Management"],
             highlight: true,
          },
          {
-            name: "Firebase Suite",
-            badge: "Cloud Backend",
-            capabilities: ["FCM Push Notifications", "Cloud Firestore", "Auth Workflows", "Storage"],
+            name: "Mobile Integrations",
+            badge: "Services",
+            capabilities: ["RevenueCat Subscriptions", "ZegoCloud Audio/Video", "Geolocation Services", "Media Uploads"],
             highlight: true,
          },
          {
-            name: "Mobile State & Architecture",
-            badge: "App Lifecycle",
-            capabilities: ["Provider / Riverpod", "Secure Storage", "REST & GraphQL Integration", "Offline-First Sync"],
+            name: "Docker & Containerization",
+            badge: "DevOps",
+            capabilities: ["Container Sandboxing", "Multi-Stage Builds", "Docker Compose", "Environment Isolation"],
          },
          {
-            name: "App Distribution",
-            badge: "Release Engineering",
-            capabilities: ["App Store & Play Store Packaging", "Code Signing", "Release Pipelines", "Crashlytics"],
-         },
-      ],
-   },
-   {
-      id: "devops",
-      title: "DevOps & Cloud Systems",
-      subtitle: "Distributed Queues & Containerization",
-      icon: Terminal,
-      description: "Managing containerized workflows, background job queues, and automated CI/CD deployment pipelines.",
-      skills: [
-         {
-            name: "BullMQ & Redis",
-            badge: "Queue Architecture",
-            capabilities: ["Asynchronous Job Queues", "Worker Concurrency", "Pub/Sub Messaging", "Rate Limiting"],
-            highlight: true,
-         },
-         {
-            name: "Docker & Containers",
-            badge: "Containerization",
-            capabilities: ["Multi-Stage Builds", "Docker Compose", "Environment Isolation", "Container Sandboxing"],
-            highlight: true,
-         },
-         {
-            name: "Git & Version Control",
-            badge: "Team Workflow",
-            capabilities: ["Branching Strategies", "Rebase Workflows", "Code Reviews", "Semantic Versioning"],
-         },
-         {
-            name: "CI/CD & Cloud Hosting",
-            badge: "Deployment",
-            capabilities: ["GitHub Actions", "Vercel / Render", "Nginx Reverse Proxy", "Environment Configs"],
+            name: "CI/CD & Workflows",
+            badge: "Automation",
+            capabilities: ["GitHub Actions", "CI/CD Pipelines", "Agile Development", "Code Reviews"],
          },
       ],
    },
@@ -151,34 +154,35 @@ const skillCategories: SkillCategory[] = [
 
 const engineeringPillars = [
    {
-      title: "Distributed Queues & Sandbox Workers",
-      description: "Built background queue engines using BullMQ, Redis, and isolated Docker runtime environments for secure execution.",
+      title: "Clean Architecture & Modular Systems",
+      description: "Proven track record building end-to-end products following Clean Architecture principles, design patterns, and clean coding standards.",
       icon: Cpu,
-      tag: "Queue Architecture",
+      tag: "Architecture",
    },
    {
-      title: "Real-Time Bidirectional Event Streaming",
-      description: "Implemented sub-millisecond WebSocket and Socket.io pipelines for live messaging, notifications, and interactive updates.",
+      title: "Real-Time Communications & Video",
+      description: "Implemented Socket.io pipelines, WebRTC channels, and ZegoCloud live audio/video integrations with sub-millisecond sync.",
       icon: Zap,
-      tag: "Real-Time Sync",
+      tag: "Real-Time",
    },
    {
-      title: "End-to-End Type Safety & Data Integrity",
-      description: "Strict TypeScript contracts spanning relational schemas, backend route validators, and frontend component states.",
+      title: "100+ REST APIs & RBAC Workflows",
+      description: "Designed 100+ production REST APIs across recruitment, matrimony, and mentorship platforms with granular RBAC security.",
       icon: Workflow,
-      tag: "Type Safety",
+      tag: "API & Security",
    },
 ];
 
 const tools = [
-   { name: "Docker", icon: Box, category: "Containers" },
-   { name: "Redis", icon: Zap, category: "In-Memory Store" },
-   { name: "PostgreSQL", icon: Database, category: "Relational DB" },
-   { name: "MongoDB", icon: Layers, category: "Document DB" },
-   { name: "Git & GitHub", icon: GitBranch, category: "Version Control" },
-   { name: "AWS", icon: Cloud, category: "Cloud Services" },
-   { name: "Figma", icon: Palette, category: "Interface Design" },
-   { name: "Nginx / Vercel", icon: Globe, category: "Web Server & Edge" },
+   { name: "PostgreSQL", icon: SiPostgresql, category: "Relational DB" },
+   { name: "Prisma ORM", icon: SiPrisma, category: "Data Layer" },
+   { name: "Redis", icon: SiRedis, category: "Caching Layer" },
+   { name: "MongoDB", icon: SiMongodb, category: "Document DB" },
+   { name: "AWS S3", icon: FaAws, category: "Cloud Storage" },
+   { name: "Docker", icon: SiDocker, category: "Containerization" },
+   { name: "Git & GitHub", icon: SiGit, category: "Version Control" },
+   { name: "Postman", icon: SiPostman, category: "API Testing" },
+   { name: "VS Code & Cursor", icon: VscVscode, category: "Development IDEs" },
 ];
 
 export default function Skills() {

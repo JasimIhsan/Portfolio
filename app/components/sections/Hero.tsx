@@ -7,7 +7,31 @@ import TextReveal from "../animations/TextReveal";
 import { TiltCard } from "../ui/tilt-card";
 import { projects } from "./Projects";
 
-export default function Hero() {
+interface HeroProps {
+   isReady?: boolean;
+}
+
+const heroCopyVariants = {
+   hidden: { opacity: 0, y: 30 },
+   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
+const pillVariants = {
+   hidden: { opacity: 0, x: -20 },
+   visible: { opacity: 1, x: 0, transition: { delay: 0.15, duration: 0.6 } },
+};
+
+const itemVariants = (delay: number) => ({
+   hidden: { opacity: 0, y: 20 },
+   visible: { opacity: 1, y: 0, transition: { delay, duration: 0.8, ease: "easeOut" } },
+});
+
+const bentoVariants = {
+   hidden: { opacity: 0, scale: 0.95 },
+   visible: { opacity: 1, scale: 1, transition: { delay: 0.5, duration: 0.9, ease: "easeOut" } },
+};
+
+export default function Hero({ isReady = true }: HeroProps) {
    const shippedCount = projects.filter((p) => p.live && p.live !== "#").length;
    const [commitCount, setCommitCount] = useState<number | null>(null);
 
@@ -62,9 +86,9 @@ export default function Hero() {
 
          <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-12 gap-8 lg:gap-8 items-center">
             {/* Left Main Hero Copy */}
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="lg:col-span-7">
+            <motion.div variants={heroCopyVariants} initial="hidden" animate={isReady ? "visible" : "hidden"} className="lg:col-span-7">
                {/* Available status pill with live radar glow */}
-               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.6 }} className="inline-flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs mb-6 sm:mb-8 max-w-full">
+               <motion.div variants={pillVariants} initial="hidden" animate={isReady ? "visible" : "hidden"} className="inline-flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs mb-6 sm:mb-8 max-w-full">
                   <span className="relative flex h-2.5 w-2.5 shrink-0">
                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
@@ -73,20 +97,20 @@ export default function Hero() {
                </motion.div>
 
                {/* Name Headline */}
-               <TextReveal text="Jasim Ihsan" delay={0.3} className="text-[clamp(2rem,10vw,5rem)] sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#181513] dark:text-[#E5DFD3] tracking-tighter leading-tight sm:leading-none mb-4 sm:mb-6 break-words" />
+               <TextReveal text="Jasim Ihsan" delay={0.25} isReady={isReady} className="text-[clamp(2rem,10vw,5rem)] sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#181513] dark:text-[#E5DFD3] tracking-tighter leading-tight sm:leading-none mb-4 sm:mb-6 break-words" />
 
                {/* Role Badge Tagline */}
-               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="flex items-center gap-3 text-lg sm:text-xl md:text-2xl font-bold text-[#8A5A2B] dark:text-[#D4A373] mb-4 sm:mb-6">
+               <motion.div variants={itemVariants(0.35)} initial="hidden" animate={isReady ? "visible" : "hidden"} className="flex items-center gap-3 text-lg sm:text-xl md:text-2xl font-bold text-[#8A5A2B] dark:text-[#D4A373] mb-4 sm:mb-6">
                   <span className="break-words overflow-wrap-anywhere">Full-Stack & Mobile Software Engineer</span>
                </motion.div>
 
                {/* Bio Narrative */}
-               <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.8 }} className="text-base sm:text-lg md:text-xl text-[#6E655C] dark:text-[#A89F91] leading-relaxed max-w-xl font-normal mb-8 sm:mb-10 break-words overflow-wrap-anywhere">
+               <motion.p variants={itemVariants(0.45)} initial="hidden" animate={isReady ? "visible" : "hidden"} className="text-base sm:text-lg md:text-xl text-[#6E655C] dark:text-[#A89F91] leading-relaxed max-w-xl font-normal mb-8 sm:mb-10 break-words overflow-wrap-anywhere">
                   Building production-grade web systems, resilient backend architectures, and Flutter mobile apps with a relentless focus on clean design, performance, and seamless motion.
                </motion.p>
 
                {/* Action Buttons & Social Hub */}
-               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.8 }} className="flex flex-wrap items-center gap-3 sm:gap-4">
+               <motion.div variants={itemVariants(0.55)} initial="hidden" animate={isReady ? "visible" : "hidden"} className="flex flex-wrap items-center gap-3 sm:gap-4">
                   <button onClick={scrollToProjects} className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl bg-[#181513] dark:bg-[#E5DFD3] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] font-semibold text-sm tracking-wide shadow-md shadow-black/10 transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer">
                      <span>Explore Projects</span>
                      <ArrowDown size={16} className="group-hover:translate-y-1 transition-transform" />
@@ -121,7 +145,7 @@ export default function Hero() {
             </motion.div>
 
             {/* Right Interactive 3D Bento Console */}
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.7, duration: 1, ease: "easeOut" }} className="lg:col-span-5 w-full">
+            <motion.div variants={bentoVariants} initial="hidden" animate={isReady ? "visible" : "hidden"} className="lg:col-span-5 w-full">
                <TiltCard max={12} glare={true} className="p-5 sm:p-8 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_20px_50px_-15px_rgba(24,21,19,0.08)] rounded-[2rem] sm:rounded-[2.5rem] relative overflow-hidden">
                   {/* Console Header */}
                   <div className="flex items-center justify-between pb-4 sm:pb-6 border-b border-[#EFECE4] dark:border-[#E5DFD3]/10 mb-5 sm:mb-6">

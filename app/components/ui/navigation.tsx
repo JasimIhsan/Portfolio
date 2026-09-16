@@ -11,6 +11,7 @@ interface NavigationProps {
    isMobileMenuOpen: boolean;
    setIsMobileMenuOpen: (open: boolean) => void;
    onOpenCommandPalette?: () => void;
+   isLoading?: boolean;
 }
 
 const navItems = [
@@ -22,7 +23,7 @@ const navItems = [
    { id: "contact", label: "Contact" },
 ];
 
-export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobileMenuOpen, onOpenCommandPalette }: NavigationProps) {
+export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobileMenuOpen, onOpenCommandPalette, isLoading = false }: NavigationProps) {
    const { scrollYProgress } = useScroll();
    const { isMac, isMobile, modifierKey } = usePlatform();
    const scaleX = useSpring(scrollYProgress, {
@@ -42,7 +43,7 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
    const scrollDirection = useScrollDirection();
    const navVariants = {
       hidden: { y: -100, opacity: 0 },
-      visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 350, damping: 30 } },
+      visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 350, damping: 30, delay: 0.2 } },
    };
 
    return (
@@ -51,15 +52,26 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
          <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8A5A2B] via-[#C97A3E] to-[#D4A373] origin-left z-50" />
 
          {/* Desktop Floating Navigation */}
-         <motion.nav variants={navVariants} animate={scrollDirection === "down" ? "hidden" : "visible"} className="fixed top-6 left-1/2 -translate-x-1/2 z-40 hidden md:block">
+         <motion.nav variants={navVariants} initial="hidden" animate={isLoading || scrollDirection === "down" ? "hidden" : "visible"} className="fixed top-6 left-1/2 -translate-x-1/2 z-40 hidden md:block">
             <div className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#F7F5F0]/85 dark:bg-[#181513]/85 backdrop-blur-xl border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
                <ul className="flex items-center gap-1">
                   {navItems.map((item) => {
                      const isActive = activeSection === item.id;
                      return (
                         <li key={item.id}>
-                           <button onClick={() => scrollToSection(item.id)} className={`relative px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 cursor-pointer ${isActive ? "text-[#F7F5F0] dark:text-[#0B0A09]" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}>
-                              {isActive && <motion.div layoutId="activeSectionIndicator" className="absolute inset-0 bg-[#8A5A2B] dark:bg-[#D4A373] rounded-full -z-10 shadow-sm" transition={{ type: "spring", stiffness: 380, damping: 30 }} />}
+                           <button
+                              onClick={() => scrollToSection(item.id)}
+                              className={`relative px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors duration-300 cursor-pointer ${
+                                 isActive ? "text-[#F7F5F0] dark:text-[#0B0A09]" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"
+                              }`}
+                           >
+                              {isActive && (
+                                 <motion.div
+                                    layoutId="activePill"
+                                    className="absolute inset-0 bg-[#8A5A2B] dark:bg-[#D4A373] rounded-full -z-10 shadow-xs"
+                                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                 />
+                              )}
                               {item.label}
                            </button>
                         </li>
@@ -67,26 +79,28 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
                   })}
                </ul>
 
-               {/* Quick Actions Cluster (Command Palette + Theme Toggle) */}
-               <div className="flex items-center gap-1.5 pl-2 ml-1 border-l border-[#E2DDD2] dark:border-[#E5DFD3]/15">
+               {/* Command Palette Spotlight & Theme Toggle Trigger */}
+               <div className="flex items-center gap-2 pl-2 border-l border-[#E2DDD2] dark:border-[#E5DFD3]/15 ml-1">
                   {onOpenCommandPalette && (
                      <button
                         onClick={onOpenCommandPalette}
-                        className="flex items-center gap-1 px-2.5 h-8 rounded-full bg-[#EFECE4]/80 dark:bg-[#231E1A]/80 hover:bg-[#E2DDD2] dark:hover:bg-[#2F2924] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3] text-xs font-mono transition-all cursor-pointer"
-                        aria-label="Open Command Palette"
-                        title={`Open Command Palette (${isMobile ? "Search" : isMac ? "⌘K" : "Ctrl+K"})`}
+                        className="group flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-[#EFECE4]/80 dark:bg-[#231E1A]/80 hover:bg-[#E2DDD2] dark:hover:bg-[#2F2924] border border-[#E2DDD2]/60 dark:border-[#E5DFD3]/10 text-xs text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3] transition-all cursor-pointer shadow-2xs"
+                        aria-label="Search portfolio"
+                        title={isMobile ? "Search commands" : `Search commands (${modifierKey}K)`}
                      >
-                        {isMobile ? (
-                           <Search size={13} />
-                        ) : isMac ? (
+                        <Search size={13} className="text-[#8A5A2B] dark:text-[#D4A373]" />
+                        <span className="hidden lg:inline text-[11px] font-medium">Search</span>
+                        {!isMobile && (
                            <>
-                              <Command size={13} />
-                              <span className="text-[11px] font-semibold">K</span>
-                           </>
-                        ) : (
-                           <>
-                              <span className="text-[10px] font-semibold font-sans">{modifierKey}</span>
-                              <span className="text-[11px] font-semibold">K</span>
+                              {isMac ? (
+                                 <kbd className="hidden sm:inline-flex items-center text-[10px] font-mono font-medium px-1.5 py-0.5 rounded bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#6E655C] dark:text-[#A89F91]">
+                                    <Command size={10} className="mr-0.5" />K
+                                 </kbd>
+                              ) : (
+                                 <kbd className="hidden sm:inline-flex items-center text-[10px] font-mono font-medium px-1.5 py-0.5 rounded bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#6E655C] dark:text-[#A89F91]">
+                                    Ctrl+K
+                                 </kbd>
+                              )}
                            </>
                         )}
                      </button>
@@ -101,7 +115,8 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
          {/* Mobile Intelligent Floating Action Bar (Auto-hides on scroll down, reveals on scroll up) */}
          <motion.div
             variants={navVariants}
-            animate={isMobileMenuOpen ? "visible" : scrollDirection === "down" ? "hidden" : "visible"}
+            initial="hidden"
+            animate={isLoading ? "hidden" : isMobileMenuOpen ? "visible" : scrollDirection === "down" ? "hidden" : "visible"}
             className="fixed top-3 sm:top-4 inset-x-3 sm:inset-x-4 z-40 flex items-center justify-between pointer-events-none md:hidden"
          >
             {/* Left Brand Badge */}

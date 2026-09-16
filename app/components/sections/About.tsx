@@ -5,7 +5,6 @@ import Image from "next/image";
 import profile from "../../assets/White Shirt.jpg";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
-import { projects } from "./Projects";
 
 const calculateExperience = () => {
    const startDate = new Date("2024-07-01");
@@ -43,11 +42,11 @@ export default function About() {
                            </div>
 
                            <h3 className="text-xl sm:text-2xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-1">Jasim Ihsan</h3>
-                           <p className="text-xs sm:text-sm font-semibold text-[#8A5A2B] dark:text-[#D4A373] mb-2 sm:mb-3">Full-Stack & Mobile Developer</p>
+                           <p className="text-xs sm:text-sm font-semibold text-[#8A5A2B] dark:text-[#D4A373] mb-2 sm:mb-3">Full Stack Engineer | Software Development Engineer</p>
 
                            <div className="flex items-center gap-1.5 text-xs font-medium text-[#6E655C] dark:text-[#A89F91] mb-5 sm:mb-6">
                               <MapPin size={14} className="text-[#8A5A2B] dark:text-[#D4A373] shrink-0" />
-                              <span>Kerala, India • Remote & Global</span>
+                              <span>Malappuram, Kerala, India</span>
                            </div>
                         </div>
 
@@ -58,11 +57,11 @@ export default function About() {
                               <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91] font-medium truncate">Years Exp</div>
                            </div>
                            <div className="p-2 sm:p-3 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A]">
-                              <div className="text-lg sm:text-xl font-bold text-[#181513] dark:text-[#E5DFD3]">{projects.filter((p) => p.live && p.live !== "#").length}+</div>
-                              <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91] font-medium truncate">Shipped</div>
+                              <div className="text-lg sm:text-xl font-bold text-[#181513] dark:text-[#E5DFD3]">100+</div>
+                              <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91] font-medium truncate">APIs Built</div>
                            </div>
                            <div className="p-2 sm:p-3 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A]">
-                              <div className="text-lg sm:text-xl font-bold text-[#181513] dark:text-[#E5DFD3]">50+</div>
+                              <div className="text-lg sm:text-xl font-bold text-[#181513] dark:text-[#E5DFD3]">25+</div>
                               <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91] font-medium truncate">Mentored</div>
                            </div>
                         </div>
@@ -81,9 +80,9 @@ export default function About() {
                               <span className="text-[11px] sm:text-xs font-mono text-[#A89F91] dark:text-[#6E655C] truncate max-w-[160px] sm:max-w-none">production_ready: true</span>
                            </div>
 
-                           <p>I build end-to-end digital products from architecture to launch. My sweet spot lies at the intersection of robust backend engineering—designing resilient Node.js services, real-time pipelines, and scalable relational schemas—and crafting fluid, tactile mobile applications with Flutter.</p>
+                           <p>Full Stack Engineer with hands-on experience building scalable web and mobile applications using Next.js, React.js, TypeScript, Node.js, PostgreSQL, Prisma ORM, MongoDB, Redis, and Flutter. Passionate about designing production-grade architectures, RESTful APIs, RBAC authentication systems, and real-time communication platforms.</p>
 
-                           <p>From steering core technical architecture in startup environments to conducting deep-dive system design reviews and mentoring emerging engineers at ExpertX Academy, I focus on clean code, measurable performance, and software that scales effortlessly.</p>
+                           <p>From building full-stack matrimonial platforms and recruitment engines to mentoring 25+ developers at ExpertX Coding Academy, I focus on Clean Architecture principles, clean coding standards, performance optimization, and Agile engineering practices.</p>
                         </div>
 
                         {/* Interactive Feature Badges */}
@@ -93,8 +92,8 @@ export default function About() {
                                  <Cpu size={20} />
                               </div>
                               <div>
-                                 <div className="text-xs text-[#6E655C] dark:text-[#A89F91] font-medium">Core Focus</div>
-                                 <div className="text-sm font-bold text-[#181513] dark:text-[#E5DFD3]">Full-Stack & Mobile</div>
+                                 <div className="text-xs text-[#6E655C] dark:text-[#A89F91] font-medium">Core Stack</div>
+                                 <div className="text-sm font-bold text-[#181513] dark:text-[#E5DFD3]">Next.js • Node.js • Flutter</div>
                               </div>
                            </div>
 
@@ -103,8 +102,8 @@ export default function About() {
                                  <Zap size={20} />
                               </div>
                               <div>
-                                 <div className="text-xs text-[#6E655C] dark:text-[#A89F91] font-medium">Performance</div>
-                                 <div className="text-sm font-bold text-[#181513] dark:text-[#E5DFD3]">Optimized & Fast</div>
+                                 <div className="text-xs text-[#6E655C] dark:text-[#A89F91] font-medium">Architecture</div>
+                                 <div className="text-sm font-bold text-[#181513] dark:text-[#E5DFD3]">Clean & Scalable APIs</div>
                               </div>
                            </div>
                         </div>
