@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Bot, MessageSquare, RefreshCw, Send, Sparkles, User, X } from "lucide-react";
+import { Bot, MessageSquare, RefreshCw, Send, Sparkles, User, X, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
@@ -13,6 +13,9 @@ interface Message {
    role: "user" | "assistant";
    content: string;
    timestamp: Date;
+   cached?: boolean;
+   cacheTier?: "exact" | "semantic" | "llm";
+   similarityScore?: number;
 }
 
 const STARTER_PROMPTS = ["What is Jasim's primary tech stack?", "Tell me about his key projects", "Is Jasim available for full-time roles?", "What is his experience with Flutter?"];
@@ -146,6 +149,9 @@ export default function AIAssistantDrawer() {
                role: "assistant",
                content: data.reply || "I'm ready to answer any questions about Jasim's portfolio.",
                timestamp: new Date(),
+               cached: !!data.cached,
+               cacheTier: data.cacheTier || (data.cached ? "semantic" : "llm"),
+               similarityScore: data.similarityScore,
             },
          ]);
       } catch (err) {
@@ -278,6 +284,24 @@ export default function AIAssistantDrawer() {
                                              >
                                                 {msg.content}
                                              </ReactMarkdown>
+                                          )}
+
+                                          {!isUser && msg.id !== "welcome" && (
+                                             <div className="flex items-center gap-1.5 mt-2 pt-1.5 border-t border-[#E2DDD2]/60 dark:border-[#E5DFD3]/10 text-[10px] text-[#6E655C] dark:text-[#A89F91]">
+                                                {msg.cacheTier === "exact" ? (
+                                                   <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
+                                                      <Zap size={10} /> Instant Cache (&lt;1ms)
+                                                   </span>
+                                                ) : msg.cacheTier === "semantic" ? (
+                                                   <span className="flex items-center gap-1 text-[#8A5A2B] dark:text-[#D4A373] font-medium">
+                                                      <Zap size={10} /> Upstash Vector {msg.similarityScore ? `(${(msg.similarityScore * 100).toFixed(0)}% match)` : ""}
+                                                   </span>
+                                                ) : (
+                                                   <span className="flex items-center gap-1 text-blue-600 dark:text-blue-400 font-medium">
+                                                      <Sparkles size={10} /> Gemini Flash (Live LLM)
+                                                   </span>
+                                                )}
+                                             </div>
                                           )}
                                        </div>
                                     </div>

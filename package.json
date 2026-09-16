@@ -5,9 +5,12 @@
    "type": "module",
    "scripts": {
       "dev": "next dev",
+      "dev:turbo": "next dev --turbopack",
+      "clean": "rm -rf .next",
       "build": "next build",
       "start": "next start",
-      "lint": "next lint"
+      "lint": "next lint",
+      "seed:faq": "node --env-file=.env scripts/seed-faq.ts"
    },
    "dependencies": {
       "@emotion/react": "^11.14.0",
@@ -16,6 +19,7 @@
       "@mui/material": "^6.4.7",
       "@radix-ui/react-slot": "^1.1.2",
       "@tailwindcss/postcss": "^4.3.3",
+      "@upstash/vector": "^1.2.3",
       "@vercel/analytics": "^1.6.1",
       "axios": "^1.10.0",
       "class-variance-authority": "^0.7.1",
