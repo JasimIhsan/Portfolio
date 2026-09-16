@@ -1,185 +1,115 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @plugin "tailwindcss-animate";
 
-body {
-   font-family: "Inter", sans-serif;
-   background-color: #FFFFFF;
-   color: #08142C;
-   /* Clean, subtle white/light-blue background */
-   background-image: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.04) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.02) 0%, transparent 60%);
-   background-attachment: fixed;
-}
-
-/* Theme Variables */
-@theme {
-   --font-sans: "Inter", sans-serif;
-   --font-heading: "Inter", sans-serif;
-
-   /* Colors */
-   --color-border: hsl(var(--border));
-   --color-input: hsl(var(--input));
-   --color-ring: hsl(var(--ring));
-   --color-background: hsl(var(--background));
-   --color-foreground: hsl(var(--foreground));
-   --color-primary: hsl(var(--primary));
-   --color-primary-foreground: hsl(var(--primary-foreground));
-   --color-secondary: hsl(var(--secondary));
-   --color-secondary-foreground: hsl(var(--secondary-foreground));
-   --color-destructive: hsl(var(--destructive));
-   --color-destructive-foreground: hsl(var(--destructive-foreground));
-   --color-muted: hsl(var(--muted));
-   --color-muted-foreground: hsl(var(--muted-foreground));
-   --color-accent: hsl(var(--accent));
-   --color-accent-foreground: hsl(var(--accent-foreground));
-   --color-popover: hsl(var(--popover));
-   --color-popover-foreground: hsl(var(--popover-foreground));
-   --color-card: hsl(var(--card));
-   --color-card-foreground: hsl(var(--card-foreground));
-
-   /* Border Radius */
-   --radius-lg: var(--radius);
-   --radius-md: calc(var(--radius) - 2px);
-   --radius-sm: calc(var(--radius) - 4px);
-
-   /* Container */
-   --container-padding: 2rem;
-   --container-screen-2xl: 1400px;
-}
-
-/* Keyframes */
-@keyframes accordion-down {
-   from {
-      height: 0;
-   }
-   to {
-      height: var(--radix-accordion-content-height);
-   }
-}
-
-@keyframes accordion-up {
-   from {
-      height: var(--radix-accordion-content-height);
-   }
-   to {
-      height: 0;
-   }
-}
-
-/* Animations */
-@theme {
-   --animation-accordion-down: accordion-down 0.2s ease-out;
-   --animation-accordion-up: accordion-up 0.2s ease-out;
-}
-
 :root {
-   /* Light mode default values */
-   --background: oklch(1 0 0);
-   --foreground: oklch(0.145 0 0); /* Dark text */
-   --card: oklch(1 0 0);
-   --card-foreground: oklch(0.145 0 0);
-   --popover: oklch(1 0 0);
-   --popover-foreground: oklch(0.145 0 0);
-   --primary: oklch(0.5 0.2 264); /* Primary Blue #2563EB approx */
-   --primary-foreground: oklch(1 0 0);
-   --secondary: oklch(0.97 0 0); /* Secondary Background #F8FAFC approx */
-   --secondary-foreground: oklch(0.145 0 0);
-   --muted: oklch(0.97 0 0);
-   --muted-foreground: oklch(0.55 0 0); /* Muted Text #64748B approx */
-   --accent: oklch(0.97 0 0);
-   --accent-foreground: oklch(0.145 0 0);
-   --destructive: oklch(0.6 0.2 25);
-   --destructive-foreground: oklch(1 0 0);
-   --border: oklch(0.92 0 0); /* Border #E5E7EB approx */
-   --input: oklch(0.92 0 0);
-   --ring: oklch(0.5 0.2 264);
-   --radius: 0.625rem;
+   --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+   --font-mono: "JetBrains Mono", monospace;
+
+   /* 
+     Palette derived from the reference:
+     Dark Palette:
+       Deep Obsidian Pitch: #0B0A09 (Top band)
+       Espresso Charcoal:   #1E1A17 (2nd band)
+       Warm Coffee / Earth: #3D2D20 (3rd band)
+       Warm Ivory Cream:    #E5DFD3 (Bottom band accent / light text)
+
+     Harmonious Light Palette:
+       Alabaster Canvas:    #F7F5F0
+       Warm Cream Card:     #EFECE4
+       Border / Muted:      #DCD6C8
+       Rich Dark Coffee:    #1A1715
+       Muted Earth:         #6E645A
+       Bronze Accent:       #8C6339 / #4A3728
+   */
+
+   --bg-page: #F7F5F0;
+   --bg-card: #FFFFFF;
+   --bg-subtle: #EFECE4;
+   --border-color: #E2DDD2;
+   --text-main: #181513;
+   --text-muted: #6E655C;
+   --text-accent: #8A5A2B;
+   --pill-bg: #EFECE4;
+   --primary-btn: #181513;
+   --primary-btn-text: #F7F5F0;
 }
 
-@theme inline {
-   --color-background: var(--background);
-   --color-foreground: var(--foreground);
-   --color-card: var(--card);
-   --color-card-foreground: var(--card-foreground);
-   --color-popover: var(--popover);
-   --color-popover-foreground: var(--popover-foreground);
-   --color-primary: var(--primary);
-   --color-primary-foreground: var(--primary-foreground);
-   --color-secondary: var(--secondary);
-   --color-secondary-foreground: var(--secondary-foreground);
-   --color-muted: var(--muted);
-   --color-muted-foreground: var(--muted-foreground);
-   --color-accent: var(--accent);
-   --color-accent-foreground: var(--accent-foreground);
-   --color-destructive: var(--destructive);
-   --color-destructive-foreground: var(--destructive-foreground);
-   --color-border: var(--border);
-   --color-input: var(--input);
-   --color-ring: var(--ring);
-   --radius-sm: calc(var(--radius) - 4px);
-   --radius-md: calc(var(--radius) - 2px);
-   --radius-lg: var(--radius);
-   --radius-xl: calc(var(--radius) + 4px);
+html.dark {
+   --bg-page: #0B0A09;
+   --bg-card: #181513;
+   --bg-subtle: #231E1A;
+   --border-color: rgba(229, 223, 211, 0.1);
+   --text-main: #E5DFD3;
+   --text-muted: #A89F91;
+   --text-accent: #D4A373;
+   --pill-bg: #231E1A;
+   --primary-btn: #E5DFD3;
+   --primary-btn-text: #0B0A09;
 }
 
-@layer base {
-   * {
-      @apply border-border outline-ring/50;
-   }
-   body {
-      @apply bg-background text-foreground font-sans;
-   }
-   h1,
-   h2,
-   h3,
-   h4,
-   h5,
-   h6 {
-      @apply font-heading;
-   }
+html:not(.dark) {
+   color-scheme: light;
 }
 
-@utility clay-card {
-   background: #FFFFFF;
-   border-radius: 2rem;
-   box-shadow: 0 10px 40px -10px rgba(8, 20, 44, 0.08);
-   border: 1px solid #E5E7EB;
-   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-   &:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px -10px rgba(8, 20, 44, 0.12);
-      border-color: rgba(37, 99, 235, 0.2);
-   }
+html.dark {
+   color-scheme: dark;
 }
 
-@utility clay-btn {
-   background: #2563EB;
-   color: #FFFFFF;
-   border-radius: 1.5rem;
-   box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
-   border: 1px solid transparent;
-   transition: all 0.3s ease;
-
-   &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.23);
-      background: #1D4ED8;
-      color: #FFFFFF;
-   }
-
-   &:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
-   }
+body {
+   font-family: var(--font-sans);
+   background-color: var(--bg-page);
+   color: var(--text-main);
+   transition: background-color 0.3s ease, color 0.3s ease;
+   overflow-x: hidden;
 }
 
-@utility clay-pill {
-   background: #F8FAFC;
-   color: #64748B;
+/* Subtle atmosphere lighting */
+body::before {
+   content: "";
+   position: fixed;
+   inset: 0;
+   pointer-events: none;
+   background-image: 
+      radial-gradient(circle at 15% 15%, rgba(140, 99, 57, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, rgba(61, 45, 32, 0.04) 0%, transparent 40%);
+   z-index: 0;
+}
+
+html.dark body::before {
+   background-image: 
+      radial-gradient(circle at 20% 20%, rgba(212, 163, 115, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(61, 45, 32, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(30, 26, 23, 0.2) 0%, transparent 60%);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+   width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+   background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+   background: rgba(138, 90, 43, 0.2);
    border-radius: 9999px;
-   border: 1px solid #E5E7EB;
-   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-   transition: all 0.3s ease;
+}
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+   background: rgba(212, 163, 115, 0.2);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+   background: rgba(138, 90, 43, 0.4);
+}
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+   background: rgba(212, 163, 115, 0.4);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+   display: none;
+}
+.no-scrollbar {
+   -ms-overflow-style: none;
+   scrollbar-width: none;
 }

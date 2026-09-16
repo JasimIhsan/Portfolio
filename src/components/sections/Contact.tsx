@@ -1,9 +1,9 @@
 import axios from "axios";
-import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, MapPin, Phone, Send, Twitter } from "lucide-react";
+import { CheckCircle2, Github, Linkedin, Mail, MapPin, Phone, Send, Sparkles, Twitter } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import ScrollReveal from "../animations/ScrollReveal";
+import { TiltCard } from "../ui/tilt-card";
 
 export default function Contact() {
    const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ export default function Contact() {
          });
 
          if (response.data.success) {
-            setSubmitStatus({ success: true, message: "Message sent successfully!" });
+            setSubmitStatus({ success: true, message: "Thank you! Your message has been sent successfully." });
             setFormData({ name: "", email: "", message: "" });
          } else {
             setSubmitStatus({ success: false, message: "Failed to send message. Please try again." });
@@ -60,87 +60,122 @@ export default function Contact() {
    };
 
    return (
-      <section id="contact" className="py-24 px-6 relative z-10 pb-32">
+      <section id="contact" className="py-28 px-6 relative z-10 pb-36">
          <ScrollReveal>
             <div className="max-w-6xl mx-auto">
-               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="mb-20 text-center">
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-[#08142C]">Let's Work Together</h2>
-                  <p className="text-lg text-[#64748B] font-normal max-w-2xl mx-auto">Have a project in mind? I'd love to hear about it.</p>
-               </motion.div>
+               {/* Header */}
+               <div className="text-center mb-16">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-4">
+                     <Sparkles size={14} />
+                     Start a Conversation
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">
+                     Let's Build Something Exceptional
+                  </h2>
+                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">
+                     Have an opening, a freelance project, or an architecture inquiry? Send a message and I'll respond within 24 hours.
+                  </p>
+               </div>
 
-               <div className="grid lg:grid-cols-12 gap-12">
-                  {/* Contact info */}
-                  <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="lg:col-span-5">
-                     <div className="clay-card p-8 md:p-10 rounded-[2.5rem] space-y-12 h-full relative overflow-hidden bg-white">
-                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#2563EB]/5 rounded-full blur-[60px] translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+               <div className="grid lg:grid-cols-12 gap-8 items-start">
+                  {/* Left Column: Direct Info & Social Hub */}
+                  <div className="lg:col-span-5 space-y-6">
+                     <TiltCard
+                        max={6}
+                        glare={true}
+                        className="p-8 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[2.5rem]"
+                     >
+                        <h3 className="text-2xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-6">Contact Channels</h3>
 
-                        <div className="relative z-10">
-                           <h3 className="text-2xl font-bold mb-8 text-[#08142C]">Get in Touch</h3>
-                           <div className="space-y-6">
-                              {[
-                                 { icon: Mail, label: "Email", value: "jasimihsan1234@gmail.com", href: "mailto:jasimihsan1234@gmail.com" },
-                                 { icon: Phone, label: "Phone", value: "+91 9656646449", href: "tel:+91 9656646449" },
-                                 { icon: MapPin, label: "Location", value: "Malappuram, Kerala", href: "#" },
-                              ].map((contact, index) => (
-                                 <motion.a
-                                    key={contact.label}
-                                    href={contact.href}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                    whileHover={{ x: 5 }}
-                                    className="flex items-center gap-5 p-4 rounded-2xl transition-all duration-300 hover:bg-[#F8FAFC] group border border-transparent hover:border-[#E5E7EB]"
-                                 >
-                                    <div className="clay-pill bg-white p-3 text-[#2563EB] group-hover:scale-110 transition-all border border-[#E5E7EB] shadow-sm">
-                                       <contact.icon size={20} />
+                        <div className="space-y-4 mb-8">
+                           {[
+                              {
+                                 icon: Mail,
+                                 label: "Direct Email",
+                                 value: "jasimihsan1234@gmail.com",
+                                 href: "mailto:jasimihsan1234@gmail.com",
+                              },
+                              {
+                                 icon: Phone,
+                                 label: "Phone / WhatsApp",
+                                 value: "+91 9656646449",
+                                 href: "tel:+91 9656646449",
+                              },
+                              {
+                                 icon: MapPin,
+                                 label: "Location",
+                                 value: "Malappuram, Kerala, India",
+                                 href: "#",
+                              },
+                           ].map((item) => (
+                              <a
+                                 key={item.label}
+                                 href={item.href}
+                                 className="flex items-center gap-4 p-4 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B] dark:hover:border-[#D4A373] hover:bg-white dark:hover:bg-[#2A241F] transition-all group"
+                              >
+                                 <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-105 transition-transform shadow-2xs">
+                                    <item.icon size={18} />
+                                 </div>
+                                 <div>
+                                    <div className="text-xs text-[#A89F91] dark:text-[#6E655C] font-medium">{item.label}</div>
+                                    <div className="text-sm font-semibold text-[#181513] dark:text-[#E5DFD3] group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors">
+                                       {item.value}
                                     </div>
-                                    <div>
-                                       <div className="text-sm font-medium text-[#64748B] mb-1">{contact.label}</div>
-                                       <div className="text-[#08142C] font-semibold">{contact.value}</div>
-                                    </div>
-                                 </motion.a>
-                              ))}
-                           </div>
+                                 </div>
+                              </a>
+                           ))}
                         </div>
 
-                        <div className="relative z-10">
-                           <h3 className="text-xl font-bold mb-6 text-[#08142C]">Follow Me</h3>
-                           <div className="flex gap-4">
+                        <div className="pt-6 border-t border-[#EFECE4] dark:border-[#E5DFD3]/10">
+                           <div className="text-xs font-bold uppercase tracking-wider text-[#A89F91] dark:text-[#6E655C] mb-4">
+                              Social Profiles
+                           </div>
+                           <div className="flex gap-3">
                               {[
                                  { icon: Github, href: "http://github.com/JasimIhsan", label: "GitHub" },
                                  { icon: Linkedin, href: "http://linkedin.com/in/jasim-ihsan-m", label: "LinkedIn" },
-                                 { icon: Twitter, href: "#", label: "Twitter" },
-                              ].map((social, index) => (
-                                 <motion.a
-                                    key={social.label}
-                                    href={social.href}
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
+                                 { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+                              ].map(({ icon: Icon, href, label }) => (
+                                 <a
+                                    key={label}
+                                    href={href}
                                     target="_blank"
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                    whileHover={{ scale: 1.1, y: -2 }}
-                                    className="clay-pill p-4 text-[#64748B] hover:text-[#2563EB] bg-white border border-[#E5E7EB] shadow-sm hover:border-[#2563EB]/30 transition-all"
-                                    aria-label={social.label}
+                                    rel="noreferrer"
+                                    className="w-11 h-11 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#6E655C] dark:text-[#A89F91] hover:text-[#8A5A2B] dark:hover:text-[#D4A373] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] hover:bg-white dark:hover:bg-[#181513] transition-all shadow-2xs"
+                                    aria-label={label}
                                  >
-                                    <social.icon size={22} />
-                                 </motion.a>
+                                    <Icon size={18} />
+                                 </a>
                               ))}
                            </div>
                         </div>
-                     </div>
-                  </motion.div>
+                     </TiltCard>
+                  </div>
 
-                  {/* Contact form */}
-                  <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} viewport={{ once: true }} className="lg:col-span-7">
-                     <div className="clay-card p-8 md:p-10 rounded-[2.5rem] bg-white">
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                           {submitStatus && <div className={`p-4 rounded-xl font-medium ${submitStatus.success ? "bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/20" : "bg-red-50 text-red-600 border border-red-200"}`}>{submitStatus.message}</div>}
-                           <div className="grid md:grid-cols-2 gap-6">
+                  {/* Right Column: Contact Message Form */}
+                  <div className="lg:col-span-7">
+                     <div className="p-8 md:p-10 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[2.5rem]">
+                        <h3 className="text-2xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-2">Send a Direct Message</h3>
+                        <p className="text-sm text-[#6E655C] dark:text-[#A89F91] mb-8">Fill in your details below and I'll get back to you promptly.</p>
+
+                        <form onSubmit={handleSubmit} className="space-y-5">
+                           {submitStatus && (
+                              <div
+                                 className={`p-4 rounded-2xl text-sm font-medium flex items-center gap-3 ${
+                                    submitStatus.success
+                                       ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40"
+                                       : "bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/40"
+                                 }`}
+                              >
+                                 {submitStatus.success && <CheckCircle2 size={18} className="shrink-0" />}
+                                 <span>{submitStatus.message}</span>
+                              </div>
+                           )}
+
+                           <div className="grid sm:grid-cols-2 gap-5">
                               <div>
-                                 <label htmlFor="name" className="block text-sm font-semibold mb-2 text-[#08142C] ml-2">
-                                    Name
+                                 <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91] mb-2">
+                                    Your Name
                                  </label>
                                  <input
                                     type="text"
@@ -149,13 +184,14 @@ export default function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none bg-[#F8FAFC] border border-[#E5E7EB] text-[#08142C] focus:border-[#2563EB]/50 focus:bg-white shadow-sm placeholder-slate-400"
-                                    placeholder="Your name"
+                                    className="w-full px-4 py-3.5 rounded-xl text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all placeholder:text-[#A89F91]"
+                                    placeholder="Jane Doe"
                                  />
                               </div>
+
                               <div>
-                                 <label htmlFor="email" className="block text-sm font-semibold mb-2 text-[#08142C] ml-2">
-                                    Email
+                                 <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91] mb-2">
+                                    Email Address
                                  </label>
                                  <input
                                     type="email"
@@ -164,15 +200,15 @@ export default function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none bg-[#F8FAFC] border border-[#E5E7EB] text-[#08142C] focus:border-[#2563EB]/50 focus:bg-white shadow-sm placeholder-slate-400"
-                                    placeholder="your@email.com"
+                                    className="w-full px-4 py-3.5 rounded-xl text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all placeholder:text-[#A89F91]"
+                                    placeholder="jane@example.com"
                                  />
                               </div>
                            </div>
 
                            <div>
-                              <label htmlFor="message" className="block text-sm font-semibold mb-2 text-[#08142C] ml-2">
-                                 Message
+                              <label htmlFor="message" className="block text-xs font-bold uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91] mb-2">
+                                 Message Details
                               </label>
                               <textarea
                                  id="message"
@@ -180,36 +216,29 @@ export default function Contact() {
                                  value={formData.message}
                                  onChange={handleChange}
                                  required
-                                 rows={6}
-                                 className="w-full px-5 py-4 rounded-[1.2rem] transition-all duration-300 outline-none resize-none bg-[#F8FAFC] border border-[#E5E7EB] text-[#08142C] focus:border-[#2563EB]/50 focus:bg-white shadow-sm placeholder-slate-400"
-                                 placeholder="Tell me about your project..."
+                                 rows={5}
+                                 className="w-full px-4 py-3.5 rounded-xl text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all resize-none placeholder:text-[#A89F91]"
+                                 placeholder="Tell me about your product requirements, role, or timelines..."
                               />
                            </div>
 
-                           {/* Hidden inputs for email customization */}
-                           <input type="hidden" name="subject" value={`New Portfolio Contact from ${formData.name}`} />
-                           <input type="hidden" name="from_name" value={formData.name} />
-                           <input type="hidden" name="replyto" value={formData.email} />
-                           <input
-                              type="hidden"
-                              name="html"
-                              value={`
-                                       <h2>New Contact Form Submission</h2>
-                                       <p><strong>Name:</strong> ${formData.name}</p>
-                                       <p><strong>Email:</strong> ${formData.email}</p>
-                                       <p><strong>Message:</strong> ${formData.message}</p>
-                                       <hr />
-                                       <p><small>Sent from Jasim's Portfolio Contact Form</small></p>
-                                 `}
-                           />
-
-                           <motion.button type="submit" disabled={isSubmitting} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="clay-btn w-full flex items-center justify-center gap-3 px-6 py-4 text-white font-medium tracking-wide disabled:opacity-50 disabled:cursor-not-allowed group shadow-md mt-4">
-                              {isSubmitting ? <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }} className="w-5 h-5 border-2 border-white border-t-transparent rounded-full" /> : <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
-                              {isSubmitting ? "Sending..." : "Send Message"}
-                           </motion.button>
+                           <button
+                              type="submit"
+                              disabled={isSubmitting}
+                              className="w-full py-4 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] font-semibold text-sm tracking-wide shadow-md shadow-black/10 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                           >
+                              {isSubmitting ? (
+                                 <div className="w-5 h-5 border-2 border-white dark:border-[#0B0A09] border-t-transparent rounded-full animate-spin" />
+                              ) : (
+                                 <>
+                                    <span>Send Message</span>
+                                    <Send size={16} />
+                                 </>
+                              )}
+                           </button>
                         </form>
                      </div>
-                  </motion.div>
+                  </div>
                </div>
             </div>
          </ScrollReveal>

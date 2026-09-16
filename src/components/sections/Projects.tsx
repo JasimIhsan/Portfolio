@@ -1,176 +1,445 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
-import { useEffect, useState } from "react";
-import brewcode from "../../assets/projects/brewcode.png";
-import byteverse from "../../assets/projects/byteverse.png";
-import forge from "../../assets/projects/forge.onboard.png";
-import lifePartnerAgain from "../../assets/projects/lifepartneragain.png";
-import mentorshub from "../../assets/projects/mentorshub.png";
-import onboard from "../../assets/projects/onboard.png";
-import usermanagement from "../../assets/projects/user_management.jpg";
+import { ArrowUpRight, Code2, ExternalLink, Github, Layers, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import brewcode from "../../assets/projects/brewcode_mock.png";
+import byteverse from "../../assets/projects/byteverse_mock.png";
+import forge from "../../assets/projects/forge_mock.png";
+import lifePartnerAgain from "../../assets/projects/lifepartneragain_mock.png";
+import mentorshub from "../../assets/projects/mentorshub_mock.png";
+import onboard from "../../assets/projects/onboard_mock.png";
+import { startLenis, stopLenis } from "../../hooks/useLenis";
 import ScrollReveal from "../animations/ScrollReveal";
+import { TiltCard } from "../ui/tilt-card";
 
-export const projects = [
+export interface ProjectItem {
+   id: string;
+   title: string;
+   subtitle: string;
+   category: "Full-Stack" | "Mobile" | "Systems & Cloud" | "E-Commerce";
+   description: string;
+   image: string;
+   tech: string[];
+   github?: string;
+   live?: string;
+   liveDemo: boolean;
+   highlights: string[];
+   featured?: boolean;
+}
+
+export const projects: ProjectItem[] = [
    {
+      id: "lifepartneragain",
       title: "Life Partner Again",
-      description: "A matrimony platform designed specifically for middle-aged women seeking a second chance at companionship. Built to provide a safe, respectful, and trust-driven environment — focusing on meaningful connections, verified profiles, and a supportive experience tailored for a new phase of life.",
+      subtitle: "Mobile Matchmaking Ecosystem",
+      category: "Mobile",
+      description: "A bespoke matrimony and companionship platform engineered specifically for middle-aged individuals. Focuses on privacy-first verified member profiles, real-time matchmaking algorithms, and end-to-end trust workflows.",
       image: lifePartnerAgain,
-      tech: ["Flutter"],
+      tech: ["Flutter", "Dart", "REST API", "State Management", "Firebase"],
       liveDemo: false,
       live: "#",
+      highlights: ["Full cross-platform Flutter application with custom smooth motion design", "Privacy-centric architecture with secure verification mechanisms", "Tailored onboarding flow optimized for effortless user adoption"],
+      featured: true,
    },
    {
+      id: "onboard-careers",
       title: "Onboard Careers",
-      description: "Onboard Careers is a dedicated recruitment portal designed to connect aspiring professionals with premier opportunities in the maritime and cruise industries. We bridge the gap between talent and the open ocean, specializing in sourcing skilled candidates for hospitality, technical, and deck roles aboard international vessels.",
+      subtitle: "Maritime & Cruise Recruitment Portal",
+      category: "Full-Stack",
+      description: "Dedicated recruitment portal bridging aspiring professionals with maritime career opportunities worldwide. Features intelligent talent matching, candidate dashboards, and automated recruitment pipelines.",
       image: onboard,
       tech: ["Next.js", "PostgreSQL", "Prisma ORM", "Tailwind CSS", "TypeScript"],
       github: "https://github.com/muhammedsirajudeen/core-backend",
       liveDemo: true,
       live: "https://www.onboardcareers.in",
+      highlights: ["Complex relational schema with PostgreSQL & Prisma", "High-performance Next.js application with fast server-side data fetching", "Custom candidate application workflows and role filters"],
+      featured: true,
    },
    {
-      title: "NearHirable - Recruitment Portal",
-      description: `We built Forge to answer exactly that. It’s a tool that assesses your coding fundamentals and tells you if you are "Near-Hireable" or ready to go—and exactly what you need to fix if you aren't.`,
+      id: "forge-nearhirable",
+      title: "NearHirable Engine (Forge)",
+      subtitle: "Candidate Assessment & Code Readiness Platform",
+      category: "Systems & Cloud",
+      description: "An automated diagnostic assessment engine that analyzes developer fundamentals and pinpoints exactly whether a candidate is near-hirable or job-ready, generating customized improvement roadmaps.",
       image: forge,
-      tech: ["Next.js", "MongoDB", "Tailwind CSS", "TypeScript"],
+      tech: ["Next.js", "MongoDB", "Tailwind CSS", "TypeScript", "Node.js"],
       github: "https://github.com/muhammedsirajudeen/near-hireable-platform-engine",
       liveDemo: true,
       live: "https://forge.onboardcareers.in",
+      highlights: ["Automated scoring heuristics for developer core competencies", "Actionable candidate feedback reports with diagnostic metrics", "Seamless integration with recruiting assessment portals"],
+      featured: true,
    },
    {
+      id: "brewcode",
       title: "BrewCode JS Compiler",
-      description: "A web application that compiles JavaScript code into a visual representation",
+      subtitle: "Visual Code Sandbox & Queue Worker",
+      category: "Systems & Cloud",
+      description: "A distributed JavaScript compilation sandbox that translates code execution into visual event loop queue representations using asynchronous job queue management.",
       image: brewcode,
-      tech: ["Next.js", "TypeScript", "Docker", "BullMQ", "Redis", "Queue Management"],
+      tech: ["Next.js", "Docker", "BullMQ", "Redis", "TypeScript", "Node.js"],
       github: "https://github.com/JasimIhsan/Brew-Code-JS-Compiler",
       liveDemo: true,
       live: "https://brewcode.jasimihsan.in",
+      highlights: ["Isolated sandbox execution with Docker containers", "Distributed async task queues handled via BullMQ and Redis", "Interactive visual animation showing Call Stack & Event Loop ticks"],
+      featured: true,
    },
    {
+      id: "mentorshub",
       title: "MentorsHub",
-      description: "A platform for booking mentorship sessions with features like chat, video calls, payments, wallet, and admin panel.",
+      subtitle: "Live Mentorship & Video Platform",
+      category: "Full-Stack",
+      description: "Complete platform for booking mentorship sessions, real-time chat, 1-on-1 video calling, payment escrow wallets, and granular administrative governance.",
       image: mentorshub,
       tech: ["React.js", "TypeScript", "Node.js", "Socket.io", "MongoDB", "Tailwind CSS"],
       github: "https://github.com/JasimIhsan/MentorsHub",
       liveDemo: true,
       live: "https://mentors-hub-in.vercel.app",
+      highlights: ["Real-time bidirectional communication powered by Socket.io", "Integrated scheduling calendar with automated slot management", "Complete admin dashboard with revenue analytics and payout controls"],
    },
    {
-      title: "Byteverse E-Commerce Platform",
-      description: "A full-stack e-commerce solution with Ejs, Node.js, and RazorPay integration.",
+      id: "byteverse",
+      title: "Byteverse E-Commerce",
+      subtitle: "Full-Stack Commerce & Payments",
+      category: "E-Commerce",
+      description: "Comprehensive e-commerce platform built with Node.js featuring secure checkout, RazorPay gateway integration, inventory tracking, and discount engine.",
       image: byteverse,
-      tech: ["Node.js", "MongoDB", "Ejs", "RazorPay"],
+      tech: ["Node.js", "MongoDB", "Ejs", "RazorPay", "Express.js"],
       github: "https://github.com/JasimIhsan/Byteverse-E-commerse-website",
       liveDemo: false,
       live: "#",
+      highlights: ["Multi-step checkout flow with RazorPay payment gateway integration", "Product catalog with dynamic filtering and variant management", "Session-based cart state with stock verification safeguards"],
    },
-   {
-      title: "User Management System",
-      description: "A user management system built with React, TypeScript, and MongoDB",
-      image: usermanagement,
-      tech: ["React", "TypeScript"],
-      github: "https://github.com/JasimIhsan/User_Management",
-      liveDemo: false,
-      live: "#",
-   },
+   // {
+   //    id: "usermanagement",
+   //    title: "User Management System",
+   //    subtitle: "RBAC & Authentication Engine",
+   //    category: "Full-Stack",
+   //    description:
+   //       "Robust administrative dashboard with role-based access control (RBAC), user state lifecycle management, token-based authentication, and profile audits.",
+   //    image: usermanagement,
+   //    tech: ["React", "TypeScript", "MongoDB", "Express.js", "JWT"],
+   //    github: "https://github.com/JasimIhsan/User_Management",
+   //    liveDemo: false,
+   //    live: "#",
+   //    highlights: [
+   //       "Granular Role-Based Access Control and permission scopes",
+   //       "Type-safe frontend and backend APIs with TypeScript",
+   //       "Fast administrative search, pagination, and bulk batch actions",
+   //    ],
+   // },
 ];
 
+const categories = ["All", "Full-Stack", "Mobile", "Systems & Cloud", "E-Commerce"] as const;
+
 export default function Projects() {
-   const [isModalOpen, setIsModalOpen] = useState(false);
-   const [selectedImage, setSelectedImage] = useState<any>(null);
+   const [activeFilter, setActiveFilter] = useState<string>("All");
+   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+   const tabsContainerRef = useRef<HTMLDivElement>(null);
 
-   const openModal = (image: any) => {
-      setSelectedImage(image);
-      setIsModalOpen(true);
-   };
+   const filteredProjects = activeFilter === "All" ? projects : projects.filter((p) => p.category === activeFilter);
 
-   const closeModal = () => {
-      setIsModalOpen(false);
-      setSelectedImage(null);
+   const handleTabClick = (cat: string, e: React.MouseEvent<HTMLButtonElement>) => {
+      setActiveFilter(cat);
+      const btn = e.currentTarget;
+      const container = tabsContainerRef.current;
+      if (btn && container) {
+         const containerRect = container.getBoundingClientRect();
+         const btnRect = btn.getBoundingClientRect();
+
+         // Auto-scroll when button reaches edge threshold
+         const offsetLeft = btnRect.left - containerRect.left;
+         const offsetRight = containerRect.right - btnRect.right;
+         const threshold = 70; // 70px edge threshold
+
+         if (offsetLeft < threshold || offsetRight < threshold) {
+            const targetScrollLeft =
+               container.scrollLeft + (btnRect.left - containerRect.left) - containerRect.width / 2 + btnRect.width / 2;
+            container.scrollTo({
+               left: targetScrollLeft,
+               behavior: "smooth",
+            });
+         }
+      }
    };
 
    useEffect(() => {
       const handleEsc = (event: KeyboardEvent) => {
-         if (event.key === "Escape" && isModalOpen) {
-            closeModal();
+         if (event.key === "Escape" && selectedProject) {
+            setSelectedProject(null);
          }
       };
+
+      if (selectedProject) {
+         stopLenis();
+         document.documentElement.style.overflow = "hidden";
+         document.body.style.overflow = "hidden";
+      } else {
+         startLenis();
+         document.documentElement.style.overflow = "";
+         document.body.style.overflow = "";
+      }
+
       window.addEventListener("keydown", handleEsc);
-      return () => window.removeEventListener("keydown", handleEsc);
-   }, [isModalOpen]);
+      return () => {
+         startLenis();
+         document.documentElement.style.overflow = "";
+         document.body.style.overflow = "";
+         window.removeEventListener("keydown", handleEsc);
+      };
+   }, [selectedProject]);
 
    return (
-      <section id="projects" className="py-24 px-6 relative z-10">
-         <div className="max-w-6xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="mb-20 text-center">
-               <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-[#08142C]">Featured Projects</h2>
-               <p className="text-lg text-[#64748B] font-normal max-w-2xl mx-auto">A curated selection of my recent work showcasing modern development, premium design, and scalable architecture.</p>
-            </motion.div>
+      <section id="projects" className="py-28 px-6 relative z-10">
+         {/* Subtle ambient light */}
+         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#8A5A2B]/5 dark:bg-[#D4A373]/5 rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="flex flex-col gap-16">
-               {projects.map((project, index) => {
-                  const isEven = index % 2 === 0;
+         <div className="max-w-7xl mx-auto">
+            {/* Section Header */}
+            <ScrollReveal>
+               <div className="text-center mb-16">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-4">
+                     <Sparkles size={14} />
+                     Crafted With Precision
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">
+                     Featured Engineering Projects
+                  </h2>
+                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">
+                     A showcase of production web applications, distributed queue systems, and mobile applications built with modern tools.
+                  </p>
+               </div>
+            </ScrollReveal>
 
-                  return (
-                     <ScrollReveal key={project.title} delay={index * 0.1}>
-                        <div className="clay-card group flex flex-col lg:flex-row overflow-hidden relative rounded-[2.5rem]">
-                           {/* Image Container */}
-                           <div className={`relative overflow-hidden w-full lg:w-1/2 shrink-0 h-64 md:h-96 lg:h-auto ${!isEven ? "lg:order-2" : ""}`}>
-                              <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer" loading="lazy" onClick={() => openModal(project.image)} />
-                              <div className="absolute inset-0 bg-gradient-to-t from-[#08142C]/20 via-transparent to-transparent pointer-events-none lg:opacity-0 transition-opacity duration-300" />
-                           </div>
-
-                           {/* Content Container */}
-                           <div className={`p-8 md:p-12 flex-grow flex flex-col justify-center relative z-10 lg:w-1/2 bg-white ${!isEven ? "lg:order-1" : ""}`}>
-                              <h3 className="text-3xl md:text-4xl font-bold text-[#08142C] mb-6">{project.title}</h3>
-
-                              <p className="mb-8 text-[#64748B] font-normal leading-relaxed text-lg">{project.description}</p>
-
-                              <div className="flex flex-wrap gap-3 mb-10">
-                                 {project.tech.map((tech) => (
-                                    <span key={tech} className="clay-pill px-5 py-2 text-sm font-medium text-[#64748B] tracking-wide shadow-sm">
-                                       {tech}
-                                    </span>
-                                 ))}
-                              </div>
-
-                              <div className="flex flex-wrap gap-4 mt-auto">
-                                 {project.github && (
-                                    <motion.a href={project.github} whileHover={{ scale: 1.05, y: -2 }} target="_blank" whileTap={{ scale: 0.95 }} className="clay-pill bg-white flex items-center gap-2 px-6 py-3 text-[#08142C] hover:bg-[#F8FAFC]" aria-label={`View ${project.title} on GitHub`}>
-                                       <Github size={20} />
-                                       <span className="font-medium tracking-wide">Source Code</span>
-                                    </motion.a>
-                                 )}
-                                 {project.liveDemo && (
-                                    <motion.a href={project.live} whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} target="_blank" className="clay-btn flex items-center gap-2 px-6 py-3" aria-label={`View ${project.title} live demo`}>
-                                       <ExternalLink size={20} />
-                                       <span className="font-medium tracking-wide">Live Demo</span>
-                                    </motion.a>
-                                 )}
-                              </div>
-                           </div>
-                        </div>
-                     </ScrollReveal>
-                  );
-               })}
+            {/* Filter Tabs */}
+            <div className="flex justify-center mb-12 sm:mb-16">
+               <div
+                  ref={tabsContainerRef}
+                  className="w-full max-w-full overflow-x-auto no-scrollbar py-1 px-4 sm:px-0 flex justify-start sm:justify-center scroll-smooth"
+               >
+                  <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs min-w-max">
+                     {categories.map((cat) => {
+                        const isSelected = activeFilter === cat;
+                        return (
+                           <button
+                              key={cat}
+                              onClick={(e) => handleTabClick(cat, e)}
+                              className={`relative px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${
+                                 isSelected
+                                    ? "text-[#F7F5F0] dark:text-[#0B0A09]"
+                                    : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"
+                              }`}
+                           >
+                              {isSelected && <motion.div layoutId="activeProjectCategory" className="absolute inset-0 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] shadow-sm" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
+                              <span className="relative z-10 whitespace-nowrap">{cat}</span>
+                           </button>
+                        );
+                     })}
+                  </div>
+               </div>
             </div>
+
+            {/* Project Grid */}
+            <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <AnimatePresence>
+                  {filteredProjects.map((project) => (
+                     <motion.div key={project.id} layout initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}>
+                        <TiltCard
+                           max={8}
+                           glare={true}
+                           className="h-full flex flex-col bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-12px_rgba(24,21,19,0.06)] hover:shadow-[0_20px_45px_-10px_rgba(138,90,43,0.12)] transition-shadow duration-300 group cursor-pointer"
+                           onClick={() => setSelectedProject(project)}
+                        >
+                           {/* Project Image Header */}
+                           <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#ECE8DF]/70 dark:bg-[#141210] border-b border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex items-center justify-center p-3 sm:p-4">
+                              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/10 dark:to-black/30 pointer-events-none" />
+
+                              <img src={project.image} alt={project.title} className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_12px_24px_rgba(0,0,0,0.45)] group-hover:scale-[1.03] transition-transform duration-500 ease-out" loading="lazy" />
+
+                              {/* Category Badge */}
+                              <div className="absolute top-3.5 left-3.5 z-10">
+                                 <span className="px-3 py-1 text-xs font-semibold rounded-full bg-white/95 dark:bg-[#181513]/95 backdrop-blur-md text-[#181513] dark:text-[#E5DFD3] shadow-xs border border-white/50 dark:border-[#E5DFD3]/15">{project.category}</span>
+                              </div>
+
+                              {/* Live indicator if live */}
+                              {project.liveDemo && (
+                                 <div className="absolute top-3.5 right-3.5 z-10">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-emerald-600 text-white backdrop-blur-md shadow-xs">
+                                       <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                       Live
+                                    </span>
+                                 </div>
+                              )}
+                           </div>
+
+                           {/* Project Body */}
+                           <div className="p-7 flex-1 flex flex-col justify-between">
+                              <div>
+                                 <div className="text-xs font-medium text-[#8A5A2B] dark:text-[#D4A373] mb-1">{project.subtitle}</div>
+                                 <h3 className="text-xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-3 group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors flex items-center justify-between">
+                                    <span>{project.title}</span>
+                                    <ArrowUpRight size={18} className="text-[#A89F91] group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                                 </h3>
+                                 <p className="text-sm text-[#6E655C] dark:text-[#A89F91] line-clamp-3 leading-relaxed mb-6 font-normal">{project.description}</p>
+                              </div>
+
+                              {/* Tech Stack Chips & Action Link */}
+                              <div>
+                                 <div className="flex flex-wrap gap-1.5 mb-5">
+                                    {project.tech.slice(0, 3).map((t) => (
+                                       <span key={t} className="px-2.5 py-1 text-xs font-medium text-[#4A433D] dark:text-[#D5CEC2] bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 rounded-md">
+                                          {t}
+                                       </span>
+                                    ))}
+                                    {project.tech.length > 3 && <span className="px-2 py-1 text-xs font-medium text-[#6E655C] dark:text-[#A89F91] bg-[#EFECE4] dark:bg-[#231E1A] rounded-md">+{project.tech.length - 3}</span>}
+                                 </div>
+
+                                 <div className="flex items-center justify-between pt-4 border-t border-[#EFECE4] dark:border-[#E5DFD3]/10 text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373]">
+                                    <span>View Details & Specs</span>
+                                    <span className="text-[#A89F91] dark:text-[#6E655C] font-normal group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors">Click to inspect →</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </TiltCard>
+                     </motion.div>
+                  ))}
+               </AnimatePresence>
+            </motion.div>
          </div>
 
-         {/* Enhanced Modal */}
-         <AnimatePresence>
-            {isModalOpen && selectedImage && (
-               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="fixed inset-0 bg-[#08142C]/80 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={closeModal}>
-                  <motion.div initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }} transition={{ type: "spring", damping: 25, stiffness: 300 }} className="clay-card relative max-w-6xl w-full mx-auto p-2 bg-white" onClick={(e) => e.stopPropagation()}>
-                     <img src={selectedImage} alt="Enlarged project" className="w-full h-auto max-h-[85vh] object-contain rounded-[1.5rem]" />
-                     <button className="clay-btn absolute -top-4 -right-4 text-white p-3 shadow-xl border-2 border-white" onClick={closeModal} aria-label="Close modal">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                     </button>
-                  </motion.div>
-               </motion.div>
+         {/* Detailed Project Modal with beUI backdrop & spring motion rendered via Portal */}
+         {typeof document !== "undefined" &&
+            createPortal(
+               <AnimatePresence>
+                  {selectedProject && (
+                     <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 bg-black/80 dark:bg-black/92 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-hidden"
+                        onClick={() => setSelectedProject(null)}
+                        onWheel={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
+                     >
+                        <motion.div
+                           initial={{ scale: 0.95, opacity: 0, y: 15 }}
+                           animate={{ scale: 1, opacity: 1, y: 0 }}
+                           exit={{ scale: 0.95, opacity: 0, y: 15 }}
+                           transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                           className="bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 rounded-3xl md:rounded-[2rem] max-w-5xl w-full max-h-[90vh] md:max-h-[85vh] overflow-hidden shadow-2xl relative flex flex-col md:grid md:grid-cols-12"
+                           onClick={(e) => e.stopPropagation()}
+                        >
+                           {/* Close button */}
+                           {/* <button
+                              onClick={() => setSelectedProject(null)}
+                              className="absolute top-4 right-4 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 dark:bg-[#231E1A]/90 backdrop-blur-md border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#6E655C] dark:text-[#E5DFD3] hover:text-[#181513] dark:hover:text-white shadow-md hover:scale-105 transition-all cursor-pointer"
+                              aria-label="Close modal"
+                           >
+                              <X size={18} />
+                           </button> */}
+
+                           {/* Left Column: MacBook Device Showcase */}
+                           <div className="md:col-span-6 lg:col-span-7 bg-[#ECE8DF]/60 dark:bg-[#12100E] border-b md:border-b-0 md:border-r border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-col justify-between p-5 sm:p-7 relative overflow-hidden shrink-0">
+                              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/10 dark:to-black/35 pointer-events-none" />
+
+                              {/* Category & Status badges */}
+                              <div className="flex items-center justify-between z-10 mb-2 sm:mb-4">
+                                 <span className="px-3 py-1 rounded-full bg-white/95 dark:bg-[#231E1A]/95 backdrop-blur-md border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider shadow-2xs">{selectedProject.category}</span>
+                                 {selectedProject.liveDemo && (
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-emerald-600 text-white shadow-xs">
+                                       <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                       Live Platform
+                                    </span>
+                                 )}
+                              </div>
+
+                              {/* Laptop Preview */}
+                              <div className="flex-1 flex items-center justify-center py-2 sm:py-6 z-10">
+                                 <img src={selectedProject.image} alt={selectedProject.title} className="w-full max-h-[200px] sm:max-h-[280px] md:max-h-[380px] object-contain drop-shadow-[0_16px_32px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]" />
+                              </div>
+
+                              {/* Desktop hint */}
+                              <div className="hidden md:flex items-center justify-between text-[11px] text-[#A89F91] dark:text-[#6E655C] font-mono z-10 pt-2">
+                                 <span>Production Build Architecture</span>
+                                 <span>Interactive Preview</span>
+                              </div>
+                           </div>
+
+                           {/* Right Column: Project Dossier & Scrollable Content */}
+                           <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between overflow-hidden bg-white dark:bg-[#181513] flex-1">
+                              {/* Scrollable details */}
+                              <div className="p-5 sm:p-7 space-y-6 overflow-y-auto flex-1 custom-scrollbar">
+                                 <div>
+                                    <div className="text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373] uppercase tracking-wider mb-1">{selectedProject.subtitle}</div>
+                                    <h3 className="text-xl sm:text-2xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-3">{selectedProject.title}</h3>
+                                    <p className="text-sm text-[#6E655C] dark:text-[#A89F91] leading-relaxed font-normal">{selectedProject.description}</p>
+                                 </div>
+
+                                 {/* Architectural Highlights */}
+                                 <div>
+                                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-3 flex items-center gap-2">
+                                       <Code2 size={16} className="text-[#8A5A2B] dark:text-[#D4A373]" />
+                                       Key Features & Architecture
+                                    </h4>
+                                    <div className="space-y-2">
+                                       {selectedProject.highlights.map((h, i) => (
+                                          <div key={i} className="flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#EFECE4]/70 dark:bg-[#231E1A]/80 border border-[#DCD6C8] dark:border-[#E5DFD3]/10 text-xs sm:text-sm text-[#4A433D] dark:text-[#D5CEC2]">
+                                             <div className="w-1.5 h-1.5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] mt-1.5 shrink-0" />
+                                             <span className="leading-snug">{h}</span>
+                                          </div>
+                                       ))}
+                                    </div>
+                                 </div>
+
+                                 {/* Tech Stack */}
+                                 <div>
+                                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-3 flex items-center gap-2">
+                                       <Layers size={16} className="text-[#8A5A2B] dark:text-[#D4A373]" />
+                                       Tech Stack & Tools
+                                    </h4>
+                                    <div className="flex flex-wrap gap-1.5">
+                                       {selectedProject.tech.map((t) => (
+                                          <span key={t} className="px-2.5 py-1 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3] bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 rounded-lg">
+                                             {t}
+                                          </span>
+                                       ))}
+                                    </div>
+                                 </div>
+                              </div>
+
+                              {/* Pinned Action Footer */}
+                              <div className="p-4 sm:p-5 bg-[#EFECE4] dark:bg-[#110E0C] border-t border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-wrap gap-2.5 items-center justify-between shrink-0">
+                                 <div className="flex flex-wrap gap-2">
+                                    {selectedProject.github && (
+                                       <a
+                                          href={selectedProject.github}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all shadow-2xs"
+                                       >
+                                          <Github size={14} />
+                                          GitHub Source
+                                       </a>
+                                    )}
+                                    {selectedProject.liveDemo && (
+                                       <a href={selectedProject.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] text-[#F7F5F0] dark:text-[#0B0A09] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-xs font-semibold transition-all shadow-sm">
+                                          <ExternalLink size={14} />
+                                          Open Live
+                                       </a>
+                                    )}
+                                 </div>
+
+                                 <button onClick={() => setSelectedProject(null)} className="text-xs font-semibold text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-white transition-colors cursor-pointer px-2 py-1">
+                                    Close
+                                 </button>
+                              </div>
+                           </div>
+                        </motion.div>
+                     </motion.div>
+                  )}
+               </AnimatePresence>,
+               document.body
             )}
-         </AnimatePresence>
       </section>
    );
 }

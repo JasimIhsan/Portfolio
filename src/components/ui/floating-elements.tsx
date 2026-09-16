@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 export default function FloatingElements() {
    return (
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-         {/* Dot grid pattern */}
+         {/* Dot grid pattern in warm espresso / earth */}
          <div 
-            className="absolute inset-0 opacity-[0.4]"
+            className="absolute inset-0 opacity-[0.25] dark:opacity-[0.15]"
             style={{ 
-               backgroundImage: 'radial-gradient(#2563EB 1px, transparent 1px)', 
+               backgroundImage: 'radial-gradient(#8A5A2B 1px, transparent 1px)', 
                backgroundSize: '40px 40px' 
             }}
          />
@@ -24,10 +24,10 @@ export default function FloatingElements() {
                repeat: Number.POSITIVE_INFINITY,
                ease: "linear",
             }}
-            className="absolute top-1/4 right-1/4 w-[30rem] h-[30rem] rounded-full border border-[#2563EB] opacity-10"
+            className="absolute top-1/4 right-1/4 w-[30rem] h-[30rem] rounded-full border border-[#8A5A2B] dark:border-[#D4A373] opacity-10"
          />
 
-         {/* Medium floating solid blue circle */}
+         {/* Medium floating solid warm circle */}
          <motion.div
             animate={{
                x: [0, -40, 0],
@@ -38,7 +38,7 @@ export default function FloatingElements() {
                repeat: Number.POSITIVE_INFINITY,
                ease: "easeInOut",
             }}
-            className="absolute bottom-1/3 left-1/5 w-64 h-64 rounded-full opacity-[0.03] bg-[#2563EB]"
+            className="absolute bottom-1/3 left-1/5 w-64 h-64 rounded-full opacity-[0.03] dark:opacity-[0.05] bg-[#8A5A2B] dark:bg-[#D4A373]"
          />
 
          {/* Small floating outline shape */}
@@ -53,26 +53,8 @@ export default function FloatingElements() {
                repeat: Number.POSITIVE_INFINITY,
                ease: "easeInOut",
             }}
-            className="absolute top-2/3 right-1/3 w-32 h-32 opacity-10 border border-[#2563EB]"
+            className="absolute top-2/3 right-1/3 w-32 h-32 opacity-10 border border-[#8A5A2B] dark:border-[#D4A373]"
             style={{ borderRadius: "40%" }}
-         />
-
-         {/* Soft gradient blur */}
-         <motion.div
-            animate={{
-               scale: [1, 1.1, 1],
-               opacity: [0.05, 0.1, 0.05],
-            }}
-            transition={{
-               duration: 10,
-               repeat: Number.POSITIVE_INFINITY,
-               ease: "easeInOut",
-            }}
-            className="absolute top-1/2 left-1/2 w-[40rem] h-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{
-               background: "radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 60%)",
-               filter: "blur(60px)",
-            }}
          />
       </div>
    );

@@ -1,6 +1,20 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 
+let globalLenis: Lenis | null = null;
+
+export function stopLenis() {
+  if (globalLenis) {
+    globalLenis.stop();
+  }
+}
+
+export function startLenis() {
+  if (globalLenis) {
+    globalLenis.start();
+  }
+}
+
 export function useLenis() {
   useEffect(() => {
     // Disable smooth scrolling on touch devices to improve performance
@@ -22,15 +36,26 @@ export function useLenis() {
       return;
     }
 
+    globalLenis = lenis;
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
+      if (globalLenis === lenis) {
+        globalLenis = null;
+      }
+      if ((window as unknown as { __lenis?: Lenis }).__lenis === lenis) {
+        delete (window as unknown as { __lenis?: Lenis }).__lenis;
+      }
     };
   }, []);
 }
