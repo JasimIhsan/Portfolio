@@ -8,6 +8,7 @@ import Projects from "app/components/sections/Projects";
 import Skills from "app/components/sections/Skills";
 import CommandPalette from "app/components/ui/command-palette";
 import Navigation from "app/components/ui/navigation";
+import Preloader from "app/components/ui/preloader";
 import { AnimatePresence, motion } from "framer-motion";
 import { debounce } from "lodash";
 import { ArrowUp, ChevronDown } from "lucide-react";
@@ -29,6 +30,7 @@ const SECTIONS = [
 ];
 
 export default function Home() {
+   const [isLoading, setIsLoading] = useState(true);
    const [activeSection, setActiveSection] = useState("hero");
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
    const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -89,10 +91,14 @@ export default function Home() {
 
    return (
       <div className="min-h-screen w-full bg-[#F7F5F0] dark:bg-[#0B0A09] text-[#181513] dark:text-[#E5DFD3] selection:bg-[#8A5A2B] dark:selection:bg-[#D4A373] selection:text-[#F7F5F0] dark:selection:text-[#0B0A09] transition-colors duration-300">
+         {/* Initial Boot Sequence Preloader on every app restart */}
+         <AnimatePresence mode="wait">{isLoading && <Preloader key="app-preloader" onComplete={() => setIsLoading(false)} />}</AnimatePresence>
+
          {/* Command Palette Spotlight Search Modal */}
          <CommandPalette
             isOpen={isCommandPaletteOpen}
             onClose={() => setIsCommandPaletteOpen(false)}
+            onReplayPreloader={() => setIsLoading(true)}
             onSelectProject={(projectId) => {
                setSelectedProjectId(projectId);
                scrollToSection("projects");
@@ -102,14 +108,14 @@ export default function Home() {
          {/* Unified Navigation (Desktop floating pill & Mobile smart auto-hiding bar) */}
          <Navigation activeSection={activeSection} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
 
-         <main className="relative w-full">
+         <motion.main initial={isLoading ? { opacity: 0.8, scale: 0.98 } : false} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} className="relative w-full">
             <Hero />
             <About />
             <Experience />
             <Projects selectedProjectId={selectedProjectId} onClearSelectedProject={() => setSelectedProjectId(null)} />
             <Skills />
             <Contact />
-         </main>
+         </motion.main>
 
          {/* Bottom Center Floating Next Section Quick Jump Button (Visible on tablet/desktop to avoid blocking mobile FAB) */}
          <AnimatePresence>

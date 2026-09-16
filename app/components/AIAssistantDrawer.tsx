@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Bot, Brain, MessageSquare, RefreshCw, Send, User, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
@@ -51,10 +51,13 @@ interface AIAssistantDrawerProps {
 export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChange }: AIAssistantDrawerProps = {}) {
    const [internalIsOpen, setInternalIsOpen] = useState(false);
    const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
-   const setIsOpen = (open: boolean) => {
-      if (onOpenChange) onOpenChange(open);
-      setInternalIsOpen(open);
-   };
+   const setIsOpen = useCallback(
+      (open: boolean) => {
+         if (onOpenChange) onOpenChange(open);
+         setInternalIsOpen(open);
+      },
+      [onOpenChange]
+   );
 
    const [messages, setMessages] = useState<Message[]>([]);
    const [input, setInput] = useState("");
@@ -76,24 +79,20 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
 
    useEffect(() => {
       if (isOpen) {
-         if (animStage === "closed" || animStage === "sliding_out") {
-            setAnimStage("sliding_in");
-         }
+         setAnimStage((prev) => (prev === "closed" || prev === "sliding_out" ? "sliding_in" : prev));
       } else {
-         if (animStage === "open" || animStage === "sliding_in") {
-            setAnimStage("closing_top");
-         }
+         setAnimStage((prev) => (prev === "open" || prev === "sliding_in" ? "closing_top" : prev));
       }
    }, [isOpen]);
 
-   const handleRequestClose = () => {
+   const handleRequestClose = useCallback(() => {
       if (animStage === "open" || animStage === "sliding_in") {
          setAnimStage("closing_top");
       } else {
          setAnimStage("closed");
          setIsOpen(false);
       }
-   };
+   }, [animStage, setIsOpen]);
 
    const hasMessages = messages.length > 0;
 
@@ -161,7 +160,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
       };
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
-   }, [animStage]);
+   }, [animStage, handleRequestClose]);
 
    // Lock Lenis & body scroll on mobile screens when open
    useEffect(() => {
@@ -630,7 +629,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
                                  whileTap={{ scale: 0.94 }}
                                  type="submit"
                                  disabled={!input.trim() || isLoading}
-                                 className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-95 transition-all cursor-pointer shrink-0 shadow-[0_8px_20px_rgba(138,90,43,0.3)] dark:shadow-[0_8px_20px_rgba(212,163,115,0.25)] border border-[#8A5A2B]/20 dark:border-[#D4A373]/20"
+                                 className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] flex items-center justify-center disabled:cursor-not-allowed hover:opacity-95 transition-all cursor-pointer shrink-0 shadow-[0_8px_20px_rgba(138,90,43,0.3)] dark:shadow-[0_8px_20px_rgba(212,163,115,0.25)] border border-[#8A5A2B]/20 dark:border-[#D4A373]/20"
                                  aria-label="Send message"
                               >
                                  <Send size={15} />

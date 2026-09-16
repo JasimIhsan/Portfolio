@@ -33,6 +33,7 @@ interface CommandPaletteProps {
    isOpen: boolean;
    onClose: () => void;
    onSelectProject?: (projectId: string) => void;
+   onReplayPreloader?: () => void;
 }
 
 interface CommandItem {
@@ -46,7 +47,7 @@ interface CommandItem {
    badge?: string;
 }
 
-export default function CommandPalette({ isOpen, onClose, onSelectProject }: CommandPaletteProps) {
+export default function CommandPalette({ isOpen, onClose, onSelectProject, onReplayPreloader }: CommandPaletteProps) {
    const [query, setQuery] = useState("");
    const [selectedIndex, setSelectedIndex] = useState(0);
    const inputRef = useRef<HTMLInputElement>(null);
@@ -194,6 +195,20 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject }: Com
             },
             badge: "Clipboard",
          },
+         {
+            id: "act-replay-boot",
+            title: "Replay System Boot Sequence",
+            subtitle: "Trigger the initial architectural loading & unmounting motion graphics",
+            category: "Actions",
+            icon: Sparkles,
+            action: () => {
+               onClose();
+               if (onReplayPreloader) {
+                  onReplayPreloader();
+               }
+            },
+            badge: "FX",
+         },
 
          // Social Links
          {
@@ -239,7 +254,7 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject }: Com
       ];
 
       return items;
-   }, [isDark, onClose, onSelectProject, scrollToSection, toggleTheme]);
+   }, [isDark, onClose, onReplayPreloader, onSelectProject, scrollToSection, toggleTheme]);
 
    const filteredCommands = useMemo(() => {
       if (!query.trim()) return commands;
