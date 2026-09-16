@@ -1,26 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import {
-   ArrowRight,
-   Briefcase,
-   Code2,
-   Command,
-   FileText,
-   FolderGit2,
-   Github,
-   Layers,
-   Linkedin,
-   Mail,
-   Moon,
-   Phone,
-   Search,
-   Sparkles,
-   Sun,
-   Terminal,
-   User,
-   X,
-} from "lucide-react";
+import { ArrowRight, Briefcase, Code2, Command, FileText, FolderGit2, Github, Layers, Linkedin, Mail, Moon, Phone, Search, Sparkles, Sun, Terminal, User, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { toast } from "sonner";
@@ -160,7 +141,7 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
             category: "Actions",
             icon: FileText,
             action: () => {
-               window.open("https://drive.google.com/file/d/1G6Ylakk0SxJHrs6rfh6K4Blsx19aRueD/view?usp=drive_link", "_blank");
+               window.open("https://drive.google.com/file/d/19qu8HEq97dK2_8j0ZvycamyVXwyKeAgX/view?usp=sharing", "_blank");
                onClose();
             },
             badge: "PDF",
@@ -259,12 +240,7 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
    const filteredCommands = useMemo(() => {
       if (!query.trim()) return commands;
       const lower = query.toLowerCase();
-      return commands.filter(
-         (c) =>
-            c.title.toLowerCase().includes(lower) ||
-            c.subtitle?.toLowerCase().includes(lower) ||
-            c.category.toLowerCase().includes(lower)
-      );
+      return commands.filter((c) => c.title.toLowerCase().includes(lower) || c.subtitle?.toLowerCase().includes(lower) || c.category.toLowerCase().includes(lower));
    }, [commands, query]);
 
    // Keyboard Navigation within Palette
@@ -308,14 +284,7 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
    return createPortal(
       <AnimatePresence>
          {isOpen && (
-            <motion.div
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1 }}
-               exit={{ opacity: 0 }}
-               transition={{ duration: 0.15 }}
-               className="fixed inset-0 z-50 bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 pt-[12vh] sm:pt-[15vh]"
-               onClick={onClose}
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="fixed inset-0 z-50 bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 pt-[12vh] sm:pt-[15vh]" onClick={onClose}>
                <motion.div
                   initial={{ scale: 0.96, opacity: 0, y: -10 }}
                   animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -338,26 +307,14 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
                         }}
                         className="w-full bg-transparent text-sm sm:text-base font-medium text-[#181513] dark:text-[#E5DFD3] placeholder-[#A89F91] focus:outline-none"
                      />
-                     <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-[#EFECE4] dark:bg-[#231E1A] text-[10px] font-mono text-[#6E655C] dark:text-[#A89F91] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">
-                        ESC
-                     </span>
-                     <button
-                        onClick={onClose}
-                        className="sm:hidden text-[#6E655C] dark:text-[#A89F91] p-1"
-                        aria-label="Close"
-                     >
+                     <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-[#EFECE4] dark:bg-[#231E1A] text-[10px] font-mono text-[#6E655C] dark:text-[#A89F91] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">ESC</span>
+                     <button onClick={onClose} className="sm:hidden text-[#6E655C] dark:text-[#A89F91] p-1" aria-label="Close">
                         <X size={18} />
                      </button>
                   </div>
 
                   {/* Results List */}
-                  <div
-                     ref={listRef}
-                     data-lenis-prevent="true"
-                     onWheel={(e) => e.stopPropagation()}
-                     onTouchMove={(e) => e.stopPropagation()}
-                     className="max-h-[380px] sm:max-h-[420px] overflow-y-auto overscroll-contain p-2 space-y-1 custom-scrollbar touch-pan-y"
-                  >
+                  <div ref={listRef} data-lenis-prevent="true" onWheel={(e) => e.stopPropagation()} onTouchMove={(e) => e.stopPropagation()} className="max-h-[380px] sm:max-h-[420px] overflow-y-auto overscroll-contain p-2 space-y-1 custom-scrollbar touch-pan-y">
                      {filteredCommands.length > 0 ? (
                         filteredCommands.map((cmd, idx) => {
                            const isSelected = selectedIndex === idx;
@@ -369,68 +326,27 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
                                  data-index={idx}
                                  onClick={cmd.action}
                                  onMouseEnter={() => setSelectedIndex(idx)}
-                                 className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all cursor-pointer ${
-                                    isSelected
-                                       ? "bg-[#181513] dark:bg-[#231E1A] text-white shadow-xs border border-[#181513] dark:border-[#D4A373]/30"
-                                       : "text-[#181513] dark:text-[#E5DFD3] hover:bg-[#EFECE4]/60 dark:hover:bg-[#231E1A]/60"
-                                 }`}
+                                 className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all cursor-pointer ${isSelected ? "bg-[#181513] dark:bg-[#231E1A] text-white shadow-xs border border-[#181513] dark:border-[#D4A373]/30" : "text-[#181513] dark:text-[#E5DFD3] hover:bg-[#EFECE4]/60 dark:hover:bg-[#231E1A]/60"}`}
                               >
                                  <div className="flex items-center gap-3 min-w-0">
-                                    <div
-                                       className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
-                                          isSelected
-                                             ? "bg-[#8A5A2B] text-white"
-                                             : "bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373]"
-                                       }`}
-                                    >
+                                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${isSelected ? "bg-[#8A5A2B] text-white" : "bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373]"}`}>
                                        <Icon size={15} />
                                     </div>
                                     <div className="min-w-0">
-                                       <div
-                                          className={`text-sm font-semibold truncate ${
-                                             isSelected ? "text-white dark:text-[#E5DFD3]" : "text-[#181513] dark:text-[#E5DFD3]"
-                                          }`}
-                                       >
-                                          {cmd.title}
-                                       </div>
-                                       {cmd.subtitle && (
-                                          <div
-                                             className={`text-xs truncate ${
-                                                isSelected ? "text-[#D5CEC2]" : "text-[#6E655C] dark:text-[#A89F91]"
-                                             }`}
-                                          >
-                                             {cmd.subtitle}
-                                          </div>
-                                       )}
+                                       <div className={`text-sm font-semibold truncate ${isSelected ? "text-white dark:text-[#E5DFD3]" : "text-[#181513] dark:text-[#E5DFD3]"}`}>{cmd.title}</div>
+                                       {cmd.subtitle && <div className={`text-xs truncate ${isSelected ? "text-[#D5CEC2]" : "text-[#6E655C] dark:text-[#A89F91]"}`}>{cmd.subtitle}</div>}
                                     </div>
                                  </div>
 
                                  <div className="flex items-center gap-2 shrink-0 ml-2">
-                                    {cmd.badge && (
-                                       <span
-                                          className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
-                                             isSelected
-                                                ? "bg-white/10 text-[#D4A373] border-white/15"
-                                                : "bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] border-[#DCD6C8] dark:border-[#E5DFD3]/15"
-                                          }`}
-                                       >
-                                          {cmd.badge}
-                                       </span>
-                                    )}
-                                    <ArrowRight
-                                       size={14}
-                                       className={`transition-transform ${
-                                          isSelected ? "opacity-100 translate-x-0.5 text-[#D4A373]" : "opacity-0"
-                                       }`}
-                                    />
+                                    {cmd.badge && <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${isSelected ? "bg-white/10 text-[#D4A373] border-white/15" : "bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] border-[#DCD6C8] dark:border-[#E5DFD3]/15"}`}>{cmd.badge}</span>}
+                                    <ArrowRight size={14} className={`transition-transform ${isSelected ? "opacity-100 translate-x-0.5 text-[#D4A373]" : "opacity-0"}`} />
                                  </div>
                               </button>
                            );
                         })
                      ) : (
-                        <div className="p-8 text-center text-sm text-[#6E655C] dark:text-[#A89F91]">
-                           No matching actions or projects found for "{query}"
-                        </div>
+                        <div className="p-8 text-center text-sm text-[#6E655C] dark:text-[#A89F91]">No matching actions or projects found for "{query}"</div>
                      )}
                   </div>
 
