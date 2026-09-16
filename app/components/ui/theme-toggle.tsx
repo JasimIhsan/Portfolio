@@ -113,7 +113,7 @@ export function useThemeToggle({ variant = "circle-blur", start = "top-right" }:
       document.head.appendChild(el);
    }, []);
 
-   const isDark = mounted && resolvedTheme === "dark";
+   const isDark = mounted ? resolvedTheme === "dark" : true;
 
    const toggle = (e?: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent) => {
       const next = isDark ? "light" : "dark";

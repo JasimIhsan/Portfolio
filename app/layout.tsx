@@ -22,8 +22,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const viewport: Viewport = {
    themeColor: [
-      { media: "(prefers-color-scheme: light)", color: "#F7F5F0" },
       { media: "(prefers-color-scheme: dark)", color: "#0B0A09" },
+      { media: "(prefers-color-scheme: light)", color: "#F7F5F0" },
    ],
    width: "device-width",
    initialScale: 1,
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
    return (
-      <html lang="en" suppressHydrationWarning className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
+      <html lang="en" suppressHydrationWarning className={`dark ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
          <body className="font-sans bg-[var(--bg-page)] text-[var(--text-main)] transition-colors duration-300 antialiased overflow-x-hidden">
             <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
                <LenisProvider>
