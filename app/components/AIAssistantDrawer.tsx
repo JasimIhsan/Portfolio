@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Bot, MessageSquare, RefreshCw, Send, Sparkles, User, X, Zap } from "lucide-react";
+import { Bot, Brain, MessageSquare, RefreshCw, Send, Sparkles, User, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
@@ -13,14 +13,22 @@ interface Message {
    role: "user" | "assistant";
    content: string;
    timestamp: Date;
-   cached?: boolean;
-   cacheTier?: "exact" | "semantic" | "llm";
-   similarityScore?: number;
+   model?: string;
 }
 
-const STARTER_PROMPTS = ["What is Jasim's primary tech stack?", "Tell me about his key projects", "Is Jasim available for full-time roles?", "What is his experience with Flutter?"];
+const STARTER_PROMPTS = [
+   "What is Jasim's primary tech stack?",
+   "Tell me about his key projects",
+   "Is Jasim available for full-time roles?",
+   "What is his experience with Flutter?",
+];
 
-const COOKING_STEPS = ["Analyzing your question...", "Scanning Jasim's project archives...", "Synthesizing technical details...", "Formatting response..."];
+const LOADING_STATUSES = [
+   "Analyzing your question...",
+   "Scanning Jasim's portfolio archives...",
+   "Synthesizing technical details...",
+   "Formulating response...",
+];
 
 export default function AIAssistantDrawer() {
    const [isOpen, setIsOpen] = useState(false);
@@ -34,19 +42,19 @@ export default function AIAssistantDrawer() {
    ]);
    const [input, setInput] = useState("");
    const [isLoading, setIsLoading] = useState(false);
-   const [cookingStep, setCookingStep] = useState(0);
+   const [loadingStatusIndex, setLoadingStatusIndex] = useState(0);
    const messagesEndRef = useRef<HTMLDivElement>(null);
    const inputRef = useRef<HTMLInputElement>(null);
 
-   // Cycle through engaging status messages while the AI response is cooking
+   // Cycle through engaging status messages while loading
    useEffect(() => {
       if (!isLoading) {
-         setCookingStep(0);
+         setLoadingStatusIndex(0);
          return;
       }
       const interval = setInterval(() => {
-         setCookingStep((prev) => (prev + 1) % COOKING_STEPS.length);
-      }, 1500);
+         setLoadingStatusIndex((prev) => (prev + 1) % LOADING_STATUSES.length);
+      }, 1400);
       return () => clearInterval(interval);
    }, [isLoading]);
 
@@ -99,7 +107,7 @@ export default function AIAssistantDrawer() {
       // Construct history slice for backend
       const chatHistory = messages
          .filter((m) => m.id !== "welcome")
-         .slice(-4)
+         .slice(-6)
          .map((m) => ({
             role: m.role === "user" ? "user" : "assistant",
             content: m.content,
@@ -149,9 +157,7 @@ export default function AIAssistantDrawer() {
                role: "assistant",
                content: data.reply || "I'm ready to answer any questions about Jasim's portfolio.",
                timestamp: new Date(),
-               cached: !!data.cached,
-               cacheTier: data.cacheTier || (data.cached ? "semantic" : "llm"),
-               similarityScore: data.similarityScore,
+               model: data.model || "Gemini 3.6 Flash",
             },
          ]);
       } catch (err) {
@@ -285,34 +291,16 @@ export default function AIAssistantDrawer() {
                                                 {msg.content}
                                              </ReactMarkdown>
                                           )}
-
-                                          {!isUser && msg.id !== "welcome" && (
-                                             <div className="flex items-center gap-1.5 mt-2 pt-1.5 border-t border-[#E2DDD2]/60 dark:border-[#E5DFD3]/10 text-[10px] text-[#6E655C] dark:text-[#A89F91]">
-                                                {msg.cacheTier === "exact" ? (
-                                                   <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
-                                                      <Zap size={10} /> Instant Cache (&lt;1ms)
-                                                   </span>
-                                                ) : msg.cacheTier === "semantic" ? (
-                                                   <span className="flex items-center gap-1 text-[#8A5A2B] dark:text-[#D4A373] font-medium">
-                                                      <Zap size={10} /> Upstash Vector {msg.similarityScore ? `(${(msg.similarityScore * 100).toFixed(0)}% match)` : ""}
-                                                   </span>
-                                                ) : (
-                                                   <span className="flex items-center gap-1 text-blue-600 dark:text-blue-400 font-medium">
-                                                      <Sparkles size={10} /> Gemini Flash (Live LLM)
-                                                   </span>
-                                                )}
-                                             </div>
-                                          )}
                                        </div>
                                     </div>
                                  );
                               })}
 
-                              {/* Engaging Cooking / Loading Indicator */}
+                              {/* Engaging Animated Loading Indicator */}
                               {isLoading && (
                                  <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="flex items-start gap-2.5">
                                     <div className="w-6 h-6 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
-                                       <Sparkles size={12} className="animate-spin text-[#8A5A2B] dark:text-[#D4A373]" style={{ animationDuration: "3.5s" }} />
+                                       <Brain size={12} className="animate-pulse text-[#8A5A2B] dark:text-[#D4A373]" />
                                     </div>
                                     <div className="px-3.5 py-2.5 rounded-2xl bg-[#F7F5F0] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 rounded-tl-xs shadow-2xs space-y-2 min-w-[210px]">
                                        <div className="flex items-center gap-2">
@@ -322,15 +310,35 @@ export default function AIAssistantDrawer() {
                                              <div className="w-1.5 h-1.5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] animate-bounce [animation-delay:0.4s]" />
                                           </div>
                                           <AnimatePresence mode="wait">
-                                             <motion.span key={cookingStep} initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -3 }} transition={{ duration: 0.18 }} className="text-[11px] font-medium text-[#6E655C] dark:text-[#A89F91]">
-                                                {COOKING_STEPS[cookingStep]}
+                                             <motion.span
+                                                key={loadingStatusIndex}
+                                                initial={{ opacity: 0, y: 2 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -2 }}
+                                                transition={{ duration: 0.2 }}
+                                                className="text-[11px] font-medium text-[#6E655C] dark:text-[#A89F91]"
+                                             >
+                                                {LOADING_STATUSES[loadingStatusIndex]}
                                              </motion.span>
                                           </AnimatePresence>
                                        </div>
-                                       {/* Subtle skeleton shimmer */}
+
+                                       {/* Animated Reasoning Shimmer Bar */}
                                        <div className="space-y-1.5 pt-0.5">
-                                          <div className="h-2 w-4/5 rounded bg-black/5 dark:bg-white/5 animate-pulse" />
-                                          <div className="h-2 w-3/5 rounded bg-black/5 dark:bg-white/5 animate-pulse [animation-delay:0.2s]" />
+                                          <div className="h-1.5 w-full rounded-full bg-black/5 dark:bg-white/5 overflow-hidden">
+                                             <motion.div
+                                                className="h-full bg-gradient-to-r from-[#8A5A2B]/40 via-[#D4A373] to-[#8A5A2B]/40 dark:from-[#D4A373]/40 dark:via-[#F7F5F0] dark:to-[#D4A373]/40 rounded-full"
+                                                animate={{
+                                                   x: ["-100%", "100%"],
+                                                }}
+                                                transition={{
+                                                   repeat: Infinity,
+                                                   duration: 1.5,
+                                                   ease: "linear",
+                                                }}
+                                                style={{ width: "50%" }}
+                                             />
+                                          </div>
                                        </div>
                                     </div>
                                  </motion.div>

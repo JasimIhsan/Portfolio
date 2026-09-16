@@ -9,8 +9,7 @@
       "clean": "rm -rf .next",
       "build": "next build",
       "start": "next start",
-      "lint": "next lint",
-      "seed:faq": "node --env-file=.env scripts/seed-faq.ts"
+      "lint": "next lint"
    },
    "dependencies": {
       "@emotion/react": "^11.14.0",
