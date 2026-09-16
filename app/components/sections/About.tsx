@@ -2,8 +2,8 @@
 
 import { Cpu, Download, MapPin, Sparkles, Terminal, UserCheck, Zap } from "lucide-react";
 import Image from "next/image";
-import profileLight from "../../assets/profile-light.jpg";
 import profileDark from "../../assets/profile-dark.jpg";
+import profileLight from "../../assets/profile-light.jpg";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
 
@@ -39,23 +39,9 @@ export default function About() {
                            <div className="relative mb-5 sm:mb-6">
                               <div className="w-44 h-44 sm:w-56 sm:h-56 md:w-60 md:h-60 rounded-full overflow-hidden border-4 border-white dark:border-[#231E1A] shadow-xl shadow-black/10 relative">
                                  {/* Light mode portrait */}
-                                 <Image
-                                    src={profileLight}
-                                    alt="Jasim Ihsan"
-                                    priority
-                                    fill
-                                    sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 240px"
-                                    className="object-cover group-hover:scale-105 transition-all duration-500 opacity-100 dark:opacity-0"
-                                 />
+                                 <Image src={profileLight} alt="Jasim Ihsan" priority fill sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 240px" className="object-cover group-hover:scale-105 transition-all duration-500 opacity-100 dark:opacity-0" />
                                  {/* Dark mode portrait */}
-                                 <Image
-                                    src={profileDark}
-                                    alt="Jasim Ihsan"
-                                    priority
-                                    fill
-                                    sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 240px"
-                                    className="object-cover group-hover:scale-105 transition-all duration-500 opacity-0 dark:opacity-100"
-                                 />
+                                 <Image src={profileDark} alt="Jasim Ihsan" priority fill sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 240px" className="object-cover group-hover:scale-105 transition-all duration-500 opacity-0 dark:opacity-100" />
                               </div>
                            </div>
 
@@ -98,7 +84,10 @@ export default function About() {
                               <span className="text-[11px] sm:text-xs font-mono text-[#A89F91] dark:text-[#6E655C] truncate max-w-[160px] sm:max-w-none">production_ready: true</span>
                            </div>
 
-                           <p>Full Stack Engineer with hands-on experience building scalable web and mobile applications using Next.js, React.js, TypeScript, Node.js, PostgreSQL, Prisma ORM, MongoDB, Redis, and Flutter. Passionate about designing production-grade architectures, RESTful APIs, RBAC authentication systems, and real-time communication platforms.</p>
+                           <p>
+                              Full Stack Engineer with hands-on experience building scalable web and mobile applications using Next.js, React.js, TypeScript, Node.js, PostgreSQL, Prisma ORM, MongoDB, Redis, and Flutter. Passionate about designing production-grade architectures, RESTful APIs, RBAC authentication systems, and real-time communication
+                              platforms.
+                           </p>
 
                            <p>From building full-stack matrimonial platforms and recruitment engines to mentoring 25+ developers at ExpertX Coding Academy, I focus on Clean Architecture principles, clean coding standards, performance optimization, and Agile engineering practices.</p>
                         </div>
@@ -129,7 +118,7 @@ export default function About() {
                         {/* Resume CTA */}
                         <div className="pt-5 sm:pt-6 mt-5 sm:mt-6 border-t border-[#EFECE4] dark:border-[#E5DFD3]/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
                            <button
-                              onClick={() => window.open("https://drive.google.com/file/d/1G6Ylakk0SxJHrs6rfh6K4Blsx19aRueD/view?usp=drive_link", "_blank")}
+                              onClick={() => window.open("https://drive.google.com/file/d/19qu8HEq97dK2_8j0ZvycamyVXwyKeAgX/view?usp=sharing", "_blank")}
                               className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#181513] dark:bg-[#E5DFD3] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] font-semibold text-sm shadow-md shadow-black/10 transition-all duration-300 cursor-pointer group"
                            >
                               <Download size={18} className="group-hover:-translate-y-0.5 transition-transform" />
