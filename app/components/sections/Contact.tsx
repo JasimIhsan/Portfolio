@@ -96,26 +96,26 @@ export default function Contact() {
    };
 
    return (
-      <section id="contact" className="py-28 px-6 relative z-10 pb-36">
+      <section id="contact" className="py-16 sm:py-24 md:py-28 px-4 sm:px-6 relative z-10 pb-28 sm:pb-36">
          <ScrollReveal>
             <div className="max-w-6xl mx-auto">
                {/* Header */}
-               <div className="text-center mb-16">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-4">
+               <div className="text-center mb-12 sm:mb-16">
+                  <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-4">
                      <Sparkles size={14} />
                      Start a Conversation
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">Let's Build Something Exceptional</h2>
-                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">Have an opening, a freelance project, or an architecture inquiry? Send a message and I'll respond within 24 hours.</p>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-3 sm:mb-4">Let's Build Something Exceptional</h2>
+                  <p className="text-base sm:text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">Have an opening, a freelance project, or an architecture inquiry? Send a message and I'll respond within 24 hours.</p>
                </div>
 
-               <div className="grid lg:grid-cols-12 gap-8 items-start">
+               <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 items-start">
                   {/* Left Column: Direct Info & Social Hub */}
                   <div className="lg:col-span-5 space-y-6">
-                     <TiltCard max={6} glare={true} className="p-8 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[2.5rem]">
-                        <h3 className="text-2xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-6">Contact Channels</h3>
+                     <TiltCard max={6} glare={true} className="p-5 sm:p-8 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[1.75rem] sm:rounded-[2.5rem]">
+                        <h3 className="text-xl sm:text-2xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-5 sm:mb-6">Contact Channels</h3>
 
-                        <div className="space-y-4 mb-8">
+                        <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                            {[
                               {
                                  icon: Mail,
@@ -139,33 +139,33 @@ export default function Contact() {
                               },
                            ].map((item) => (
                               <div key={item.label} className="relative group">
-                                 <a href={item.href} className="flex items-center gap-4 p-4 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B] dark:hover:border-[#D4A373] hover:bg-white dark:hover:bg-[#2A241F] transition-all">
-                                    <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-105 transition-transform shadow-2xs">
-                                       <item.icon size={18} />
+                                 <a href={item.href} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B] dark:hover:border-[#D4A373] hover:bg-white dark:hover:bg-[#2A241F] transition-all">
+                                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-105 transition-transform shadow-2xs shrink-0">
+                                       <item.icon size={16} />
                                     </div>
-                                    <div className="min-w-0 flex-1">
-                                       <div className="text-xs text-[#A89F91] dark:text-[#6E655C] font-medium">{item.label}</div>
-                                       <div className="text-sm font-semibold text-[#181513] dark:text-[#E5DFD3] group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors truncate">{item.value}</div>
+                                    <div className="min-w-0 flex-1 pr-8 sm:pr-10">
+                                       <div className="text-[11px] sm:text-xs text-[#A89F91] dark:text-[#6E655C] font-medium">{item.label}</div>
+                                       <div className="text-xs sm:text-sm font-semibold text-[#181513] dark:text-[#E5DFD3] group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors truncate">{item.value}</div>
                                     </div>
                                  </a>
                                  {item.onCopy && (
                                     <button
                                        type="button"
                                        onClick={item.onCopy}
-                                       className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#6E655C] dark:text-[#A89F91] hover:text-[#8A5A2B] dark:hover:text-[#D4A373] shadow-xs hover:scale-105 transition-all cursor-pointer"
-                                       title="Copy Email"
-                                       aria-label="Copy Email"
+                                       className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 rounded-xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#6E655C] dark:text-[#A89F91] hover:text-[#8A5A2B] dark:hover:text-[#D4A373] shadow-xs hover:scale-105 transition-all cursor-pointer"
+                                       title={`Copy ${item.label}`}
+                                       aria-label={`Copy ${item.label}`}
                                     >
-                                       <Copy size={14} />
+                                       <Copy size={13} />
                                     </button>
                                  )}
                               </div>
                            ))}
                         </div>
 
-                        <div className="pt-6 border-t border-[#EFECE4] dark:border-[#E5DFD3]/10">
-                           <div className="text-xs font-bold uppercase tracking-wider text-[#A89F91] dark:text-[#6E655C] mb-4">Social Profiles</div>
-                           <div className="flex gap-3">
+                        <div className="pt-5 sm:pt-6 border-t border-[#EFECE4] dark:border-[#E5DFD3]/10">
+                           <div className="text-xs font-bold uppercase tracking-wider text-[#A89F91] dark:text-[#6E655C] mb-3 sm:mb-4">Social Profiles</div>
+                           <div className="flex gap-2.5 sm:gap-3">
                               {[
                                  { icon: Github, href: "http://github.com/JasimIhsan", label: "GitHub" },
                                  { icon: Linkedin, href: "http://linkedin.com/in/jasim-ihsan-m", label: "LinkedIn" },
@@ -176,10 +176,10 @@ export default function Contact() {
                                     href={href}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="w-11 h-11 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#6E655C] dark:text-[#A89F91] hover:text-[#8A5A2B] dark:hover:text-[#D4A373] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] hover:bg-white dark:hover:bg-[#181513] transition-all shadow-2xs"
+                                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#6E655C] dark:text-[#A89F91] hover:text-[#8A5A2B] dark:hover:text-[#D4A373] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] hover:bg-white dark:hover:bg-[#181513] transition-all shadow-2xs"
                                     aria-label={label}
                                  >
-                                    <Icon size={18} />
+                                    <Icon size={17} />
                                  </a>
                               ))}
                            </div>
@@ -189,14 +189,14 @@ export default function Contact() {
 
                   {/* Right Column: Contact Message Form */}
                   <div className="lg:col-span-7">
-                     <div className="p-8 md:p-10 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[2.5rem]">
-                        <h3 className="text-2xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-2">Send a Direct Message</h3>
-                        <p className="text-sm text-[#6E655C] dark:text-[#A89F91] mb-8">Fill in your details below and I'll get back to you promptly.</p>
+                     <div className="p-5 sm:p-8 md:p-10 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[1.75rem] sm:rounded-[2.5rem]">
+                        <h3 className="text-xl sm:text-2xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-1.5 sm:mb-2">Send a Direct Message</h3>
+                        <p className="text-xs sm:text-sm text-[#6E655C] dark:text-[#A89F91] mb-6 sm:mb-8">Fill in your details below and I'll get back to you promptly.</p>
 
-                        <form onSubmit={handleSubmit} className="space-y-5">
+                        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                            {submitStatus && (
                               <div
-                                 className={`p-4 rounded-2xl text-sm font-medium flex items-center gap-3 ${
+                                 className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm font-medium flex items-center gap-3 ${
                                     submitStatus.success ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40" : "bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/40"
                                  }`}
                               >
@@ -205,7 +205,7 @@ export default function Contact() {
                               </div>
                            )}
 
-                           <div className="grid sm:grid-cols-2 gap-5">
+                           <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
                               <div>
                                  <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91] mb-2">
                                     Your Name
@@ -217,7 +217,7 @@ export default function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3.5 rounded-xl text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all placeholder:text-[#A89F91]"
+                                    className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 rounded-xl text-base sm:text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all placeholder:text-[#A89F91]"
                                     placeholder="Jane Doe"
                                  />
                               </div>
@@ -233,7 +233,7 @@ export default function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3.5 rounded-xl text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all placeholder:text-[#A89F91]"
+                                    className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 rounded-xl text-base sm:text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all placeholder:text-[#A89F91]"
                                     placeholder="jane@example.com"
                                  />
                               </div>
@@ -250,7 +250,7 @@ export default function Contact() {
                                  onChange={handleChange}
                                  required
                                  rows={5}
-                                 className="w-full px-4 py-3.5 rounded-xl text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all resize-none placeholder:text-[#A89F91]"
+                                 className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 rounded-xl text-base sm:text-sm bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#181513] dark:text-[#E5DFD3] focus:bg-white dark:focus:bg-[#181513] focus:border-[#8A5A2B] dark:focus:border-[#D4A373] focus:ring-4 focus:ring-[#8A5A2B]/10 outline-none transition-all resize-none placeholder:text-[#A89F91]"
                                  placeholder="Tell me about your product requirements, role, or timelines..."
                               />
                            </div>
@@ -258,7 +258,7 @@ export default function Contact() {
                            <button
                               type="submit"
                               disabled={isSubmitting}
-                              className="w-full py-4 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] font-semibold text-sm tracking-wide shadow-md shadow-black/10 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                              className="w-full py-3.5 sm:py-4 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] font-semibold text-sm tracking-wide shadow-md shadow-black/10 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                            >
                               {isSubmitting ? (
                                  <div className="w-5 h-5 border-2 border-white dark:border-[#0B0A09] border-t-transparent rounded-full animate-spin" />

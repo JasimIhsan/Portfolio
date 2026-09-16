@@ -8,11 +8,9 @@ import Projects from "app/components/sections/Projects";
 import Skills from "app/components/sections/Skills";
 import CommandPalette from "app/components/ui/command-palette";
 import Navigation from "app/components/ui/navigation";
-import { ThemeToggle } from "app/components/ui/theme-toggle";
-import { usePlatform } from "app/hooks/usePlatform";
 import { AnimatePresence, motion } from "framer-motion";
 import { debounce } from "lodash";
-import { ArrowUp, ChevronDown, Command, Menu, Search, X } from "lucide-react";
+import { ArrowUp, ChevronDown } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 
@@ -36,7 +34,6 @@ export default function Home() {
    const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
    const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
    const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-   const { isMac, isMobile, modifierKey } = usePlatform();
 
    // Global ⌘K / Ctrl+K keyboard shortcut listener
    useEffect(() => {
@@ -102,39 +99,7 @@ export default function Home() {
             }}
          />
 
-         {/* Mobile Unified Floating Action Island (Command + Theme Toggle + Menu Trigger) */}
-         <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 350, damping: 28 }}
-            className="fixed top-5 right-5 z-50 flex items-center gap-1.5 p-1.5 rounded-full bg-[#F7F5F0]/90 dark:bg-[#181513]/90 backdrop-blur-xl border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_8px_30px_rgb(0,0,0,0.12)] md:hidden"
-         >
-            <button
-               onClick={() => setIsCommandPaletteOpen(true)}
-               className="w-9 h-9 flex items-center justify-center rounded-full bg-[#EFECE4]/80 dark:bg-[#231E1A]/80 hover:bg-[#E2DDD2] dark:hover:bg-[#2F2924] border border-[#E2DDD2]/60 dark:border-[#E5DFD3]/10 text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3] transition-all cursor-pointer"
-               aria-label={`Open Search (${isMobile ? "Search" : isMac ? "⌘K" : "Ctrl+K"})`}
-               title={`Search (${isMobile ? "Search" : isMac ? "⌘K" : "Ctrl+K"})`}
-            >
-               {isMobile ? <Search size={15} /> : isMac ? <Command size={15} /> : <span className="text-[10px] font-bold font-sans">{modifierKey || "Ctrl"}</span>}
-            </button>
-
-            <ThemeToggle variant="circle-blur" className="w-9 h-9 rounded-full bg-[#EFECE4]/80 dark:bg-[#231E1A]/80 hover:bg-[#E2DDD2] dark:hover:bg-[#2F2924] border border-[#E2DDD2]/60 dark:border-[#E5DFD3]/10 text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3] transition-all" />
-
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="w-9 h-9 flex items-center justify-center rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] hover:opacity-90 transition-all cursor-pointer shadow-sm" aria-label="Toggle mobile menu">
-               <AnimatePresence mode="wait">
-                  {isMobileMenuOpen ? (
-                     <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                        <X size={18} />
-                     </motion.div>
-                  ) : (
-                     <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                        <Menu size={18} />
-                     </motion.div>
-                  )}
-               </AnimatePresence>
-            </button>
-         </motion.div>
-
+         {/* Unified Navigation (Desktop floating pill & Mobile smart auto-hiding bar) */}
          <Navigation activeSection={activeSection} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
 
          <main className="relative w-full">
@@ -146,11 +111,11 @@ export default function Home() {
             <Contact />
          </main>
 
-         {/* Bottom Center Floating Next Section Quick Jump Button */}
+         {/* Bottom Center Floating Next Section Quick Jump Button (Visible on tablet/desktop to avoid blocking mobile FAB) */}
          <AnimatePresence>
             {!isAIAssistantOpen &&
                (nextSection ? (
-                  <motion.div key="next-jump" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
+                  <motion.div key="next-jump" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 hidden md:block">
                      <button
                         onClick={() => scrollToSection(nextSection.id)}
                         className="group flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#181513]/90 dark:bg-[#E5DFD3]/90 backdrop-blur-xl text-[#F7F5F0] dark:text-[#0B0A09] border border-[#3D2D20]/20 dark:border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
@@ -159,12 +124,12 @@ export default function Home() {
                         <span className="text-[11px] uppercase tracking-wider text-[#A89F91] dark:text-[#6E655C] font-semibold">Next</span>
                         <span className="text-xs font-bold">{nextSection.label}</span>
                         <div className="w-5 h-5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-white dark:text-[#0B0A09] flex items-center justify-center group-hover:translate-y-0.5 transition-transform">
-                           <ChevronDown size={13} strokeWidth={2.5} />
+                           <ChevronDown size={12} strokeWidth={2.5} />
                         </div>
                      </button>
                   </motion.div>
                ) : (
-                  <motion.div key="top-jump" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
+                  <motion.div key="top-jump" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 hidden md:block">
                      <button
                         onClick={() => scrollToSection("hero")}
                         className="group flex items-center gap-2 px-4 py-2 rounded-full bg-[#181513]/90 dark:bg-[#E5DFD3]/90 backdrop-blur-xl text-[#F7F5F0] dark:text-[#0B0A09] border border-[#3D2D20]/20 dark:border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
@@ -172,7 +137,7 @@ export default function Home() {
                      >
                         <span className="text-xs font-bold">Back to Top</span>
                         <div className="w-5 h-5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-white dark:text-[#0B0A09] flex items-center justify-center group-hover:-translate-y-0.5 transition-transform">
-                           <ArrowUp size={12} strokeWidth={2.5} />
+                           <ArrowUp size={11} strokeWidth={2.5} />
                         </div>
                      </button>
                   </motion.div>
@@ -183,7 +148,7 @@ export default function Home() {
          <AIAssistantDrawer isOpen={isAIAssistantOpen} onOpenChange={setIsAIAssistantOpen} />
 
          {/* Minimalist modern footer */}
-         <footer className="py-8 px-6 border-t border-[#E2DDD2] dark:border-[#E5DFD3]/10 bg-white dark:bg-[#0B0A09] text-center text-xs text-[#6E655C] dark:text-[#A89F91] transition-colors pb-24 md:pb-8">
+         <footer className="py-8 px-4 sm:px-6 border-t border-[#E2DDD2] dark:border-[#E5DFD3]/10 bg-white dark:bg-[#0B0A09] text-center text-xs text-[#6E655C] dark:text-[#A89F91] transition-colors pb-28 sm:pb-24 md:pb-8">
             <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                <div>© {new Date().getFullYear()} Jasim Ihsan. Engineered with Next.js 15 & beUI motion.</div>
                <div className="flex items-center gap-4">

@@ -1,25 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
-import {
-   Box,
-   CheckCircle2,
-   Cloud,
-   Code2,
-   Cpu,
-   Database,
-   GitBranch,
-   Globe,
-   Layers,
-   Palette,
-   Server,
-   Smartphone,
-   Sparkles,
-   Terminal,
-   Workflow,
-   Zap,
-} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Box, CheckCircle2, Cloud, Code2, Cpu, Database, GitBranch, Globe, Layers, Palette, Server, Smartphone, Sparkles, Terminal, Workflow, Zap } from "lucide-react";
+import { useRef, useState } from "react";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
 
@@ -202,8 +185,7 @@ export default function Skills() {
    const [activeTab, setActiveTab] = useState<string>("all");
    const tabsContainerRef = useRef<HTMLDivElement>(null);
 
-   const filteredCategories =
-      activeTab === "all" ? skillCategories : skillCategories.filter((c) => c.id === activeTab);
+   const filteredCategories = activeTab === "all" ? skillCategories : skillCategories.filter((c) => c.id === activeTab);
 
    const handleTabClick = (id: string, e: React.MouseEvent<HTMLButtonElement>) => {
       setActiveTab(id);
@@ -219,8 +201,7 @@ export default function Skills() {
          const threshold = 70; // 70px edge threshold
 
          if (offsetLeft < threshold || offsetRight < threshold) {
-            const targetScrollLeft =
-               container.scrollLeft + (btnRect.left - containerRect.left) - containerRect.width / 2 + btnRect.width / 2;
+            const targetScrollLeft = container.scrollLeft + (btnRect.left - containerRect.left) - containerRect.width / 2 + btnRect.width / 2;
             container.scrollTo({
                left: targetScrollLeft,
                behavior: "smooth",
@@ -230,49 +211,32 @@ export default function Skills() {
    };
 
    return (
-      <section id="skills" className="py-28 px-6 relative z-10">
+      <section id="skills" className="py-16 sm:py-24 md:py-28 px-4 sm:px-6 relative z-10">
          {/* Subtle ambient light */}
-         <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[#8A5A2B]/5 dark:bg-[#D4A373]/5 rounded-full blur-[120px] pointer-events-none" />
+         <div className="absolute top-1/3 left-0 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-[#8A5A2B]/5 dark:bg-[#D4A373]/5 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
 
          <div className="max-w-7xl mx-auto">
             {/* Section Header */}
             <ScrollReveal>
-               <div className="text-center mb-16">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-4">
+               <div className="text-center mb-12 sm:mb-16">
+                  <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-4">
                      <Sparkles size={14} />
                      Technical Matrix & Stack
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">
-                     Skills & Core Competencies
-                  </h2>
-                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">
-                     A comprehensive breakdown of engineering domains, production frameworks, and architectural paradigms I employ.
-                  </p>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-3 sm:mb-4">Skills & Core Competencies</h2>
+                  <p className="text-base sm:text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">A comprehensive breakdown of engineering domains, production frameworks, and architectural paradigms I employ.</p>
                </div>
             </ScrollReveal>
 
             {/* Filter Tabs (Mobile Swipeable / Desktop Centered) */}
-            <div className="flex justify-center mb-12">
-               <div
-                  ref={tabsContainerRef}
-                  className="w-full max-w-full overflow-x-auto no-scrollbar py-1 px-4 sm:px-0 flex justify-start sm:justify-center scroll-smooth"
-               >
-                  <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs min-w-max">
+            <div className="flex justify-center mb-10 sm:mb-12">
+               <div ref={tabsContainerRef} className="w-full max-w-full overflow-x-auto no-scrollbar py-1 px-3 sm:px-0 flex justify-start sm:justify-center scroll-smooth">
+                  <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs min-w-max mx-auto sm:mx-0">
                      <button
                         onClick={(e) => handleTabClick("all", e)}
-                        className={`relative px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${
-                           activeTab === "all"
-                              ? "text-[#F7F5F0] dark:text-[#0B0A09]"
-                              : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"
-                        }`}
+                        className={`relative px-3 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${activeTab === "all" ? "text-[#F7F5F0] dark:text-[#0B0A09]" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}
                      >
-                        {activeTab === "all" && (
-                           <motion.div
-                              layoutId="activeSkillDomain"
-                              className="absolute inset-0 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] shadow-sm"
-                              transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                           />
-                        )}
+                        {activeTab === "all" && <motion.div layoutId="activeSkillDomain" className="absolute inset-0 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] shadow-sm" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
                         <span className="relative z-10 whitespace-nowrap">All Specializations</span>
                      </button>
 
@@ -282,19 +246,9 @@ export default function Skills() {
                            <button
                               key={cat.id}
                               onClick={(e) => handleTabClick(cat.id, e)}
-                              className={`relative px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${
-                                 isSelected
-                                    ? "text-[#F7F5F0] dark:text-[#0B0A09]"
-                                    : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"
-                              }`}
+                              className={`relative px-3 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${isSelected ? "text-[#F7F5F0] dark:text-[#0B0A09]" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}
                            >
-                              {isSelected && (
-                                 <motion.div
-                                    layoutId="activeSkillDomain"
-                                    className="absolute inset-0 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] shadow-sm"
-                                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                                 />
-                              )}
+                              {isSelected && <motion.div layoutId="activeSkillDomain" className="absolute inset-0 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] shadow-sm" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
                               <span className="relative z-10 whitespace-nowrap">{cat.title}</span>
                            </button>
                         );
@@ -305,102 +259,61 @@ export default function Skills() {
 
             {/* Core Architectural Pillars Strip */}
             <ScrollReveal>
-               <div className="grid md:grid-cols-3 gap-6 mb-12">
+               <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
                   {engineeringPillars.map((pillar) => (
-                     <div
-                        key={pillar.title}
-                        className="p-6 rounded-2xl bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs relative overflow-hidden group hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-all"
-                     >
-                        <div className="flex items-center justify-between mb-4">
-                           <div className="w-10 h-10 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-110 transition-transform">
-                              <pillar.icon size={20} />
+                     <div key={pillar.title} className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs relative overflow-hidden group hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-all">
+                        <div className="flex items-center justify-between mb-3 sm:mb-4">
+                           <div className="w-9 sm:w-10 h-9 sm:h-10 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-110 transition-transform">
+                              <pillar.icon size={18} />
                            </div>
-                           <span className="text-[11px] font-semibold uppercase tracking-wider text-[#8A5A2B] dark:text-[#D4A373] bg-[#EFECE4] dark:bg-[#231E1A] px-2.5 py-1 rounded-full border border-[#DCD6C8] dark:border-[#E5DFD3]/10">
-                              {pillar.tag}
-                           </span>
+                           <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#8A5A2B] dark:text-[#D4A373] bg-[#EFECE4] dark:bg-[#231E1A] px-2.5 py-1 rounded-full border border-[#DCD6C8] dark:border-[#E5DFD3]/10">{pillar.tag}</span>
                         </div>
-                        <h4 className="text-base font-bold text-[#181513] dark:text-[#E5DFD3] mb-2 leading-snug">
-                           {pillar.title}
-                        </h4>
-                        <p className="text-xs text-[#6E655C] dark:text-[#A89F91] leading-relaxed font-normal">
-                           {pillar.description}
-                        </p>
+                        <h4 className="text-sm sm:text-base font-bold text-[#181513] dark:text-[#E5DFD3] mb-1.5 sm:mb-2 leading-snug">{pillar.title}</h4>
+                        <p className="text-xs text-[#6E655C] dark:text-[#A89F91] leading-relaxed font-normal">{pillar.description}</p>
                      </div>
                   ))}
                </div>
             </ScrollReveal>
 
             {/* Skill Matrix Bento Grid */}
-            <motion.div layout className="grid md:grid-cols-2 gap-8 mb-16">
+            <motion.div layout className="grid md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
                <AnimatePresence>
                   {filteredCategories.map((category) => (
-                     <motion.div
-                        key={category.id}
-                        layout
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.35 }}
-                     >
-                        <TiltCard
-                           max={6}
-                           glare={true}
-                           className="p-7 sm:p-8 h-full bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-12px_rgba(24,21,19,0.06)] hover:shadow-[0_20px_45px_-10px_rgba(138,90,43,0.12)] rounded-[2rem] flex flex-col justify-between group"
-                        >
+                     <motion.div key={category.id} layout initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.35 }}>
+                        <TiltCard max={6} glare={true} className="p-5 sm:p-7 md:p-8 h-full bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-12px_rgba(24,21,19,0.06)] hover:shadow-[0_20px_45px_-10px_rgba(138,90,43,0.12)] rounded-[1.75rem] sm:rounded-[2rem] flex flex-col justify-between group">
                            <div>
                               {/* Category Header */}
-                              <div className="flex items-start justify-between gap-4 mb-6 pb-5 border-b border-[#EFECE4] dark:border-[#E5DFD3]/10">
-                                 <div className="flex items-center gap-3.5">
-                                    <div className="w-12 h-12 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-105 transition-transform shrink-0">
-                                       <category.icon size={22} />
+                              <div className="flex items-start justify-between gap-3 sm:gap-4 mb-5 sm:mb-6 pb-4 sm:pb-5 border-b border-[#EFECE4] dark:border-[#E5DFD3]/10">
+                                 <div className="flex items-center gap-3">
+                                    <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-105 transition-transform shrink-0">
+                                       <category.icon size={20} />
                                     </div>
                                     <div>
-                                       <h3 className="text-xl font-bold text-[#181513] dark:text-[#E5DFD3]">
-                                          {category.title}
-                                       </h3>
-                                       <span className="text-xs text-[#8A5A2B] dark:text-[#D4A373] font-medium">
-                                          {category.subtitle}
-                                       </span>
+                                       <h3 className="text-lg sm:text-xl font-bold text-[#181513] dark:text-[#E5DFD3]">{category.title}</h3>
+                                       <span className="text-xs text-[#8A5A2B] dark:text-[#D4A373] font-medium">{category.subtitle}</span>
                                     </div>
                                  </div>
-                                 <span className="px-2.5 py-1 text-[11px] font-semibold text-[#6E655C] dark:text-[#A89F91] bg-[#EFECE4] dark:bg-[#231E1A] rounded-full shrink-0">
-                                    {category.skills.length} Core Techs
-                                 </span>
+                                 <span className="px-2.5 py-1 text-[10px] sm:text-[11px] font-semibold text-[#6E655C] dark:text-[#A89F91] bg-[#EFECE4] dark:bg-[#231E1A] rounded-full shrink-0">{category.skills.length} Core</span>
                               </div>
 
-                              <p className="text-xs text-[#6E655C] dark:text-[#A89F91] leading-relaxed mb-6 font-normal">
-                                 {category.description}
-                              </p>
+                              <p className="text-xs text-[#6E655C] dark:text-[#A89F91] leading-relaxed mb-5 sm:mb-6 font-normal">{category.description}</p>
 
                               {/* Skills Capabilities Matrix */}
-                              <div className="space-y-4">
+                              <div className="space-y-3 sm:space-y-4">
                                  {category.skills.map((skill) => (
-                                    <div
-                                       key={skill.name}
-                                       className="p-4 rounded-xl bg-[#EFECE4]/60 dark:bg-[#231E1A]/70 border border-[#DCD6C8] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-colors"
-                                    >
-                                       <div className="flex items-center justify-between gap-2 mb-2.5">
+                                    <div key={skill.name} className="p-3.5 sm:p-4 rounded-xl bg-[#EFECE4]/60 dark:bg-[#231E1A]/70 border border-[#DCD6C8] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-colors">
+                                       <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-1.5 sm:gap-2 mb-2">
                                           <div className="flex items-center gap-2">
-                                             <CheckCircle2
-                                                size={15}
-                                                className="text-[#8A5A2B] dark:text-[#D4A373] shrink-0"
-                                             />
-                                             <span className="text-sm font-bold text-[#181513] dark:text-[#E5DFD3]">
-                                                {skill.name}
-                                             </span>
+                                             <CheckCircle2 size={15} className="text-[#8A5A2B] dark:text-[#D4A373] shrink-0" />
+                                             <span className="text-xs sm:text-sm font-bold text-[#181513] dark:text-[#E5DFD3]">{skill.name}</span>
                                           </div>
-                                          <span className="px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider rounded-md bg-white/90 dark:bg-[#181513]/90 text-[#8A5A2B] dark:text-[#D4A373] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-2xs shrink-0">
-                                             {skill.badge}
-                                          </span>
+                                          <span className="px-2 py-0.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider rounded-md bg-white/90 dark:bg-[#181513]/90 text-[#8A5A2B] dark:text-[#D4A373] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-2xs shrink-0">{skill.badge}</span>
                                        </div>
 
                                        {/* Capability chips */}
-                                       <div className="flex flex-wrap gap-1.5 pl-6">
+                                       <div className="flex flex-wrap gap-1 sm:gap-1.5 pl-5 sm:pl-6">
                                           {skill.capabilities.map((cap) => (
-                                             <span
-                                                key={cap}
-                                                className="px-2 py-0.5 text-[11px] font-medium text-[#4A433D] dark:text-[#D5CEC2] bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 rounded-md"
-                                             >
+                                             <span key={cap} className="px-2 py-0.5 text-[10px] sm:text-[11px] font-medium text-[#4A433D] dark:text-[#D5CEC2] bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 rounded-md">
                                                 {cap}
                                              </span>
                                           ))}
@@ -417,25 +330,16 @@ export default function Skills() {
 
             {/* Integrated Tooling Ecosystem Dock */}
             <ScrollReveal>
-               <div className="p-8 rounded-[2rem] bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs text-center">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] text-[11px] font-bold uppercase tracking-widest mb-6">
-                     Integrated Platforms & Developer Tooling
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+               <div className="p-5 sm:p-8 rounded-[1.75rem] sm:rounded-[2rem] bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs text-center">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] text-[10px] sm:text-[11px] font-bold uppercase tracking-widest mb-5 sm:mb-6">Integrated Platforms & Developer Tooling</div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl mx-auto">
                      {tools.map((tool) => (
-                        <div
-                           key={tool.name}
-                           className="flex flex-col items-center justify-center p-4 rounded-2xl bg-[#EFECE4]/70 dark:bg-[#231E1A]/80 border border-[#E2DDD2] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all hover:scale-[1.03] group cursor-default"
-                        >
-                           <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#181513] flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] mb-2.5 shadow-2xs group-hover:scale-110 transition-transform">
-                              <tool.icon size={20} />
+                        <div key={tool.name} className="flex flex-col items-center justify-center p-3.5 sm:p-4 rounded-2xl bg-[#EFECE4]/70 dark:bg-[#231E1A]/80 border border-[#E2DDD2] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all hover:scale-[1.03] group cursor-default">
+                           <div className="w-9 sm:w-10 h-9 sm:h-10 rounded-xl bg-white dark:bg-[#181513] flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] mb-2 shadow-2xs group-hover:scale-110 transition-transform">
+                              <tool.icon size={18} />
                            </div>
-                           <span className="text-sm font-bold text-[#181513] dark:text-[#E5DFD3]">
-                              {tool.name}
-                           </span>
-                           <span className="text-[11px] text-[#8A5A2B] dark:text-[#D4A373] font-medium">
-                              {tool.category}
-                           </span>
+                           <span className="text-xs sm:text-sm font-bold text-[#181513] dark:text-[#E5DFD3]">{tool.name}</span>
+                           <span className="text-[10px] sm:text-[11px] text-[#8A5A2B] dark:text-[#D4A373] font-medium">{tool.category}</span>
                         </div>
                      ))}
                   </div>

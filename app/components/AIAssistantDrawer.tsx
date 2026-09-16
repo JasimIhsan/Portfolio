@@ -301,7 +301,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.3, transition: { duration: 0.15 } }}
                   transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                  className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end select-none"
+                  className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end select-none"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                >
@@ -364,7 +364,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
                      whileHover={{ scale: 1.08 }}
                      whileTap={{ scale: 0.92 }}
                      onClick={() => setIsOpen(true)}
-                     className="relative w-13 h-13 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-gradient-to-b from-[#26211D] to-[#12100E] dark:from-[#26211D] dark:to-[#12100E] text-[#F7F5F0] shadow-[0_12px_36px_rgba(0,0,0,0.45),0_0_20px_rgba(212,163,115,0.15)] border border-[#D4A373]/35 hover:border-[#D4A373] transition-all duration-300 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A373]"
+                     className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-gradient-to-b from-[#26211D] to-[#12100E] dark:from-[#26211D] dark:to-[#12100E] text-[#F7F5F0] shadow-[0_12px_36px_rgba(0,0,0,0.45),0_0_20px_rgba(212,163,115,0.15)] border border-[#D4A373]/35 hover:border-[#D4A373] transition-all duration-300 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A373]"
                      aria-label="Talk to Jasim's assistant"
                      title="Talk to Jasim's assistant"
                   >
@@ -376,7 +376,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
 
                      {/* Assistant Icon with micro-interaction */}
                      <div className="relative flex items-center justify-center">
-                        <MessageSquare size={21} className="text-[#D4A373] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
+                        <MessageSquare size={19} className="text-[#D4A373] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
                         <span className="absolute -top-1 -right-1 flex h-2 w-2">
                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4A373] opacity-60" />
                            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4A373]" />
@@ -392,7 +392,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
             createPortal(
                <AnimatePresence>
                   {animStage !== "closed" && (
-                     <div className="fixed inset-x-0 bottom-5 sm:bottom-6 z-50 flex items-end justify-center px-3 sm:px-4 pointer-events-none">
+                     <div className="fixed inset-x-0 bottom-4 sm:bottom-6 z-50 flex items-end justify-center px-3 sm:px-4 pointer-events-none">
                         {/* Command Bar Widget Stack with Consistent Uniform Width */}
                         <div className="pointer-events-auto flex flex-col gap-2.5 z-10 w-full max-w-lg md:max-w-xl lg:max-w-2xl">
                            {/* 1. Dynamic Above-Bar Container (Mounts ONLY after input bar reaches center) */}
@@ -493,7 +493,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
                                                 <div className="w-6 h-6 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
                                                    <Brain size={12} className="animate-pulse text-[#8A5A2B] dark:text-[#D4A373]" />
                                                 </div>
-                                                <div className="px-3.5 py-2.5 rounded-2xl bg-[#F7F5F0] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 rounded-tl-xs shadow-2xs space-y-2 min-w-[210px]">
+                                                <div className="px-3.5 py-2.5 rounded-2xl bg-[#F7F5F0] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 rounded-tl-xs shadow-2xs space-y-2 min-w-0 w-full max-w-[220px]">
                                                    <div className="flex items-center gap-2">
                                                       <div className="flex items-center gap-1">
                                                          <div className="w-1.5 h-1.5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] animate-bounce" />
@@ -606,7 +606,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onOpenChan
                                        onChange={(e) => setInput(e.target.value)}
                                        placeholder="Ask anything about Jasim..."
                                        disabled={isLoading}
-                                       className="flex-1 bg-transparent border-none px-1 text-xs sm:text-sm text-[#181513] dark:text-[#E5DFD3] placeholder-[#A89F91] focus:outline-none"
+                                       className="flex-1 bg-transparent border-none px-1 text-base sm:text-sm text-[#181513] dark:text-[#E5DFD3] placeholder-[#A89F91] focus:outline-none"
                                     />
 
                                     <button

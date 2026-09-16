@@ -142,7 +142,7 @@ export default function Experience() {
       <section id="experience" ref={sectionRef} className="relative z-10 w-full" style={{ height: isDesktop ? "350vh" : "auto" }}>
          {/* DESKTOP VIEW: Pinned Sticky Scrollytelling Container */}
          {isDesktop ? (
-            <div className="sticky top-0 h-screen w-full flex items-center justify-center px-6 overflow-hidden">
+            <div className="sticky top-0 h-screen w-full flex items-center justify-center px-4 sm:px-6 overflow-hidden">
                {/* Background ambient lighting */}
                <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#8A5A2B]/5 dark:bg-[#D4A373]/5 rounded-full blur-[120px] pointer-events-none" />
                <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#3D2D20]/10 dark:bg-[#3D2D20]/25 rounded-full blur-[120px] pointer-events-none" />
@@ -150,11 +150,11 @@ export default function Experience() {
                <div className="max-w-6xl mx-auto w-full">
                   {/* Header */}
                   <div className="text-center mb-8 md:mb-10">
-                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-2">
+                     <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-2">
                         <Sparkles size={14} />
                         Pinned Career Story
                      </div>
-                     <h2 className="text-3xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-2">Work Experience & Milestones</h2>
+                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-2">Work Experience & Milestones</h2>
                      <p className="text-sm md:text-base text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">Scroll or click any milestone to navigate through my career journey.</p>
                   </div>
 
@@ -308,40 +308,40 @@ export default function Experience() {
             </div>
          ) : (
             /* MOBILE VIEW: Natural Flowing Vertical Timeline List */
-            <div className="py-24 px-5 max-w-2xl mx-auto">
+            <div className="py-16 sm:py-24 px-4 sm:px-6 max-w-2xl mx-auto">
                {/* Mobile Header */}
-               <div className="text-center mb-10">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-2">
+               <div className="text-center mb-8 sm:mb-10">
+                  <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-2">
                      <Sparkles size={14} />
                      Career Journey
                   </div>
-                  <h2 className="text-3xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-2">Work Experience</h2>
-                  <p className="text-sm text-[#6E655C] dark:text-[#A89F91] font-normal">A chronological record of production roles, full-stack systems, and client delivery.</p>
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-2">Work Experience</h2>
+                  <p className="text-xs sm:text-sm text-[#6E655C] dark:text-[#A89F91] font-normal">A chronological record of production roles, full-stack systems, and client delivery.</p>
                </div>
 
                {/* Mobile Stack of Cards */}
-               <div className="space-y-6">
+               <div className="space-y-5 sm:space-y-6">
                   {experiences.map((exp) => (
-                     <div key={exp.id} className="p-6 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-sm rounded-3xl relative overflow-hidden">
+                     <div key={exp.id} className="p-5 sm:p-6 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-sm rounded-2xl sm:rounded-3xl relative overflow-hidden">
                         {/* Top Badges */}
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div className="flex flex-wrap items-center gap-1.5 mb-3">
                            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3]">
                               <Building2 size={13} className="text-[#8A5A2B] dark:text-[#D4A373]" />
                               <span>{exp.company}</span>
                            </div>
                            <div className="flex items-center gap-2 text-xs">
                               <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">{exp.type}</span>
-                              <span className="text-[#6E655C] dark:text-[#A89F91] font-medium">{exp.duration}</span>
+                              <span className="text-[#6E655C] dark:text-[#A89F91] font-medium shrink-0">{exp.duration}</span>
                            </div>
                         </div>
 
                         {/* Role & Tagline */}
-                        <h3 className="text-xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-1">{exp.role}</h3>
-                        <p className="text-xs font-medium text-[#8A5A2B] dark:text-[#D4A373] mb-4">{exp.tagline}</p>
-                        <p className="text-sm text-[#6E655C] dark:text-[#A89F91] leading-relaxed mb-4 font-normal">{exp.description}</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-1">{exp.role}</h3>
+                        <p className="text-xs font-medium text-[#8A5A2B] dark:text-[#D4A373] mb-3 sm:mb-4">{exp.tagline}</p>
+                        <p className="text-xs sm:text-sm text-[#6E655C] dark:text-[#A89F91] leading-relaxed mb-4 font-normal">{exp.description}</p>
 
                         {/* Deliverables */}
-                        <div className="p-4 rounded-2xl bg-[#EFECE4]/70 dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 mb-4 space-y-2">
+                        <div className="p-3.5 sm:p-4 rounded-2xl bg-[#EFECE4]/70 dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 mb-4 space-y-2">
                            <div className="text-[11px] font-bold uppercase tracking-wider text-[#181513] dark:text-[#E5DFD3] flex items-center gap-1.5">
                               <Briefcase size={13} className="text-[#8A5A2B] dark:text-[#D4A373]" />
                               Key Deliverables

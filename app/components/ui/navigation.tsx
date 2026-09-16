@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
-import { Command, Search } from "lucide-react";
+import { Command, Menu, Search, X } from "lucide-react";
 import { usePlatform } from "../../hooks/usePlatform";
 import { useScrollDirection } from "../../hooks/useScrollDirection";
 import { ThemeToggle } from "./theme-toggle";
@@ -98,6 +98,56 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
             </div>
          </motion.nav>
 
+         {/* Mobile Intelligent Floating Action Bar (Auto-hides on scroll down, reveals on scroll up) */}
+         <motion.div
+            variants={navVariants}
+            animate={isMobileMenuOpen ? "visible" : scrollDirection === "down" ? "hidden" : "visible"}
+            className="fixed top-3 sm:top-4 inset-x-3 sm:inset-x-4 z-40 flex items-center justify-between pointer-events-none md:hidden"
+         >
+            {/* Left Brand Badge */}
+            <button
+               onClick={() => scrollToSection("hero")}
+               className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F7F5F0]/90 dark:bg-[#181513]/90 backdrop-blur-xl border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-md text-xs font-bold text-[#181513] dark:text-[#E5DFD3] hover:text-[#8A5A2B] dark:hover:text-[#D4A373] transition-all cursor-pointer"
+               aria-label="Scroll to top"
+            >
+               <span className="w-2 h-2 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373]" />
+               <span>Jasim.dev</span>
+            </button>
+
+            {/* Right Action Cluster */}
+            <div className="pointer-events-auto flex items-center gap-1.5 p-1 rounded-full bg-[#F7F5F0]/90 dark:bg-[#181513]/90 backdrop-blur-xl border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-md">
+               {onOpenCommandPalette && (
+                  <button
+                     onClick={onOpenCommandPalette}
+                     className="w-8 h-8 flex items-center justify-center rounded-full bg-[#EFECE4]/80 dark:bg-[#231E1A]/80 hover:bg-[#E2DDD2] dark:hover:bg-[#2F2924] border border-[#E2DDD2]/60 dark:border-[#E5DFD3]/10 text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3] transition-all cursor-pointer"
+                     aria-label="Open Search"
+                  >
+                     <Search size={14} />
+                  </button>
+               )}
+
+               <ThemeToggle variant="circle-blur" className="w-8 h-8 rounded-full bg-[#EFECE4]/80 dark:bg-[#231E1A]/80 hover:bg-[#E2DDD2] dark:hover:bg-[#2F2924] border border-[#E2DDD2]/60 dark:border-[#E5DFD3]/10 text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3] transition-all" />
+
+               <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-[#F7F5F0] dark:text-[#0B0A09] hover:opacity-90 transition-all cursor-pointer shadow-sm"
+                  aria-label="Toggle mobile menu"
+               >
+                  <AnimatePresence mode="wait">
+                     {isMobileMenuOpen ? (
+                        <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                           <X size={16} />
+                        </motion.div>
+                     ) : (
+                        <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                           <Menu size={16} />
+                        </motion.div>
+                     )}
+                  </AnimatePresence>
+               </button>
+            </div>
+         </motion.div>
+
          {/* Mobile Navigation Drawer */}
          <AnimatePresence>
             {isMobileMenuOpen && (
@@ -111,41 +161,6 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
                         </motion.li>
                      ))}
                   </ul>
-
-                  {/* Sync Theme Switcher in Mobile Drawer */}
-                  {/* <div className="flex flex-col items-center gap-2">
-                     <span className="text-xs font-semibold uppercase tracking-wider text-[#6E655C] dark:text-[#A89F91]">Appearance</span>
-                     <div className="flex items-center p-1 rounded-full bg-[#EFECE4] dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-sm">
-                        <button
-                           type="button"
-                           onClick={() => {
-                              if (isDark) handleThemeToggle();
-                           }}
-                           className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                              !isDark
-                                 ? "bg-white text-[#8A5A2B] shadow-sm border border-[#E2DDD2]"
-                                 : "text-[#6E655C] hover:text-[#181513]"
-                           }`}
-                        >
-                           <Sun className="w-3.5 h-3.5 text-[#8A5A2B]" />
-                           <span>Light</span>
-                        </button>
-                        <button
-                           type="button"
-                           onClick={() => {
-                              if (!isDark) handleThemeToggle();
-                           }}
-                           className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                              isDark
-                                 ? "bg-[#231E1A] text-[#D4A373] shadow-sm border border-[#E5DFD3]/20"
-                                 : "text-[#A89F91] hover:text-[#E5DFD3]"
-                           }`}
-                        >
-                           <Moon className="w-3.5 h-3.5 text-[#D4A373]" />
-                           <span>Dark</span>
-                        </button>
-                     </div>
-                  </div> */}
                </motion.nav>
             )}
          </AnimatePresence>

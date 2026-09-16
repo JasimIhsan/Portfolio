@@ -252,34 +252,34 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
    }, [selectedProject]);
 
    return (
-      <section id="projects" className="py-28 px-6 relative z-10">
+      <section id="projects" className="py-16 sm:py-24 md:py-28 px-4 sm:px-6 relative z-10">
          {/* Subtle ambient light */}
-         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#8A5A2B]/5 dark:bg-[#D4A373]/5 rounded-full blur-[120px] pointer-events-none" />
+         <div className="absolute top-1/4 right-0 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-[#8A5A2B]/5 dark:bg-[#D4A373]/5 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
 
          <div className="max-w-7xl mx-auto">
             {/* Section Header */}
             <ScrollReveal>
-               <div className="text-center mb-16">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-4">
+               <div className="text-center mb-12 sm:mb-16">
+                  <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider mb-4">
                      <Sparkles size={14} />
                      Crafted With Precision
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">Featured Engineering Projects</h2>
-                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">A showcase of production web applications, distributed queue systems, and mobile applications built with modern tools.</p>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-3 sm:mb-4">Featured Engineering Projects</h2>
+                  <p className="text-base sm:text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">A showcase of production web applications, distributed queue systems, and mobile applications built with modern tools.</p>
                </div>
             </ScrollReveal>
 
             {/* Filter Tabs */}
-            <div className="flex justify-center mb-12 sm:mb-16">
-               <div ref={tabsContainerRef} className="w-full max-w-full overflow-x-auto no-scrollbar py-1 px-4 sm:px-0 flex justify-start sm:justify-center scroll-smooth">
-                  <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs min-w-max">
+            <div className="flex justify-center mb-10 sm:mb-16">
+               <div ref={tabsContainerRef} className="w-full max-w-full overflow-x-auto no-scrollbar py-1 px-3 sm:px-0 flex justify-start sm:justify-center scroll-smooth">
+                  <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs min-w-max mx-auto sm:mx-0">
                      {categories.map((cat) => {
                         const isSelected = activeFilter === cat;
                         return (
                            <button
                               key={cat}
                               onClick={(e) => handleTabClick(cat, e)}
-                              className={`relative px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${isSelected ? "text-[#F7F5F0] dark:text-[#0B0A09]" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}
+                              className={`relative px-3.5 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${isSelected ? "text-[#F7F5F0] dark:text-[#0B0A09]" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}
                            >
                               {isSelected && <motion.div layoutId="activeProjectCategory" className="absolute inset-0 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] shadow-sm" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
                               <span className="relative z-10 whitespace-nowrap">{cat}</span>
@@ -291,14 +291,14 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
             </div>
 
             {/* Project Grid */}
-            <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                <AnimatePresence>
                   {filteredProjects.map((project) => (
                      <motion.div key={project.id} layout initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}>
                         <TiltCard
                            max={8}
                            glare={true}
-                           className="h-full flex flex-col bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-12px_rgba(24,21,19,0.06)] hover:shadow-[0_20px_45px_-10px_rgba(138,90,43,0.12)] transition-shadow duration-300 group cursor-pointer"
+                           className="h-full flex flex-col bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-12px_rgba(24,21,19,0.06)] hover:shadow-[0_20px_45px_-10px_rgba(138,90,43,0.12)] transition-shadow duration-300 group cursor-pointer rounded-[2rem]"
                            onClick={() => setSelectedProject(project)}
                         >
                            {/* Project Image Header */}
@@ -311,13 +311,13 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
 
                               {/* Category Badge */}
                               <div className="absolute top-3.5 left-3.5 z-10">
-                                 <span className="px-3 py-1 text-xs font-semibold rounded-full bg-white/95 dark:bg-[#181513]/95 backdrop-blur-md text-[#181513] dark:text-[#E5DFD3] shadow-xs border border-white/50 dark:border-[#E5DFD3]/15">{project.category}</span>
+                                 <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 text-[11px] sm:text-xs font-semibold rounded-full bg-white/95 dark:bg-[#181513]/95 backdrop-blur-md text-[#181513] dark:text-[#E5DFD3] shadow-xs border border-white/50 dark:border-[#E5DFD3]/15">{project.category}</span>
                               </div>
 
                               {/* Live indicator if live */}
                               {project.liveDemo && (
                                  <div className="absolute top-3.5 right-3.5 z-10">
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-emerald-600 text-white backdrop-blur-md shadow-xs">
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 text-[11px] sm:text-xs font-medium rounded-full bg-emerald-600 text-white backdrop-blur-md shadow-xs">
                                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                        Live
                                     </span>
@@ -326,30 +326,30 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                            </div>
 
                            {/* Project Body */}
-                           <div className="p-7 flex-1 flex flex-col justify-between">
+                           <div className="p-5 sm:p-7 flex-1 flex flex-col justify-between">
                               <div>
                                  <div className="text-xs font-medium text-[#8A5A2B] dark:text-[#D4A373] mb-1">{project.subtitle}</div>
-                                 <h3 className="text-xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-3 group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors flex items-center justify-between">
+                                 <h3 className="text-lg sm:text-xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-2 sm:mb-3 group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors flex items-center justify-between">
                                     <span>{project.title}</span>
-                                    <ArrowUpRight size={18} className="text-[#A89F91] group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                                    <ArrowUpRight size={18} className="text-[#A89F91] group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-1" />
                                  </h3>
-                                 <p className="text-sm text-[#6E655C] dark:text-[#A89F91] line-clamp-3 leading-relaxed mb-6 font-normal">{project.description}</p>
+                                 <p className="text-xs sm:text-sm text-[#6E655C] dark:text-[#A89F91] line-clamp-3 leading-relaxed mb-4 sm:mb-6 font-normal">{project.description}</p>
                               </div>
 
                               {/* Tech Stack Chips & Action Link */}
                               <div>
-                                 <div className="flex flex-wrap gap-1.5 mb-5">
+                                 <div className="flex flex-wrap gap-1.5 mb-4 sm:mb-5">
                                     {project.tech.slice(0, 3).map((t) => (
-                                       <span key={t} className="px-2.5 py-1 text-xs font-medium text-[#4A433D] dark:text-[#D5CEC2] bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 rounded-md">
+                                       <span key={t} className="px-2.5 py-1 text-[11px] sm:text-xs font-medium text-[#4A433D] dark:text-[#D5CEC2] bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 rounded-md">
                                           {t}
                                        </span>
                                     ))}
-                                    {project.tech.length > 3 && <span className="px-2 py-1 text-xs font-medium text-[#6E655C] dark:text-[#A89F91] bg-[#EFECE4] dark:bg-[#231E1A] rounded-md">+{project.tech.length - 3}</span>}
+                                    {project.tech.length > 3 && <span className="px-2 py-1 text-[11px] sm:text-xs font-medium text-[#6E655C] dark:text-[#A89F91] bg-[#EFECE4] dark:bg-[#231E1A] rounded-md">+{project.tech.length - 3}</span>}
                                  </div>
 
-                                 <div className="flex items-center justify-between pt-4 border-t border-[#EFECE4] dark:border-[#E5DFD3]/10 text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373]">
+                                 <div className="flex items-center justify-between pt-3.5 sm:pt-4 border-t border-[#EFECE4] dark:border-[#E5DFD3]/10 text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373]">
                                     <span>View Details & Specs</span>
-                                    <span className="text-[#A89F91] dark:text-[#6E655C] font-normal group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors">Click to inspect →</span>
+                                    <span className="text-[#A89F91] dark:text-[#6E655C] font-normal group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors">Inspect →</span>
                                  </div>
                               </div>
                            </div>
@@ -370,7 +370,7 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed inset-0 bg-black/80 dark:bg-black/92 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-hidden"
+                        className="fixed inset-0 bg-black/80 dark:bg-black/92 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-hidden"
                         onClick={() => setSelectedProject(null)}
                         onWheel={(e) => e.stopPropagation()}
                         onTouchMove={(e) => e.stopPropagation()}
@@ -380,27 +380,27 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                            animate={{ scale: 1, opacity: 1, y: 0 }}
                            exit={{ scale: 0.95, opacity: 0, y: 15 }}
                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                           className="bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 rounded-3xl md:rounded-[2rem] max-w-5xl w-full max-h-[90vh] md:max-h-[85vh] overflow-hidden shadow-2xl relative flex flex-col md:grid md:grid-cols-12"
+                           className="bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 rounded-3xl md:rounded-[2rem] max-w-5xl w-full max-h-[92vh] md:max-h-[85vh] overflow-hidden shadow-2xl relative flex flex-col md:grid md:grid-cols-12"
                            onClick={(e) => e.stopPropagation()}
                         >
-                           {/* Close button */}
-                           {/* <button
+                           {/* Mobile & Desktop floating close button */}
+                           <button
                               onClick={() => setSelectedProject(null)}
-                              className="absolute top-4 right-4 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 dark:bg-[#231E1A]/90 backdrop-blur-md border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#6E655C] dark:text-[#E5DFD3] hover:text-[#181513] dark:hover:text-white shadow-md hover:scale-105 transition-all cursor-pointer"
+                              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 dark:bg-[#231E1A]/90 backdrop-blur-md border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#6E655C] dark:text-[#E5DFD3] hover:text-[#181513] dark:hover:text-white shadow-md hover:scale-105 transition-all cursor-pointer"
                               aria-label="Close modal"
                            >
-                              <X size={18} />
-                           </button> */}
+                              <span className="text-sm font-bold">✕</span>
+                           </button>
 
                            {/* Left Column: MacBook Device Showcase */}
-                           <div className="md:col-span-6 lg:col-span-7 bg-[#ECE8DF]/60 dark:bg-[#12100E] border-b md:border-b-0 md:border-r border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-col justify-between p-5 sm:p-7 relative overflow-hidden shrink-0">
+                           <div className="md:col-span-6 lg:col-span-7 bg-[#ECE8DF]/60 dark:bg-[#12100E] border-b md:border-b-0 md:border-r border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-col justify-between p-4 sm:p-7 relative overflow-hidden shrink-0">
                               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/10 dark:to-black/35 pointer-events-none" />
 
                               {/* Category & Status badges */}
-                              <div className="flex items-center justify-between z-10 mb-2 sm:mb-4">
-                                 <span className="px-3 py-1 rounded-full bg-white/95 dark:bg-[#231E1A]/95 backdrop-blur-md border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-xs font-semibold uppercase tracking-wider shadow-2xs">{selectedProject.category}</span>
+                              <div className="flex items-center justify-between z-10 mb-2 sm:mb-4 pr-10 sm:pr-0">
+                                 <span className="px-3 py-1 rounded-full bg-white/95 dark:bg-[#231E1A]/95 backdrop-blur-md border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#8A5A2B] dark:text-[#D4A373] text-[11px] sm:text-xs font-semibold uppercase tracking-wider shadow-2xs">{selectedProject.category}</span>
                                  {selectedProject.liveDemo && (
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-emerald-600 text-white shadow-xs">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] sm:text-xs font-medium rounded-full bg-emerald-600 text-white shadow-xs">
                                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                        Live Platform
                                     </span>
@@ -408,7 +408,7 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                               </div>
 
                               {/* Laptop Preview */}
-                              <div className="flex-1 flex items-center justify-center py-2 sm:py-6 z-10 relative min-h-[180px] sm:min-h-[260px] md:min-h-[340px]">
+                              <div className="flex-1 flex items-center justify-center py-2 sm:py-6 z-10 relative min-h-[160px] sm:min-h-[240px] md:min-h-[320px]">
                                  <Image src={selectedProject.image} alt={selectedProject.title} fill sizes="(max-width: 768px) 90vw, 500px" className="object-contain drop-shadow-[0_16px_32px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]" />
                               </div>
 
@@ -420,9 +420,9 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                            </div>
 
                            {/* Right Column: Project Dossier & Scrollable Content */}
-                           <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between overflow-hidden bg-white dark:bg-[#181513] flex-1">
+                           <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between overflow-hidden bg-white dark:bg-[#181513] flex-1 min-h-0">
                               {/* Modal Tab Switcher */}
-                              <div className="px-5 pt-5 pb-2 sm:px-7 border-b border-[#EFECE4] dark:border-[#E5DFD3]/10 flex items-center justify-between">
+                              <div className="px-3 sm:px-5 pt-3.5 sm:pt-5 pb-2 border-b border-[#EFECE4] dark:border-[#E5DFD3]/10 flex items-center justify-between gap-2 shrink-0 flex-wrap">
                                  <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">
                                     <button
                                        onClick={() => setModalTab("overview")}
@@ -438,22 +438,22 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                                        Architecture
                                     </button>
                                  </div>
-                                 <span className="text-[11px] font-mono text-[#A89F91] dark:text-[#6E655C] uppercase">{selectedProject.category}</span>
+                                 <span className="text-[10px] sm:text-[11px] font-mono text-[#A89F91] dark:text-[#6E655C] uppercase">{selectedProject.category}</span>
                               </div>
 
                               {/* Scrollable details */}
-                              <div className="p-5 sm:p-7 space-y-6 overflow-y-auto flex-1 custom-scrollbar">
+                              <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 overflow-y-auto flex-1 custom-scrollbar min-h-0">
                                  {modalTab === "overview" ? (
                                     <>
                                        <div>
                                           <div className="text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373] uppercase tracking-wider mb-1">{selectedProject.subtitle}</div>
-                                          <h3 className="text-xl sm:text-2xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-3">{selectedProject.title}</h3>
-                                          <p className="text-sm text-[#6E655C] dark:text-[#A89F91] leading-relaxed font-normal">{selectedProject.description}</p>
+                                          <h3 className="text-lg sm:text-2xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-2 sm:mb-3">{selectedProject.title}</h3>
+                                          <p className="text-xs sm:text-sm text-[#6E655C] dark:text-[#A89F91] leading-relaxed font-normal">{selectedProject.description}</p>
                                        </div>
 
                                        {/* Architectural Highlights */}
                                        <div>
-                                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-3 flex items-center gap-2">
+                                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-2.5 sm:mb-3 flex items-center gap-2">
                                              <Code2 size={16} className="text-[#8A5A2B] dark:text-[#D4A373]" />
                                              Key Features & Architecture
                                           </h4>
@@ -469,7 +469,7 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
 
                                        {/* Tech Stack */}
                                        <div>
-                                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-3 flex items-center gap-2">
+                                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-2.5 sm:mb-3 flex items-center gap-2">
                                              <Layers size={16} className="text-[#8A5A2B] dark:text-[#D4A373]" />
                                              Tech Stack & Tools
                                           </h4>
@@ -484,20 +484,20 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                                     </>
                                  ) : (
                                     /* System Architecture Blueprint Flow */
-                                    <div className="space-y-5">
+                                    <div className="space-y-4 sm:space-y-5">
                                        <div>
                                           <div className="text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373] uppercase tracking-wider mb-1">System Architecture Blueprint</div>
-                                          <h3 className="text-xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-2">End-to-End Data Pipeline</h3>
+                                          <h3 className="text-lg sm:text-xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-1.5 sm:mb-2">End-to-End Data Pipeline</h3>
                                           <p className="text-xs text-[#6E655C] dark:text-[#A89F91] leading-relaxed">Visual breakdown of how requests, state transitions, security layers, and data flows operate in production.</p>
                                        </div>
 
                                        {/* Interactive Pipeline Diagram */}
-                                       <div className="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-[#8A5A2B] before:via-[#D4A373] before:to-[#8A5A2B]/20">
+                                       <div className="relative pl-5 sm:pl-6 space-y-3 sm:space-y-4 before:absolute before:left-2 sm:before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-[#8A5A2B] before:via-[#D4A373] before:to-[#8A5A2B]/20">
                                           {(selectedProject.architectureFlow || []).map((step, idx) => (
                                              <div key={idx} className="relative group">
-                                                <div className="absolute -left-6 top-3 w-3 h-3 rounded-full bg-white dark:bg-[#181513] border-2 border-[#8A5A2B] dark:border-[#D4A373] group-hover:scale-125 transition-transform" />
-                                                <div className="p-3.5 rounded-2xl bg-[#EFECE4]/80 dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-all">
-                                                   <div className="flex items-center justify-between mb-1">
+                                                <div className="absolute -left-5 sm:-left-6 top-3 w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-white dark:bg-[#181513] border-2 border-[#8A5A2B] dark:border-[#D4A373] group-hover:scale-125 transition-transform" />
+                                                <div className="p-3 sm:p-3.5 rounded-2xl bg-[#EFECE4]/80 dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-all">
+                                                   <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
                                                       <span className="text-xs font-bold text-[#181513] dark:text-[#E5DFD3]">{step.label}</span>
                                                       <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white dark:bg-[#181513] text-[#8A5A2B] dark:text-[#D4A373] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">{step.tech}</span>
                                                    </div>
@@ -511,23 +511,23 @@ export default function Projects({ selectedProjectId, onClearSelectedProject }: 
                               </div>
 
                               {/* Pinned Action Footer */}
-                              <div className="p-4 sm:p-5 bg-[#EFECE4] dark:bg-[#110E0C] border-t border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-wrap gap-2.5 items-center justify-between shrink-0">
+                              <div className="p-3.5 sm:p-5 bg-[#EFECE4] dark:bg-[#110E0C] border-t border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex flex-wrap gap-2 items-center justify-between shrink-0">
                                  <div className="flex flex-wrap gap-2">
                                     {selectedProject.github && (
                                        <a
                                           href={selectedProject.github}
                                           target="_blank"
                                           rel="noreferrer"
-                                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all shadow-2xs"
+                                          className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-white dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3] hover:border-[#8A5A2B] dark:hover:border-[#D4A373] transition-all shadow-2xs"
                                        >
                                           <Github size={14} />
-                                          GitHub Source
+                                          <span>GitHub</span>
                                        </a>
                                     )}
                                     {selectedProject.liveDemo && (
-                                       <a href={selectedProject.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] text-[#F7F5F0] dark:text-[#0B0A09] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-xs font-semibold transition-all shadow-sm">
+                                       <a href={selectedProject.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] text-[#F7F5F0] dark:text-[#0B0A09] hover:bg-[#8A5A2B] dark:hover:bg-[#D4A373] text-xs font-semibold transition-all shadow-sm">
                                           <ExternalLink size={14} />
-                                          Open Live
+                                          <span>Live Platform</span>
                                        </a>
                                     )}
                                  </div>
