@@ -34,6 +34,7 @@ export default function Home() {
    const [activeSection, setActiveSection] = useState("hero");
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
    const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+   const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
    const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
    const { isMac, isMobile, modifierKey } = usePlatform();
 
@@ -147,38 +148,39 @@ export default function Home() {
 
          {/* Bottom Center Floating Next Section Quick Jump Button */}
          <AnimatePresence>
-            {nextSection ? (
-               <motion.div key="next-jump" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
-                  <button
-                     onClick={() => scrollToSection(nextSection.id)}
-                     className="group flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#181513]/90 dark:bg-[#E5DFD3]/90 backdrop-blur-xl text-[#F7F5F0] dark:text-[#0B0A09] border border-[#3D2D20]/20 dark:border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-                     aria-label={`Jump to next section: ${nextSection.label}`}
-                  >
-                     <span className="text-[11px] uppercase tracking-wider text-[#A89F91] dark:text-[#6E655C] font-semibold">Next</span>
-                     <span className="text-xs font-bold">{nextSection.label}</span>
-                     <div className="w-5 h-5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-white dark:text-[#0B0A09] flex items-center justify-center group-hover:translate-y-0.5 transition-transform">
-                        <ChevronDown size={13} strokeWidth={2.5} />
-                     </div>
-                  </button>
-               </motion.div>
-            ) : (
-               <motion.div key="top-jump" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
-                  <button
-                     onClick={() => scrollToSection("hero")}
-                     className="group flex items-center gap-2 px-4 py-2 rounded-full bg-[#181513]/90 dark:bg-[#E5DFD3]/90 backdrop-blur-xl text-[#F7F5F0] dark:text-[#0B0A09] border border-[#3D2D20]/20 dark:border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-                     aria-label="Back to Top"
-                  >
-                     <span className="text-xs font-bold">Back to Top</span>
-                     <div className="w-5 h-5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-white dark:text-[#0B0A09] flex items-center justify-center group-hover:-translate-y-0.5 transition-transform">
-                        <ArrowUp size={12} strokeWidth={2.5} />
-                     </div>
-                  </button>
-               </motion.div>
-            )}
+            {!isAIAssistantOpen &&
+               (nextSection ? (
+                  <motion.div key="next-jump" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
+                     <button
+                        onClick={() => scrollToSection(nextSection.id)}
+                        className="group flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#181513]/90 dark:bg-[#E5DFD3]/90 backdrop-blur-xl text-[#F7F5F0] dark:text-[#0B0A09] border border-[#3D2D20]/20 dark:border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+                        aria-label={`Jump to next section: ${nextSection.label}`}
+                     >
+                        <span className="text-[11px] uppercase tracking-wider text-[#A89F91] dark:text-[#6E655C] font-semibold">Next</span>
+                        <span className="text-xs font-bold">{nextSection.label}</span>
+                        <div className="w-5 h-5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-white dark:text-[#0B0A09] flex items-center justify-center group-hover:translate-y-0.5 transition-transform">
+                           <ChevronDown size={13} strokeWidth={2.5} />
+                        </div>
+                     </button>
+                  </motion.div>
+               ) : (
+                  <motion.div key="top-jump" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
+                     <button
+                        onClick={() => scrollToSection("hero")}
+                        className="group flex items-center gap-2 px-4 py-2 rounded-full bg-[#181513]/90 dark:bg-[#E5DFD3]/90 backdrop-blur-xl text-[#F7F5F0] dark:text-[#0B0A09] border border-[#3D2D20]/20 dark:border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+                        aria-label="Back to Top"
+                     >
+                        <span className="text-xs font-bold">Back to Top</span>
+                        <div className="w-5 h-5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] text-white dark:text-[#0B0A09] flex items-center justify-center group-hover:-translate-y-0.5 transition-transform">
+                           <ArrowUp size={12} strokeWidth={2.5} />
+                        </div>
+                     </button>
+                  </motion.div>
+               ))}
          </AnimatePresence>
 
          {/* Ask AI Portfolio Assistant Drawer */}
-         <AIAssistantDrawer />
+         <AIAssistantDrawer isOpen={isAIAssistantOpen} onOpenChange={setIsAIAssistantOpen} />
 
          {/* Minimalist modern footer */}
          <footer className="py-8 px-6 border-t border-[#E2DDD2] dark:border-[#E5DFD3]/10 bg-white dark:bg-[#0B0A09] text-center text-xs text-[#6E655C] dark:text-[#A89F91] transition-colors pb-24 md:pb-8">
