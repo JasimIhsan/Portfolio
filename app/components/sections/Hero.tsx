@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { ArrowDown, Code, Database, Github, Linkedin, Mail, Smartphone, Terminal } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -7,12 +9,16 @@ import { projects } from "./Projects";
 
 export default function Hero() {
    const shippedCount = projects.filter((p) => p.live && p.live !== "#").length;
-   const [commitCount, setCommitCount] = useState<number | null>(() => {
-      const cached = localStorage.getItem("github_commit_count");
-      return cached ? parseInt(cached, 10) : null;
-   });
+   const [commitCount, setCommitCount] = useState<number | null>(null);
 
    useEffect(() => {
+      try {
+         const cached = localStorage.getItem("github_commit_count");
+         if (cached) setCommitCount(parseInt(cached, 10));
+      } catch {
+         // Silently ignore
+      }
+
       async function fetchCommits() {
          try {
             const res = await fetch("https://api.github.com/search/commits?q=author:JasimIhsan", {

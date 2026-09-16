@@ -1,5 +1,8 @@
+"use client";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Code2, ExternalLink, Github, Layers, Sparkles } from "lucide-react";
+import Image, { type StaticImageData } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import brewcode from "../../assets/projects/brewcode_mock.png";
@@ -12,19 +15,26 @@ import { startLenis, stopLenis } from "../../hooks/useLenis";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
 
+export interface ArchitectureStep {
+   label: string;
+   sublabel: string;
+   tech: string;
+}
+
 export interface ProjectItem {
    id: string;
    title: string;
    subtitle: string;
    category: "Full-Stack" | "Mobile" | "Systems & Cloud" | "E-Commerce";
    description: string;
-   image: string;
+   image: StaticImageData | string;
    tech: string[];
    github?: string;
    live?: string;
    liveDemo: boolean;
    highlights: string[];
    featured?: boolean;
+   architectureFlow?: ArchitectureStep[];
 }
 
 export const projects: ProjectItem[] = [
@@ -40,6 +50,12 @@ export const projects: ProjectItem[] = [
       live: "#",
       highlights: ["Full cross-platform Flutter application with custom smooth motion design", "Privacy-centric architecture with secure verification mechanisms", "Tailored onboarding flow optimized for effortless user adoption"],
       featured: true,
+      architectureFlow: [
+         { label: "Flutter Client", sublabel: "BLoC State Management", tech: "Dart / UI" },
+         { label: "Auth & Privacy Gateway", sublabel: "Strict KYC & Token Audits", tech: "REST API" },
+         { label: "Matchmaking Engine", sublabel: "Criteria Heuristics & Filters", tech: "Node.js" },
+         { label: "Push Notification Hub", sublabel: "Zero-Latency Delivery", tech: "Firebase FCM" },
+      ],
    },
    {
       id: "onboard-careers",
@@ -54,6 +70,12 @@ export const projects: ProjectItem[] = [
       live: "https://www.onboardcareers.in",
       highlights: ["Complex relational schema with PostgreSQL & Prisma", "High-performance Next.js application with fast server-side data fetching", "Custom candidate application workflows and role filters"],
       featured: true,
+      architectureFlow: [
+         { label: "Next.js Frontend", sublabel: "Server Components & Fast SSR", tech: "React / TS" },
+         { label: "Role & Permission Router", sublabel: "Candidate vs Recruiter Scopes", tech: "Next Middleware" },
+         { label: "Prisma ORM Layer", sublabel: "Optimized Relational Queries", tech: "PostgreSQL" },
+         { label: "Application Pipeline", sublabel: "Status & Candidate Webhooks", tech: "Node APIs" },
+      ],
    },
    {
       id: "forge-nearhirable",
@@ -68,6 +90,12 @@ export const projects: ProjectItem[] = [
       live: "https://forge.onboardcareers.in",
       highlights: ["Automated scoring heuristics for developer core competencies", "Actionable candidate feedback reports with diagnostic metrics", "Seamless integration with recruiting assessment portals"],
       featured: true,
+      architectureFlow: [
+         { label: "Assessment Frontend", sublabel: "Diagnostic Test Engine", tech: "Next.js" },
+         { label: "Scoring & Rubric Worker", sublabel: "Competency Analysis Heuristics", tech: "TypeScript" },
+         { label: "Feedback Generator", sublabel: "Dynamic Roadmap Aggregator", tech: "Node.js" },
+         { label: "Candidate Analytics DB", sublabel: "Historical Progress Tracking", tech: "MongoDB" },
+      ],
    },
    {
       id: "brewcode",
@@ -82,6 +110,12 @@ export const projects: ProjectItem[] = [
       live: "https://brewcode.jasimihsan.in",
       highlights: ["Isolated sandbox execution with Docker containers", "Distributed async task queues handled via BullMQ and Redis", "Interactive visual animation showing Call Stack & Event Loop ticks"],
       featured: true,
+      architectureFlow: [
+         { label: "Code Editor UI", sublabel: "Interactive Monaco Console", tech: "Next.js" },
+         { label: "BullMQ Job Producer", sublabel: "Async Execution Dispatcher", tech: "Redis Queue" },
+         { label: "Docker Worker Sandbox", sublabel: "Isolated Runtime Container", tech: "Node.js VM" },
+         { label: "Event Loop Visualizer", sublabel: "Call Stack & Microtask Ticks", tech: "WebSockets" },
+      ],
    },
    {
       id: "mentorshub",
@@ -95,6 +129,12 @@ export const projects: ProjectItem[] = [
       liveDemo: true,
       live: "https://mentors-hub-in.vercel.app",
       highlights: ["Real-time bidirectional communication powered by Socket.io", "Integrated scheduling calendar with automated slot management", "Complete admin dashboard with revenue analytics and payout controls"],
+      architectureFlow: [
+         { label: "React Dashboard", sublabel: "Client Booking & Chatroom", tech: "TypeScript" },
+         { label: "Socket.io Signaling", sublabel: "Real-Time 1-on-1 WebRTC", tech: "WebSockets" },
+         { label: "Escrow & Payout Engine", sublabel: "Session Verification Ledger", tech: "Node.js" },
+         { label: "Persistent Store", sublabel: "Users, Slots & Booking DB", tech: "MongoDB" },
+      ],
    },
    {
       id: "byteverse",
@@ -108,6 +148,12 @@ export const projects: ProjectItem[] = [
       liveDemo: false,
       live: "#",
       highlights: ["Multi-step checkout flow with RazorPay payment gateway integration", "Product catalog with dynamic filtering and variant management", "Session-based cart state with stock verification safeguards"],
+      architectureFlow: [
+         { label: "E-Commerce Storefront", sublabel: "Catalog & Dynamic Filter", tech: "EJS / JS" },
+         { label: "Session & Cart Engine", sublabel: "Stock Verification Safeguards", tech: "Express.js" },
+         { label: "Payment Gateway", sublabel: "Webhook & Signature Verification", tech: "RazorPay" },
+         { label: "Orders & Inventory DB", sublabel: "Transactional State Records", tech: "MongoDB" },
+      ],
    },
    // {
    //    id: "usermanagement",
@@ -131,10 +177,28 @@ export const projects: ProjectItem[] = [
 
 const categories = ["All", "Full-Stack", "Mobile", "Systems & Cloud", "E-Commerce"] as const;
 
-export default function Projects() {
+interface ProjectsProps {
+   selectedProjectId?: string | null;
+   onClearSelectedProject?: () => void;
+}
+
+export default function Projects({ selectedProjectId, onClearSelectedProject }: ProjectsProps = {}) {
    const [activeFilter, setActiveFilter] = useState<string>("All");
    const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+   const [modalTab, setModalTab] = useState<"overview" | "architecture">("overview");
    const tabsContainerRef = useRef<HTMLDivElement>(null);
+
+   // Sync external project selection from command palette
+   useEffect(() => {
+      if (selectedProjectId) {
+         const found = projects.find((p) => p.id === selectedProjectId);
+         if (found) {
+            setSelectedProject(found);
+            setModalTab("overview");
+            if (onClearSelectedProject) onClearSelectedProject();
+         }
+      }
+   }, [selectedProjectId, onClearSelectedProject]);
 
    const filteredProjects = activeFilter === "All" ? projects : projects.filter((p) => p.category === activeFilter);
 
@@ -152,8 +216,7 @@ export default function Projects() {
          const threshold = 70; // 70px edge threshold
 
          if (offsetLeft < threshold || offsetRight < threshold) {
-            const targetScrollLeft =
-               container.scrollLeft + (btnRect.left - containerRect.left) - containerRect.width / 2 + btnRect.width / 2;
+            const targetScrollLeft = container.scrollLeft + (btnRect.left - containerRect.left) - containerRect.width / 2 + btnRect.width / 2;
             container.scrollTo({
                left: targetScrollLeft,
                behavior: "smooth",
@@ -201,21 +264,14 @@ export default function Projects() {
                      <Sparkles size={14} />
                      Crafted With Precision
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">
-                     Featured Engineering Projects
-                  </h2>
-                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">
-                     A showcase of production web applications, distributed queue systems, and mobile applications built with modern tools.
-                  </p>
+                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">Featured Engineering Projects</h2>
+                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">A showcase of production web applications, distributed queue systems, and mobile applications built with modern tools.</p>
                </div>
             </ScrollReveal>
 
             {/* Filter Tabs */}
             <div className="flex justify-center mb-12 sm:mb-16">
-               <div
-                  ref={tabsContainerRef}
-                  className="w-full max-w-full overflow-x-auto no-scrollbar py-1 px-4 sm:px-0 flex justify-start sm:justify-center scroll-smooth"
-               >
+               <div ref={tabsContainerRef} className="w-full max-w-full overflow-x-auto no-scrollbar py-1 px-4 sm:px-0 flex justify-start sm:justify-center scroll-smooth">
                   <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-xs min-w-max">
                      {categories.map((cat) => {
                         const isSelected = activeFilter === cat;
@@ -223,11 +279,7 @@ export default function Projects() {
                            <button
                               key={cat}
                               onClick={(e) => handleTabClick(cat, e)}
-                              className={`relative px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${
-                                 isSelected
-                                    ? "text-[#F7F5F0] dark:text-[#0B0A09]"
-                                    : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"
-                              }`}
+                              className={`relative px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors duration-300 cursor-pointer shrink-0 ${isSelected ? "text-[#F7F5F0] dark:text-[#0B0A09]" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}
                            >
                               {isSelected && <motion.div layoutId="activeProjectCategory" className="absolute inset-0 rounded-xl bg-[#181513] dark:bg-[#E5DFD3] shadow-sm" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
                               <span className="relative z-10 whitespace-nowrap">{cat}</span>
@@ -253,7 +305,9 @@ export default function Projects() {
                            <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#ECE8DF]/70 dark:bg-[#141210] border-b border-[#E2DDD2] dark:border-[#E5DFD3]/10 flex items-center justify-center p-3 sm:p-4">
                               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/10 dark:to-black/30 pointer-events-none" />
 
-                              <img src={project.image} alt={project.title} className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_12px_24px_rgba(0,0,0,0.45)] group-hover:scale-[1.03] transition-transform duration-500 ease-out" loading="lazy" />
+                              <div className="relative w-full h-full">
+                                 <Image src={project.image} alt={project.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_12px_24px_rgba(0,0,0,0.45)] group-hover:scale-[1.03] transition-transform duration-500 ease-out" />
+                              </div>
 
                               {/* Category Badge */}
                               <div className="absolute top-3.5 left-3.5 z-10">
@@ -354,8 +408,8 @@ export default function Projects() {
                               </div>
 
                               {/* Laptop Preview */}
-                              <div className="flex-1 flex items-center justify-center py-2 sm:py-6 z-10">
-                                 <img src={selectedProject.image} alt={selectedProject.title} className="w-full max-h-[200px] sm:max-h-[280px] md:max-h-[380px] object-contain drop-shadow-[0_16px_32px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]" />
+                              <div className="flex-1 flex items-center justify-center py-2 sm:py-6 z-10 relative min-h-[180px] sm:min-h-[260px] md:min-h-[340px]">
+                                 <Image src={selectedProject.image} alt={selectedProject.title} fill sizes="(max-width: 768px) 90vw, 500px" className="object-contain drop-shadow-[0_16px_32px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]" />
                               </div>
 
                               {/* Desktop hint */}
@@ -367,44 +421,93 @@ export default function Projects() {
 
                            {/* Right Column: Project Dossier & Scrollable Content */}
                            <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between overflow-hidden bg-white dark:bg-[#181513] flex-1">
+                              {/* Modal Tab Switcher */}
+                              <div className="px-5 pt-5 pb-2 sm:px-7 border-b border-[#EFECE4] dark:border-[#E5DFD3]/10 flex items-center justify-between">
+                                 <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">
+                                    <button
+                                       onClick={() => setModalTab("overview")}
+                                       className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${modalTab === "overview" ? "bg-white dark:bg-[#181513] text-[#8A5A2B] dark:text-[#D4A373] shadow-xs" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}
+                                    >
+                                       Overview
+                                    </button>
+                                    <button
+                                       onClick={() => setModalTab("architecture")}
+                                       className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${modalTab === "architecture" ? "bg-white dark:bg-[#181513] text-[#8A5A2B] dark:text-[#D4A373] shadow-xs" : "text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]"}`}
+                                    >
+                                       <Sparkles size={12} />
+                                       Architecture
+                                    </button>
+                                 </div>
+                                 <span className="text-[11px] font-mono text-[#A89F91] dark:text-[#6E655C] uppercase">{selectedProject.category}</span>
+                              </div>
+
                               {/* Scrollable details */}
                               <div className="p-5 sm:p-7 space-y-6 overflow-y-auto flex-1 custom-scrollbar">
-                                 <div>
-                                    <div className="text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373] uppercase tracking-wider mb-1">{selectedProject.subtitle}</div>
-                                    <h3 className="text-xl sm:text-2xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-3">{selectedProject.title}</h3>
-                                    <p className="text-sm text-[#6E655C] dark:text-[#A89F91] leading-relaxed font-normal">{selectedProject.description}</p>
-                                 </div>
+                                 {modalTab === "overview" ? (
+                                    <>
+                                       <div>
+                                          <div className="text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373] uppercase tracking-wider mb-1">{selectedProject.subtitle}</div>
+                                          <h3 className="text-xl sm:text-2xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-3">{selectedProject.title}</h3>
+                                          <p className="text-sm text-[#6E655C] dark:text-[#A89F91] leading-relaxed font-normal">{selectedProject.description}</p>
+                                       </div>
 
-                                 {/* Architectural Highlights */}
-                                 <div>
-                                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-3 flex items-center gap-2">
-                                       <Code2 size={16} className="text-[#8A5A2B] dark:text-[#D4A373]" />
-                                       Key Features & Architecture
-                                    </h4>
-                                    <div className="space-y-2">
-                                       {selectedProject.highlights.map((h, i) => (
-                                          <div key={i} className="flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#EFECE4]/70 dark:bg-[#231E1A]/80 border border-[#DCD6C8] dark:border-[#E5DFD3]/10 text-xs sm:text-sm text-[#4A433D] dark:text-[#D5CEC2]">
-                                             <div className="w-1.5 h-1.5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] mt-1.5 shrink-0" />
-                                             <span className="leading-snug">{h}</span>
+                                       {/* Architectural Highlights */}
+                                       <div>
+                                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-3 flex items-center gap-2">
+                                             <Code2 size={16} className="text-[#8A5A2B] dark:text-[#D4A373]" />
+                                             Key Features & Architecture
+                                          </h4>
+                                          <div className="space-y-2">
+                                             {selectedProject.highlights.map((h, i) => (
+                                                <div key={i} className="flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#EFECE4]/70 dark:bg-[#231E1A]/80 border border-[#DCD6C8] dark:border-[#E5DFD3]/10 text-xs sm:text-sm text-[#4A433D] dark:text-[#D5CEC2]">
+                                                   <div className="w-1.5 h-1.5 rounded-full bg-[#8A5A2B] dark:bg-[#D4A373] mt-1.5 shrink-0" />
+                                                   <span className="leading-snug">{h}</span>
+                                                </div>
+                                             ))}
                                           </div>
-                                       ))}
-                                    </div>
-                                 </div>
+                                       </div>
 
-                                 {/* Tech Stack */}
-                                 <div>
-                                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-3 flex items-center gap-2">
-                                       <Layers size={16} className="text-[#8A5A2B] dark:text-[#D4A373]" />
-                                       Tech Stack & Tools
-                                    </h4>
-                                    <div className="flex flex-wrap gap-1.5">
-                                       {selectedProject.tech.map((t) => (
-                                          <span key={t} className="px-2.5 py-1 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3] bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 rounded-lg">
-                                             {t}
-                                          </span>
-                                       ))}
+                                       {/* Tech Stack */}
+                                       <div>
+                                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#A89F91] mb-3 flex items-center gap-2">
+                                             <Layers size={16} className="text-[#8A5A2B] dark:text-[#D4A373]" />
+                                             Tech Stack & Tools
+                                          </h4>
+                                          <div className="flex flex-wrap gap-1.5">
+                                             {selectedProject.tech.map((t) => (
+                                                <span key={t} className="px-2.5 py-1 text-xs font-semibold text-[#181513] dark:text-[#E5DFD3] bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 rounded-lg">
+                                                   {t}
+                                                </span>
+                                             ))}
+                                          </div>
+                                       </div>
+                                    </>
+                                 ) : (
+                                    /* System Architecture Blueprint Flow */
+                                    <div className="space-y-5">
+                                       <div>
+                                          <div className="text-xs font-semibold text-[#8A5A2B] dark:text-[#D4A373] uppercase tracking-wider mb-1">System Architecture Blueprint</div>
+                                          <h3 className="text-xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-2">End-to-End Data Pipeline</h3>
+                                          <p className="text-xs text-[#6E655C] dark:text-[#A89F91] leading-relaxed">Visual breakdown of how requests, state transitions, security layers, and data flows operate in production.</p>
+                                       </div>
+
+                                       {/* Interactive Pipeline Diagram */}
+                                       <div className="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-[#8A5A2B] before:via-[#D4A373] before:to-[#8A5A2B]/20">
+                                          {(selectedProject.architectureFlow || []).map((step, idx) => (
+                                             <div key={idx} className="relative group">
+                                                <div className="absolute -left-6 top-3 w-3 h-3 rounded-full bg-white dark:bg-[#181513] border-2 border-[#8A5A2B] dark:border-[#D4A373] group-hover:scale-125 transition-transform" />
+                                                <div className="p-3.5 rounded-2xl bg-[#EFECE4]/80 dark:bg-[#231E1A] border border-[#DCD6C8] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B]/40 dark:hover:border-[#D4A373]/40 transition-all">
+                                                   <div className="flex items-center justify-between mb-1">
+                                                      <span className="text-xs font-bold text-[#181513] dark:text-[#E5DFD3]">{step.label}</span>
+                                                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white dark:bg-[#181513] text-[#8A5A2B] dark:text-[#D4A373] border border-[#DCD6C8] dark:border-[#E5DFD3]/15">{step.tech}</span>
+                                                   </div>
+                                                   <p className="text-xs text-[#6E655C] dark:text-[#A89F91]">{step.sublabel}</p>
+                                                </div>
+                                             </div>
+                                          ))}
+                                       </div>
                                     </div>
-                                 </div>
+                                 )}
                               </div>
 
                               {/* Pinned Action Footer */}

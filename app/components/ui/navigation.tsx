@@ -1,4 +1,8 @@
+"use client";
+
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
+import { Command, Search } from "lucide-react";
+import { usePlatform } from "../../hooks/usePlatform";
 import { useScrollDirection } from "../../hooks/useScrollDirection";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -6,6 +10,7 @@ interface NavigationProps {
    activeSection: string;
    isMobileMenuOpen: boolean;
    setIsMobileMenuOpen: (open: boolean) => void;
+   onOpenCommandPalette?: () => void;
 }
 
 const navItems = [
@@ -17,8 +22,9 @@ const navItems = [
    { id: "contact", label: "Contact" },
 ];
 
-export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobileMenuOpen }: NavigationProps) {
+export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobileMenuOpen, onOpenCommandPalette }: NavigationProps) {
    const { scrollYProgress } = useScroll();
+   const { isMac, isMobile, modifierKey } = usePlatform();
    const scaleX = useSpring(scrollYProgress, {
       stiffness: 100,
       damping: 30,
@@ -38,8 +44,6 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
       hidden: { y: -100, opacity: 0 },
       visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 350, damping: 30 } },
    };
-
-   // const { isDark, toggle: handleThemeToggle } = useThemeToggle();
 
    return (
       <>
@@ -63,9 +67,33 @@ export default function Navigation({ activeSection, isMobileMenuOpen, setIsMobil
                   })}
                </ul>
 
-               {/* Theme Toggle Button */}
-               <div className="pl-2 border-l border-[#E2DDD2] dark:border-[#E5DFD3]/15">
-                  <ThemeToggle variant="circle-blur" className="w-8 h-8 rounded-full bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 hover:border-[#8A5A2B] dark:hover:border-[#D4A373]" />
+               {/* Quick Actions Cluster (Command Palette + Theme Toggle) */}
+               <div className="flex items-center gap-1.5 pl-2 ml-1 border-l border-[#E2DDD2] dark:border-[#E5DFD3]/15">
+                  {onOpenCommandPalette && (
+                     <button
+                        onClick={onOpenCommandPalette}
+                        className="flex items-center gap-1 px-2.5 h-8 rounded-full bg-[#EFECE4]/80 dark:bg-[#231E1A]/80 hover:bg-[#E2DDD2] dark:hover:bg-[#2F2924] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3] text-xs font-mono transition-all cursor-pointer"
+                        aria-label="Open Command Palette"
+                        title={`Open Command Palette (${isMobile ? "Search" : isMac ? "⌘K" : "Ctrl+K"})`}
+                     >
+                        {isMobile ? (
+                           <Search size={13} />
+                        ) : isMac ? (
+                           <>
+                              <Command size={13} />
+                              <span className="text-[11px] font-semibold">K</span>
+                           </>
+                        ) : (
+                           <>
+                              <span className="text-[10px] font-semibold font-sans">{modifierKey}</span>
+                              <span className="text-[11px] font-semibold">K</span>
+                           </>
+                        )}
+                     </button>
+                  )}
+
+                  {/* Theme Toggle Button */}
+                  <ThemeToggle variant="circle-blur" className="w-8 h-8 rounded-full bg-[#EFECE4]/80 dark:bg-[#231E1A]/80 hover:bg-[#E2DDD2] dark:hover:bg-[#2F2924] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#6E655C] dark:text-[#A89F91] hover:text-[#181513] dark:hover:text-[#E5DFD3]" />
                </div>
             </div>
          </motion.nav>

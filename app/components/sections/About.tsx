@@ -1,4 +1,7 @@
+"use client";
+
 import { Cpu, Download, MapPin, Sparkles, Terminal, UserCheck, Zap } from "lucide-react";
+import Image from "next/image";
 import profile from "../../assets/White Shirt.jpg";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
@@ -34,8 +37,8 @@ export default function About() {
                      <TiltCard max={6} glare={true} className="p-8 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[2.5rem] flex flex-col items-center text-center group h-full justify-between">
                         <div className="flex flex-col items-center w-full">
                            <div className="relative mb-6">
-                              <div className="w-60 h-60 rounded-full overflow-hidden border-4 border-white dark:border-[#231E1A] shadow-xl shadow-black/10">
-                                 <img src={profile} alt="Jasim Ihsan" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                              <div className="w-60 h-60 rounded-full overflow-hidden border-4 border-white dark:border-[#231E1A] shadow-xl shadow-black/10 relative">
+                                 <Image src={profile} alt="Jasim Ihsan" priority fill sizes="240px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                               </div>
                            </div>
 

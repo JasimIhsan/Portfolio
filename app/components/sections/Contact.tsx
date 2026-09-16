@@ -1,7 +1,10 @@
+"use client";
+
 import axios from "axios";
-import { CheckCircle2, Github, Linkedin, Mail, MapPin, Phone, Send, Sparkles, Twitter } from "lucide-react";
+import { CheckCircle2, Copy, Github, Linkedin, Mail, MapPin, Phone, Send, Sparkles, Twitter } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { toast } from "sonner";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
 
@@ -14,15 +17,36 @@ export default function Contact() {
    const [isSubmitting, setIsSubmitting] = useState(false);
    const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | null>(null);
 
+   const handleCopyEmail = (e: React.MouseEvent) => {
+      e.preventDefault();
+      navigator.clipboard.writeText("jasimihsan1234@gmail.com");
+      toast.success("Email Copied!", {
+         description: "jasimihsan1234@gmail.com has been copied to your clipboard.",
+      });
+   };
+
+   const handleCopyPhone = (e: React.MouseEvent) => {
+      e.preventDefault();
+      navigator.clipboard.writeText("+919656646449");
+      toast.success("Phone Number Copied!", {
+         description: "+91 9656646449 has been copied to your clipboard.",
+      });
+   };
+
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setIsSubmitting(true);
       setSubmitStatus(null);
 
       try {
+         const accessKey =
+            process.env.NEXT_PUBLIC_WEB3FORM_ACCESS_KEY ||
+            (typeof window !== "undefined" && (window as unknown as { __ENV?: { VITE_WEB3FORM_ACCESS_KEY?: string } }).__ENV?.VITE_WEB3FORM_ACCESS_KEY) ||
+            "";
+
          const data = {
             ...formData,
-            access_key: import.meta.env.VITE_WEB3FORM_ACCESS_KEY as string,
+            access_key: accessKey,
             subject: `New Portfolio Contact from ${formData.name}`,
             from_name: formData.name,
             replyto: formData.email,
@@ -36,16 +60,28 @@ export default function Contact() {
          });
 
          if (response.data.success) {
-            setSubmitStatus({ success: true, message: "Thank you! Your message has been sent successfully." });
+            const successMsg = "Thank you! Your message has been sent successfully.";
+            setSubmitStatus({ success: true, message: successMsg });
+            toast.success("Message Delivered", {
+               description: "Thank you for reaching out! I'll get back to you within 24 hours.",
+            });
             setFormData({ name: "", email: "", message: "" });
          } else {
-            setSubmitStatus({ success: false, message: "Failed to send message. Please try again." });
+            const errMsg = "Failed to send message. Please try again.";
+            setSubmitStatus({ success: false, message: errMsg });
+            toast.error("Delivery Failed", {
+               description: "Please check your network or email directly at jasimihsan1234@gmail.com.",
+            });
          }
       } catch (error) {
          console.error("Submission error:", error);
+         const errMsg = "An error occurred. Please try again later.";
          setSubmitStatus({
             success: false,
-            message: "An error occurred. Please try again later.",
+            message: errMsg,
+         });
+         toast.error("Transmission Error", {
+            description: "Something went wrong. Feel free to contact via LinkedIn or direct email.",
          });
       } finally {
          setIsSubmitting(false);
@@ -69,22 +105,14 @@ export default function Contact() {
                      <Sparkles size={14} />
                      Start a Conversation
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">
-                     Let's Build Something Exceptional
-                  </h2>
-                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">
-                     Have an opening, a freelance project, or an architecture inquiry? Send a message and I'll respond within 24 hours.
-                  </p>
+                  <h2 className="text-4xl md:text-5xl font-extrabold text-[#181513] dark:text-[#E5DFD3] tracking-tight mb-4">Let's Build Something Exceptional</h2>
+                  <p className="text-lg text-[#6E655C] dark:text-[#A89F91] max-w-2xl mx-auto font-normal">Have an opening, a freelance project, or an architecture inquiry? Send a message and I'll respond within 24 hours.</p>
                </div>
 
                <div className="grid lg:grid-cols-12 gap-8 items-start">
                   {/* Left Column: Direct Info & Social Hub */}
                   <div className="lg:col-span-5 space-y-6">
-                     <TiltCard
-                        max={6}
-                        glare={true}
-                        className="p-8 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[2.5rem]"
-                     >
+                     <TiltCard max={6} glare={true} className="p-8 bg-white dark:bg-[#181513]/95 border border-[#E2DDD2] dark:border-[#E5DFD3]/15 shadow-[0_10px_35px_-10px_rgba(24,21,19,0.06)] rounded-[2.5rem]">
                         <h3 className="text-2xl font-bold text-[#181513] dark:text-[#E5DFD3] mb-6">Contact Channels</h3>
 
                         <div className="space-y-4 mb-8">
@@ -94,12 +122,14 @@ export default function Contact() {
                                  label: "Direct Email",
                                  value: "jasimihsan1234@gmail.com",
                                  href: "mailto:jasimihsan1234@gmail.com",
+                                 onCopy: handleCopyEmail,
                               },
                               {
                                  icon: Phone,
                                  label: "Phone / WhatsApp",
                                  value: "+91 9656646449",
                                  href: "tel:+91 9656646449",
+                                 onCopy: handleCopyPhone,
                               },
                               {
                                  icon: MapPin,
@@ -108,28 +138,33 @@ export default function Contact() {
                                  href: "#",
                               },
                            ].map((item) => (
-                              <a
-                                 key={item.label}
-                                 href={item.href}
-                                 className="flex items-center gap-4 p-4 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B] dark:hover:border-[#D4A373] hover:bg-white dark:hover:bg-[#2A241F] transition-all group"
-                              >
-                                 <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-105 transition-transform shadow-2xs">
-                                    <item.icon size={18} />
-                                 </div>
-                                 <div>
-                                    <div className="text-xs text-[#A89F91] dark:text-[#6E655C] font-medium">{item.label}</div>
-                                    <div className="text-sm font-semibold text-[#181513] dark:text-[#E5DFD3] group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors">
-                                       {item.value}
+                              <div key={item.label} className="relative group">
+                                 <a href={item.href} className="flex items-center gap-4 p-4 rounded-2xl bg-[#EFECE4] dark:bg-[#231E1A] border border-[#E2DDD2] dark:border-[#E5DFD3]/10 hover:border-[#8A5A2B] dark:hover:border-[#D4A373] hover:bg-white dark:hover:bg-[#2A241F] transition-all">
+                                    <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 flex items-center justify-center text-[#8A5A2B] dark:text-[#D4A373] group-hover:scale-105 transition-transform shadow-2xs">
+                                       <item.icon size={18} />
                                     </div>
-                                 </div>
-                              </a>
+                                    <div className="min-w-0 flex-1">
+                                       <div className="text-xs text-[#A89F91] dark:text-[#6E655C] font-medium">{item.label}</div>
+                                       <div className="text-sm font-semibold text-[#181513] dark:text-[#E5DFD3] group-hover:text-[#8A5A2B] dark:group-hover:text-[#D4A373] transition-colors truncate">{item.value}</div>
+                                    </div>
+                                 </a>
+                                 {item.onCopy && (
+                                    <button
+                                       type="button"
+                                       onClick={item.onCopy}
+                                       className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-white dark:bg-[#181513] border border-[#E2DDD2] dark:border-[#E5DFD3]/15 text-[#6E655C] dark:text-[#A89F91] hover:text-[#8A5A2B] dark:hover:text-[#D4A373] shadow-xs hover:scale-105 transition-all cursor-pointer"
+                                       title="Copy Email"
+                                       aria-label="Copy Email"
+                                    >
+                                       <Copy size={14} />
+                                    </button>
+                                 )}
+                              </div>
                            ))}
                         </div>
 
                         <div className="pt-6 border-t border-[#EFECE4] dark:border-[#E5DFD3]/10">
-                           <div className="text-xs font-bold uppercase tracking-wider text-[#A89F91] dark:text-[#6E655C] mb-4">
-                              Social Profiles
-                           </div>
+                           <div className="text-xs font-bold uppercase tracking-wider text-[#A89F91] dark:text-[#6E655C] mb-4">Social Profiles</div>
                            <div className="flex gap-3">
                               {[
                                  { icon: Github, href: "http://github.com/JasimIhsan", label: "GitHub" },
@@ -162,9 +197,7 @@ export default function Contact() {
                            {submitStatus && (
                               <div
                                  className={`p-4 rounded-2xl text-sm font-medium flex items-center gap-3 ${
-                                    submitStatus.success
-                                       ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40"
-                                       : "bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/40"
+                                    submitStatus.success ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40" : "bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/40"
                                  }`}
                               >
                                  {submitStatus.success && <CheckCircle2 size={18} className="shrink-0" />}

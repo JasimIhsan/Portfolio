@@ -1,3 +1,5 @@
+"use client";
+
 import { useReducedMotion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -161,15 +163,23 @@ export function useThemeToggle({ variant = "circle-blur", start = "top-right" }:
          root.dataset.beuiVt = variant;
       }
 
-      const vt = (
-         document as Document & {
-            startViewTransition(cb: () => void): { finished: Promise<void> };
-         }
-      ).startViewTransition(() => setTheme(next));
+      try {
+         const vt = (
+            document as Document & {
+               startViewTransition(cb: () => void): { finished: Promise<void> };
+            }
+         ).startViewTransition(() => setTheme(next));
 
-      vt.finished.finally(() => {
-         delete root.dataset.beuiVt;
-      });
+         vt.finished
+            .catch(() => {
+               // Handle aborted view transitions silently
+            })
+            .finally(() => {
+               delete root.dataset.beuiVt;
+            });
+      } catch {
+         setTheme(next);
+      }
    };
 
    return { isDark, mounted, toggle };
