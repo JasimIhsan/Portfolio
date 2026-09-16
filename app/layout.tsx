@@ -62,6 +62,14 @@ export const metadata: Metadata = {
       description: "Building production-grade web systems and Flutter apps with modern UI engineering.",
       images: ["/og-image.png"],
    },
+   icons: {
+      icon: [
+         { url: "/favicon.png", type: "image/png" },
+      ],
+      apple: [
+         { url: "/apple-touch-icon.png", type: "image/png" },
+      ],
+   },
    robots: {
       index: true,
       follow: true,
