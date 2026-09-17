@@ -237,11 +237,28 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
       return items;
    }, [isDark, onClose, onReplayPreloader, onSelectProject, scrollToSection, toggleTheme]);
 
+   const mousePosRef = useRef({ x: 0, y: 0 });
+
+   const handleItemMouseMove = useCallback((e: React.MouseEvent, idx: number) => {
+      if (e.clientX === mousePosRef.current.x && e.clientY === mousePosRef.current.y) {
+         return;
+      }
+      mousePosRef.current = { x: e.clientX, y: e.clientY };
+      setSelectedIndex(idx);
+   }, []);
+
    const filteredCommands = useMemo(() => {
       if (!query.trim()) return commands;
       const lower = query.toLowerCase();
       return commands.filter((c) => c.title.toLowerCase().includes(lower) || c.subtitle?.toLowerCase().includes(lower) || c.category.toLowerCase().includes(lower));
    }, [commands, query]);
+
+   // Clamp selectedIndex if list length shrinks
+   useEffect(() => {
+      if (selectedIndex >= filteredCommands.length && filteredCommands.length > 0) {
+         setSelectedIndex(filteredCommands.length - 1);
+      }
+   }, [filteredCommands.length, selectedIndex]);
 
    // Keyboard Navigation within Palette
    useEffect(() => {
@@ -269,12 +286,20 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
       return () => window.removeEventListener("keydown", handleKeyDown);
    }, [filteredCommands, isOpen, onClose, selectedIndex]);
 
-   // Scroll selected item into view
+   // Scroll selected item into view smoothly without window jitter
    useEffect(() => {
       if (listRef.current) {
-         const activeEl = listRef.current.querySelector(`[data-index="${selectedIndex}"]`) as HTMLElement | null;
+         const container = listRef.current;
+         const activeEl = container.querySelector(`[data-index="${selectedIndex}"]`) as HTMLElement | null;
          if (activeEl) {
-            activeEl.scrollIntoView({ block: "nearest" });
+            const containerRect = container.getBoundingClientRect();
+            const elRect = activeEl.getBoundingClientRect();
+
+            if (elRect.top < containerRect.top) {
+               container.scrollTop -= containerRect.top - elRect.top + 6;
+            } else if (elRect.bottom > containerRect.bottom) {
+               container.scrollTop += elRect.bottom - containerRect.bottom + 6;
+            }
          }
       }
    }, [selectedIndex]);
@@ -325,11 +350,11 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
                                  key={cmd.id}
                                  data-index={idx}
                                  onClick={cmd.action}
-                                 onMouseEnter={() => setSelectedIndex(idx)}
-                                 className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all cursor-pointer ${isSelected ? "bg-[#181513] dark:bg-[#231E1A] text-white shadow-xs border border-[#181513] dark:border-[#D4A373]/30" : "text-[#181513] dark:text-[#E5DFD3] hover:bg-[#EFECE4]/60 dark:hover:bg-[#231E1A]/60"}`}
+                                 onMouseMove={(e) => handleItemMouseMove(e, idx)}
+                                 className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-colors duration-150 cursor-pointer border ${isSelected ? "bg-[#181513] dark:bg-[#231E1A] text-white shadow-xs border-[#181513] dark:border-[#D4A373]/30" : "border-transparent text-[#181513] dark:text-[#E5DFD3] hover:bg-[#EFECE4]/60 dark:hover:bg-[#231E1A]/60"}`}
                               >
                                  <div className="flex items-center gap-3 min-w-0">
-                                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${isSelected ? "bg-[#8A5A2B] text-white" : "bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373]"}`}>
+                                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-150 ${isSelected ? "bg-[#8A5A2B] text-white" : "bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373]"}`}>
                                        <Icon size={15} />
                                     </div>
                                     <div className="min-w-0">
@@ -339,8 +364,10 @@ export default function CommandPalette({ isOpen, onClose, onSelectProject, onRep
                                  </div>
 
                                  <div className="flex items-center gap-2 shrink-0 ml-2">
-                                    {cmd.badge && <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${isSelected ? "bg-white/10 text-[#D4A373] border-white/15" : "bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] border-[#DCD6C8] dark:border-[#E5DFD3]/15"}`}>{cmd.badge}</span>}
-                                    <ArrowRight size={14} className={`transition-transform ${isSelected ? "opacity-100 translate-x-0.5 text-[#D4A373]" : "opacity-0"}`} />
+                                    {cmd.badge && (
+                                       <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border transition-colors duration-150 ${isSelected ? "bg-white/10 text-[#D4A373] border-white/15" : "bg-[#EFECE4] dark:bg-[#231E1A] text-[#8A5A2B] dark:text-[#D4A373] border-[#DCD6C8] dark:border-[#E5DFD3]/15"}`}>{cmd.badge}</span>
+                                    )}
+                                    <ArrowRight size={14} className={`transition-all duration-150 ${isSelected ? "opacity-100 translate-x-0 text-[#D4A373]" : "opacity-0 -translate-x-1"}`} />
                                  </div>
                               </button>
                            );
