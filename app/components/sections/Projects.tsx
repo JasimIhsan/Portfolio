@@ -11,6 +11,7 @@ import forge from "../../assets/projects/forge_mock.png";
 import lifePartnerAgain from "../../assets/projects/lifepartneragain_mock.png";
 import mentorshub from "../../assets/projects/mentorshub_mock.png";
 import onboard from "../../assets/projects/onboard_mock.png";
+import pdfchatbot from "../../assets/projects/pdfchatbot_mock.png";
 import { startLenis, stopLenis } from "../../hooks/useLenis";
 import ScrollReveal from "../animations/ScrollReveal";
 import { TiltCard } from "../ui/tilt-card";
@@ -25,7 +26,7 @@ export interface ProjectItem {
    id: string;
    title: string;
    subtitle: string;
-   category: "Full-Stack" | "Mobile" | "Systems & Cloud" | "E-Commerce";
+   category: "Full-Stack" | "Mobile" | "Systems & Cloud" | "E-Commerce" | "AI & Full Stack";
    description: string;
    image: StaticImageData | string;
    tech: string[];
@@ -38,31 +39,6 @@ export interface ProjectItem {
 }
 
 export const projects: ProjectItem[] = [
-   {
-      id: "mentorshub",
-      title: "MentorsHub",
-      subtitle: "Full-Stack Mentorship Platform",
-      category: "Full-Stack",
-      description: "A production-grade mentorship platform built following Clean Architecture principles, enabling 1-on-1 session bookings, mentor discovery, escrow wallet management, and real-time communications.",
-      image: mentorshub,
-      tech: ["React.js", "TypeScript", "Node.js", "Express.js", "MongoDB", "Redis", "Socket.io", "Razorpay"],
-      github: "https://github.com/JasimIhsan/MentorsHub",
-      liveDemo: true,
-      live: "https://mentors-hub-in.vercel.app",
-      highlights: [
-         "Built 30+ REST APIs supporting authentication, mentor discovery, session booking, wallet management, reviews, and administration",
-         "Implemented JWT authentication, Google OAuth, refresh token workflow, and Redis-based token blacklisting",
-         "Integrated real-time chat, booking updates, notifications, and live session management using Socket.io",
-         "Designed and developed the complete application independently, including frontend, backend, database architecture, and deployment workflows",
-      ],
-      featured: true,
-      architectureFlow: [
-         { label: "Frontend Layer", sublabel: "React.js & TypeScript UI with Tailwind CSS", tech: "React / TS" },
-         { label: "Security & Auth", sublabel: "JWT, Google OAuth & Redis Token Blacklist", tech: "Redis / Auth" },
-         { label: "Real-Time & APIs", sublabel: "30+ REST Endpoints & Socket.io Event Hub", tech: "Express.js" },
-         { label: "Persistence & Payments", sublabel: "MongoDB Schemas & Razorpay Escrow Wallet", tech: "MongoDB" },
-      ],
-   },
    {
       id: "lifepartneragain",
       title: "Life Partner Again",
@@ -88,6 +64,31 @@ export const projects: ProjectItem[] = [
       ],
    },
    {
+      id: "pdfchatbot",
+      title: "PDF ChatBot",
+      subtitle: "AI Document Intelligence & RAG System",
+      category: "AI & Full Stack",
+      description: "An AI-powered document intelligence system allowing users to upload PDF documents, generate vector embeddings, and conduct contextual Q&A using RAG architecture.",
+      image: pdfchatbot,
+      tech: ["Next.js", "TypeScript", "FastAPI", "Python", "Pinecone", "LangChain", "Tailwind CSS"],
+      github: "https://github.com/JasimIhsan/pdf-chat-bot",
+      liveDemo: true,
+      live: "https://pdfchatbot.jasimihsan.in/",
+      highlights: [
+         "Architected RAG (Retrieval-Augmented Generation) pipeline converting PDF documents into vector embeddings stored in Pinecone",
+         "Built high-performance FastAPI and Python backend for document chunking, embedding generation, and semantic similarity search",
+         "Developed interactive Next.js frontend with real-time streaming Q&A responses, citation highlights, and vector query visualizer",
+         "Integrated LangChain orchestration with Pinecone vector database for context-aware conversational AI",
+      ],
+      featured: true,
+      architectureFlow: [
+         { label: "Next.js UI & Stream", sublabel: "Interactive PDF Viewer & Streaming Chat Interface", tech: "Next.js / TS" },
+         { label: "FastAPI & Python Hub", sublabel: "Document Processing, Chunking & RAG Pipelines", tech: "FastAPI / Python" },
+         { label: "LangChain Orchestration", sublabel: "Context Retrieval & LLM Prompting Pipeline", tech: "LangChain" },
+         { label: "Vector DB & Indexing", sublabel: "Pinecone Vector Store & Semantic Embeddings", tech: "Pinecone" },
+      ],
+   },
+   {
       id: "brewcode",
       title: "Brew Code JS Compiler",
       subtitle: "Online JavaScript Compiler & IDE",
@@ -110,6 +111,31 @@ export const projects: ProjectItem[] = [
          { label: "Execution API Hub", sublabel: "15+ REST APIs for Code Runs & State Handling", tech: "Express.js" },
          { label: "Evaluation Runtime", sublabel: "Real-Time Output Rendering & Error Diagnostics", tech: "Node.js" },
          { label: "Snippet Persistence", sublabel: "Code Storage & Project Management Store", tech: "MongoDB" },
+      ],
+   },
+   {
+      id: "mentorshub",
+      title: "MentorsHub",
+      subtitle: "Full-Stack Mentorship Platform",
+      category: "Full-Stack",
+      description: "A production-grade mentorship platform built following Clean Architecture principles, enabling 1-on-1 session bookings, mentor discovery, escrow wallet management, and real-time communications.",
+      image: mentorshub,
+      tech: ["React.js", "TypeScript", "Node.js", "Express.js", "MongoDB", "Redis", "Socket.io", "Razorpay"],
+      github: "https://github.com/JasimIhsan/MentorsHub",
+      liveDemo: true,
+      live: "https://mentors-hub-in.vercel.app",
+      highlights: [
+         "Built 30+ REST APIs supporting authentication, mentor discovery, session booking, wallet management, reviews, and administration",
+         "Implemented JWT authentication, Google OAuth, refresh token workflow, and Redis-based token blacklisting",
+         "Integrated real-time chat, booking updates, notifications, and live session management using Socket.io",
+         "Designed and developed the complete application independently, including frontend, backend, database architecture, and deployment workflows",
+      ],
+      featured: true,
+      architectureFlow: [
+         { label: "Frontend Layer", sublabel: "React.js & TypeScript UI with Tailwind CSS", tech: "React / TS" },
+         { label: "Security & Auth", sublabel: "JWT, Google OAuth & Redis Token Blacklist", tech: "Redis / Auth" },
+         { label: "Real-Time & APIs", sublabel: "30+ REST Endpoints & Socket.io Event Hub", tech: "Express.js" },
+         { label: "Persistence & Payments", sublabel: "MongoDB Schemas & Razorpay Escrow Wallet", tech: "MongoDB" },
       ],
    },
    {
@@ -178,7 +204,7 @@ export const projects: ProjectItem[] = [
    },
 ];
 
-const categories = ["All", "Full-Stack", "Mobile", "Systems & Cloud", "E-Commerce"] as const;
+const categories = ["All", "Full-Stack", "AI & Full Stack", "Mobile", "Systems & Cloud", "E-Commerce"] as const;
 
 interface ProjectsProps {
    selectedProjectId?: string | null;
